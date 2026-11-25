@@ -79,7 +79,7 @@ export default function SkyPlayer({ fixture }: { fixture: IllustrativeSky }) {
   }
 
   return (
-    <section id="sky" className="sky" aria-labelledby="sky-title">
+    <section id="sky" className="sky" aria-labelledby="sky-title" tabIndex={-1}>
       <div className="sky-header">
         <p className="data-label">{fixture.kind} sky</p>
         <h2 id="sky-title">Who crosses first?</h2>
@@ -90,7 +90,7 @@ export default function SkyPlayer({ fixture }: { fixture: IllustrativeSky }) {
         <span className="meridian">Meridian</span>
         <span className="west">W · West</span>
         <span className="east">East · E</span>
-        <span className="motion">← Apparent motion</span>
+        <span className="motion">← Motion westward</span>
         {stars.map(({ key, label }) => (
           <span key={key} className={`star ${key}`} style={{ left: `${50 + frame.offset[key] * 0.38}%` }}>
             <span className="star-dot" />
