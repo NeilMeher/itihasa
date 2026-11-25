@@ -1,0 +1,75 @@
+{
+  "catalogue": {
+    "name": "Hipparcos, the New Reduction (van Leeuwen, 2007), CDS VizieR I/311/hip2",
+    "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=I%2F311%2Fhip2&-out=HIP,Sn,So,Nc,RArad,DErad,Plx,pmRA,pmDE,e_RArad,e_DErad,e_Plx,e_pmRA,e_pmDE&HIP=65378,65477",
+    "retrieved_on": "2026-11-26",
+    "frame": "ICRS",
+    "epoch_julian_year": 1991.25
+  },
+  "stars": {
+    "alcor": {
+      "hip": 65477,
+      "identification": "Alcor, 80 UMa, HD 116842",
+      "solution": { "Sn": 5, "So": 0, "Nc": 1 },
+      "astrometry": {
+        "ra_deg": 201.30589840,
+        "dec_deg": 54.98799865,
+        "pm_ra_cosdec_mas_per_year": 120.21,
+        "pm_dec_mas_per_year": -16.04,
+        "parallax_mas": 39.91
+      },
+      "formal_errors": {
+        "e_RArad_mas": 0.11,
+        "e_DErad_mas": 0.11,
+        "e_pmRA_mas_per_year": 0.12,
+        "e_pmDE_mas_per_year": 0.14,
+        "e_Plx_mas": 0.13
+      }
+    },
+    "mizar": {
+      "hip": 65378,
+      "identification": "Mizar A (ζ UMa A, HD 116656), represented here by the HIP 65378 catalogue solution",
+      "solution": { "Sn": 15, "So": 3, "Nc": 2 },
+      "astrometry": {
+        "ra_deg": 200.98091528,
+        "dec_deg": 54.92541509,
+        "pm_ra_cosdec_mas_per_year": 119.01,
+        "pm_dec_mas_per_year": -25.97,
+        "parallax_mas": 38.01
+      },
+      "formal_errors": {
+        "e_RArad_mas": 1.28,
+        "e_DErad_mas": 1.40,
+        "e_pmRA_mas_per_year": 1.49,
+        "e_pmDE_mas_per_year": 1.65,
+        "e_Plx_mas": 1.71
+      }
+    }
+  },
+  "case": {
+    "date_ut1": "2025-01-01",
+    "midnight_jd_ut1": 2460676.5,
+    "tt_minus_ut1_seconds": 69.14,
+    "east_longitude_deg": 0.0,
+    "transit_bracket_ut1_seconds": [21600, 28800]
+  },
+  "reference": {
+    "name": "IAU 2006/SOFA-derived ERFA pmsafe, pmat06 and gmst06",
+    "pyerfa": "2.0.1.5",
+    "erfa": "2.0.1",
+    "sofa": "20231011",
+    "expected": {
+      "stars": {
+        "alcor": { "mean_ra_deg": 201.55576617125334, "transit_ut1_seconds": 24091.530809970573 },
+        "mizar": { "mean_ra_deg": 201.23197223106413, "transit_ut1_seconds": 24014.03244738467 }
+      },
+      "first": "mizar",
+      "alcor_minus_mizar_ut1_seconds": 77.49836258590221
+    }
+  },
+  "tolerances": {
+    "mean_ra_arcseconds": 0.20,
+    "transit_ut1_seconds": 0.10,
+    "separation_ut1_seconds": 0.02
+  }
+}
