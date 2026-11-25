@@ -1,0 +1,68 @@
+{
+  "schema_version": "1.0.0",
+  "sources": [
+    {
+      "id": "bori-bhismaparvan",
+      "title": "Mahābhārata · Bhīṣmaparvan",
+      "attribution": "Bhandarkar Oriental Research Institute",
+      "edition": "BORI Critical Edition, Tokunaga–Smith electronic text",
+      "language": "Sanskrit",
+      "url": "https://indology.info/bombay/mahabharata/text/UR/MBh06.txt#:~:text=06002031a",
+      "display_note": "One verse excerpt for the local prototype. Review display rights before public release."
+    },
+    {
+      "id": "oak-arundhati-vasistha-2016",
+      "title": "Arundhati & Vasistha",
+      "attribution": "Nilesh Nilkanth Oak",
+      "edition": "Author’s post, 8 February 2016",
+      "language": "English",
+      "url": "https://nileshoak.wordpress.com/2016/02/08/arundhati-vasistha/",
+      "display_note": "Linked and paraphrased. Oak’s images remain at the source."
+    }
+  ],
+  "passage": {
+    "id": "bori-6-2-31",
+    "source_id": "bori-bhismaparvan",
+    "locator": "Bhīṣmaparvan 6.2.31",
+    "source_locator": "06002031a and 06002031c",
+    "devanagari": [
+      "या चैषा विश्रुता राजंस्त्रैलोक्ये साधुसंमता ।",
+      "अरुन्धती तयाप्येष वसिष्ठः पृष्ठतः कृतः ॥"
+    ],
+    "source_transliteration": [
+      "yā caiṣā viśrutā rājaṁs trailokye sādhusaṁmatā",
+      "arundhatī tayāpy eṣa vasiṣṭhaḥ pr̥ṣṭhataḥ kr̥taḥ"
+    ],
+    "working_translation": "O king, Arundhatī is renowned in the three worlds and held in esteem by the good. Even she has put Vasiṣṭha behind her.",
+    "translation_credit": "Itihāsa working translation",
+    "review_note": "Sanskrit and translation review pending."
+  },
+  "clue": {
+    "id": "oak-meridian-order",
+    "passage_id": "bori-6-2-31",
+    "source_id": "oak-arundhati-vasistha-2016",
+    "source_locator": "Opening comparison and its two meridian-crossing figures",
+    "interpretation": "Oak identifies Arundhatī with Alcor and Vasiṣṭha with Mizar. In his reading, the star that crosses the meridian first is ahead.",
+    "measure": "Compare the order in which Alcor and the chosen Mizar component cross the same meridian.",
+    "uncertainty": "A historical test needs a specified Mizar component, transit definition, star catalogue, long-term precession model, and search window."
+  },
+  "sky": {
+    "id": "arundhati-meridian-demo-v1",
+    "kind": "illustrative",
+    "clue_id": "oak-meridian-order",
+    "description": "Invented positions show what it would mean for one star to cross the meridian first.",
+    "units": "schematic units",
+    "frames": [
+      { "step": 0, "offset": { "alcor": 48, "mizar": 72 } },
+      { "step": 1, "offset": { "alcor": 24, "mizar": 48 } },
+      { "step": 2, "offset": { "alcor": 0, "mizar": 24 } },
+      { "step": 3, "offset": { "alcor": -24, "mizar": 0 } },
+      { "step": 4, "offset": { "alcor": -48, "mizar": -24 } },
+      { "step": 5, "offset": { "alcor": -72, "mizar": -48 } }
+    ]
+  },
+  "historical": {
+    "status": "unavailable",
+    "reason": "Historical dates are unavailable in this demo. Itihāsa has yet to calculate and independently review a historical run."
+  }
+}

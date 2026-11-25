@@ -1,0 +1,572 @@
+{
+  "$defs": {
+    "Clue": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "interpretation": {
+          "minLength": 1,
+          "title": "Interpretation",
+          "type": "string"
+        },
+        "measure": {
+          "minLength": 1,
+          "title": "Measure",
+          "type": "string"
+        },
+        "passage_id": {
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Passage Id",
+          "type": "string"
+        },
+        "source_id": {
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Source Id",
+          "type": "string"
+        },
+        "source_locator": {
+          "minLength": 1,
+          "title": "Source Locator",
+          "type": "string"
+        },
+        "uncertainty": {
+          "minLength": 1,
+          "title": "Uncertainty",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "passage_id",
+        "source_id",
+        "source_locator",
+        "interpretation",
+        "measure",
+        "uncertainty"
+      ],
+      "title": "Clue",
+      "type": "object"
+    },
+    "Frame": {
+      "additionalProperties": false,
+      "properties": {
+        "offset": {
+          "$ref": "#/$defs/Offset"
+        },
+        "step": {
+          "minimum": 0,
+          "title": "Step",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "step",
+        "offset"
+      ],
+      "title": "Frame",
+      "type": "object"
+    },
+    "IllustrativeSky": {
+      "additionalProperties": false,
+      "properties": {
+        "clue_id": {
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Clue Id",
+          "type": "string"
+        },
+        "description": {
+          "minLength": 1,
+          "title": "Description",
+          "type": "string"
+        },
+        "frames": {
+          "items": {
+            "$ref": "#/$defs/Frame"
+          },
+          "minItems": 3,
+          "title": "Frames",
+          "type": "array"
+        },
+        "id": {
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "const": "illustrative",
+          "title": "Kind",
+          "type": "string"
+        },
+        "units": {
+          "const": "schematic units",
+          "title": "Units",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "clue_id",
+        "description",
+        "units",
+        "frames"
+      ],
+      "title": "IllustrativeSky",
+      "type": "object"
+    },
+    "InputArtifact": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "url": {
+          "format": "uri",
+          "maxLength": 2083,
+          "minLength": 1,
+          "title": "Url",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "url",
+        "sha256"
+      ],
+      "title": "InputArtifact",
+      "type": "object"
+    },
+    "Offset": {
+      "additionalProperties": false,
+      "properties": {
+        "alcor": {
+          "maximum": 100,
+          "minimum": -100,
+          "title": "Alcor",
+          "type": "integer"
+        },
+        "mizar": {
+          "maximum": 100,
+          "minimum": -100,
+          "title": "Mizar",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "alcor",
+        "mizar"
+      ],
+      "title": "Offset",
+      "type": "object"
+    },
+    "Passage": {
+      "additionalProperties": false,
+      "properties": {
+        "devanagari": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "title": "Devanagari",
+          "type": "array"
+        },
+        "id": {
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "locator": {
+          "minLength": 1,
+          "title": "Locator",
+          "type": "string"
+        },
+        "review_note": {
+          "minLength": 1,
+          "title": "Review Note",
+          "type": "string"
+        },
+        "source_id": {
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Source Id",
+          "type": "string"
+        },
+        "source_locator": {
+          "minLength": 1,
+          "title": "Source Locator",
+          "type": "string"
+        },
+        "source_transliteration": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "title": "Source Transliteration",
+          "type": "array"
+        },
+        "translation_credit": {
+          "minLength": 1,
+          "title": "Translation Credit",
+          "type": "string"
+        },
+        "working_translation": {
+          "minLength": 1,
+          "title": "Working Translation",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "source_id",
+        "locator",
+        "source_locator",
+        "devanagari",
+        "source_transliteration",
+        "working_translation",
+        "translation_credit",
+        "review_note"
+      ],
+      "title": "Passage",
+      "type": "object"
+    },
+    "Review": {
+      "additionalProperties": false,
+      "properties": {
+        "notes": {
+          "minLength": 1,
+          "title": "Notes",
+          "type": "string"
+        },
+        "reviewed_on": {
+          "format": "date",
+          "title": "Reviewed On",
+          "type": "string"
+        },
+        "reviewer": {
+          "minLength": 1,
+          "title": "Reviewer",
+          "type": "string"
+        }
+      },
+      "required": [
+        "reviewer",
+        "reviewed_on",
+        "notes"
+      ],
+      "title": "Review",
+      "type": "object"
+    },
+    "ReviewedResult": {
+      "additionalProperties": false,
+      "properties": {
+        "finding": {
+          "minLength": 1,
+          "title": "Finding",
+          "type": "string"
+        },
+        "outcome": {
+          "enum": [
+            "match",
+            "mismatch",
+            "inconclusive"
+          ],
+          "title": "Outcome",
+          "type": "string"
+        },
+        "output": {
+          "$ref": "#/$defs/InputArtifact"
+        },
+        "review": {
+          "$ref": "#/$defs/Review"
+        },
+        "run": {
+          "$ref": "#/$defs/Run"
+        },
+        "status": {
+          "const": "reviewed",
+          "title": "Status",
+          "type": "string"
+        },
+        "uncertainty": {
+          "minLength": 1,
+          "title": "Uncertainty",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "run",
+        "outcome",
+        "finding",
+        "uncertainty",
+        "output",
+        "review"
+      ],
+      "title": "ReviewedResult",
+      "type": "object"
+    },
+    "Run": {
+      "additionalProperties": false,
+      "properties": {
+        "assumptions": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Assumptions",
+          "type": "array"
+        },
+        "calendar": {
+          "minLength": 1,
+          "title": "Calendar",
+          "type": "string"
+        },
+        "clue_id": {
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Clue Id",
+          "type": "string"
+        },
+        "end_jd": {
+          "title": "End Jd",
+          "type": "number"
+        },
+        "frame_and_observer": {
+          "minLength": 1,
+          "title": "Frame And Observer",
+          "type": "string"
+        },
+        "git_revision": {
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Git Revision",
+          "type": "string"
+        },
+        "id": {
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "inputs": {
+          "items": {
+            "$ref": "#/$defs/InputArtifact"
+          },
+          "minItems": 1,
+          "title": "Inputs",
+          "type": "array"
+        },
+        "method_version": {
+          "minLength": 1,
+          "title": "Method Version",
+          "type": "string"
+        },
+        "original_date_label": {
+          "minLength": 1,
+          "title": "Original Date Label",
+          "type": "string"
+        },
+        "sampling_and_refinement": {
+          "minLength": 1,
+          "title": "Sampling And Refinement",
+          "type": "string"
+        },
+        "start_jd": {
+          "title": "Start Jd",
+          "type": "number"
+        },
+        "time_scale": {
+          "minLength": 1,
+          "title": "Time Scale",
+          "type": "string"
+        },
+        "tolerance": {
+          "minLength": 1,
+          "title": "Tolerance",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "clue_id",
+        "method_version",
+        "git_revision",
+        "inputs",
+        "original_date_label",
+        "calendar",
+        "time_scale",
+        "start_jd",
+        "end_jd",
+        "frame_and_observer",
+        "sampling_and_refinement",
+        "tolerance",
+        "assumptions"
+      ],
+      "title": "Run",
+      "type": "object"
+    },
+    "Source": {
+      "additionalProperties": false,
+      "properties": {
+        "attribution": {
+          "minLength": 1,
+          "title": "Attribution",
+          "type": "string"
+        },
+        "display_note": {
+          "minLength": 1,
+          "title": "Display Note",
+          "type": "string"
+        },
+        "edition": {
+          "minLength": 1,
+          "title": "Edition",
+          "type": "string"
+        },
+        "id": {
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "language": {
+          "minLength": 1,
+          "title": "Language",
+          "type": "string"
+        },
+        "title": {
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "url": {
+          "format": "uri",
+          "maxLength": 2083,
+          "minLength": 1,
+          "title": "Url",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "attribution",
+        "edition",
+        "language",
+        "url",
+        "display_note"
+      ],
+      "title": "Source",
+      "type": "object"
+    },
+    "Unavailable": {
+      "additionalProperties": false,
+      "properties": {
+        "reason": {
+          "minLength": 1,
+          "title": "Reason",
+          "type": "string"
+        },
+        "status": {
+          "const": "unavailable",
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "reason"
+      ],
+      "title": "Unavailable",
+      "type": "object"
+    },
+    "UnderReview": {
+      "additionalProperties": false,
+      "properties": {
+        "run": {
+          "$ref": "#/$defs/Run"
+        },
+        "status": {
+          "const": "under_review",
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "run"
+      ],
+      "title": "UnderReview",
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "clue": {
+      "$ref": "#/$defs/Clue"
+    },
+    "historical": {
+      "discriminator": {
+        "mapping": {
+          "reviewed": "#/$defs/ReviewedResult",
+          "unavailable": "#/$defs/Unavailable",
+          "under_review": "#/$defs/UnderReview"
+        },
+        "propertyName": "status"
+      },
+      "oneOf": [
+        {
+          "$ref": "#/$defs/Unavailable"
+        },
+        {
+          "$ref": "#/$defs/UnderReview"
+        },
+        {
+          "$ref": "#/$defs/ReviewedResult"
+        }
+      ],
+      "title": "Historical"
+    },
+    "passage": {
+      "$ref": "#/$defs/Passage"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "sky": {
+      "$ref": "#/$defs/IllustrativeSky"
+    },
+    "sources": {
+      "items": {
+        "$ref": "#/$defs/Source"
+      },
+      "minItems": 2,
+      "title": "Sources",
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema_version",
+    "sources",
+    "passage",
+    "clue",
+    "sky",
+    "historical"
+  ],
+  "title": "EvidenceBundle",
+  "type": "object"
+}
