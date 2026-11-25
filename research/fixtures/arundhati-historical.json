@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "window": {"start_julian_epoch_tt": -12999.0, "end_julian_epoch_tt": 2025.0, "step_year": 1.0, "refinement_step_year": 0.25, "boundary_bracket_year": 0.01},
+  "limits": {"near_pole_deg": 1.0, "order_margin_arcsec": 1.0},
+  "original_hipparcos": {
+    "name":"ESA Hipparcos I/239, VizieR positions propagated by the catalogue service to J2000",
+    "url":"https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=I%2F239%2Fhip_main&-out=HIP,_RA.icrs,_DE.icrs,Plx,pmRA,pmDE&HIP=65378,65477",
+    "epoch_julian_year": 2000.0,
+    "alcor": {"ra_deg":201.30640816,"dec_deg":54.98795767,"parallax_mas":40.19,"pm_ra_cosdec_mas_per_year":120.35,"pm_dec_mas_per_year":-16.94},
+    "mizar": {"ra_deg":200.98142880,"dec_deg":54.92536175,"parallax_mas":41.73,"pm_ra_cosdec_mas_per_year":121.23,"pm_dec_mas_per_year":-22.01}
+  },
+  "author_labels": {
+    "mahābhārata_opening": "16 October 5561 BCE (proleptic Julian)",
+    "calendar_source": "https://nileshoak.wordpress.com/2015/08/16/16-october-5561-bce-julian-or-gregorian/",
+    "claimed_bounds": ["11091 BCE", "4508 BCE"],
+    "interval_source": "https://nileshoak.wordpress.com/2019/08/02/faq-frequently-asked-questions/"
+  }
+}

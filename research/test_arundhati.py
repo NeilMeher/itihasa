@@ -4,6 +4,7 @@ from math import degrees, radians
 import erfa
 
 from check_arundhati import STARS, check_against_reference, load_fixture, measure, signed_angle
+from run_arundhati_history import proleptic_julian_midnight
 
 
 class ModernArundhatiTests(unittest.TestCase):
@@ -31,3 +32,7 @@ class ModernArundhatiTests(unittest.TestCase):
     def test_right_ascension_difference_wraps_across_zero(self) -> None:
         self.assertAlmostEqual(degrees(signed_angle(radians(359.9 - 0.1))), -0.2)
         self.assertAlmostEqual(degrees(signed_angle(radians(0.1 - 359.9))), 0.2)
+
+    def test_normalized_julian_date_label(self) -> None:
+        self.assertEqual(proleptic_julian_midnight(2000, 1, 1), sum(erfa.cal2jd(2000, 1, 14)))
+        self.assertEqual(proleptic_julian_midnight(0, 3, 1) - proleptic_julian_midnight(0, 2, 28), 2)

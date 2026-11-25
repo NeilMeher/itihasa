@@ -1,0 +1,289 @@
+{
+  "run_id": "arundhati-prereview-v1",
+  "status": "under_review",
+  "window": {
+    "start_julian_epoch_tt": -12999.0,
+    "end_julian_epoch_tt": 2025.0,
+    "step_year": 1.0,
+    "refinement_step_year": 0.25,
+    "boundary_bracket_year": 0.01
+  },
+  "frame": "ICRS propagated to mean equator/equinox of date, upper transit on same sidereal turn",
+  "precession": "Vondrak-Capitaine-Wallace 2011/2012 via ERFA ltpb",
+  "proper_motion": "ERFA pmsafe rectilinear propagation; original HIP and stress alternatives",
+  "versions": {
+    "pyerfa": "2.0.1.5",
+    "erfa": "2.0.1",
+    "numpy": "2.5.5"
+  },
+  "limits": {
+    "near_pole_deg": 1.0,
+    "order_margin_arcsec": 1.0
+  },
+  "sample_count": 60097,
+  "coarse_sample_count": 15025,
+  "labeled_intervals": [
+    {
+      "label": "mizar-first",
+      "first_sample": -12999.0,
+      "last_sample": -11109.5
+    },
+    {
+      "label": "unresolved",
+      "first_sample": -11109.25,
+      "last_sample": -10103.0
+    },
+    {
+      "label": "alcor-first",
+      "first_sample": -10102.75,
+      "last_sample": -4652.5
+    },
+    {
+      "label": "unresolved",
+      "first_sample": -4652.25,
+      "last_sample": -4504.0
+    },
+    {
+      "label": "mizar-first",
+      "first_sample": -4503.75,
+      "last_sample": 2025.0
+    }
+  ],
+  "nominal_extrema_screen_count": 2,
+  "modern_control": {
+    "years": [
+      1800,
+      2025
+    ],
+    "max_delta_ra_difference_arcsec": 5.588e-06
+  },
+  "author_labels": {
+    "mahābhārata_opening": "16 October 5561 BCE (proleptic Julian)",
+    "calendar_source": "https://nileshoak.wordpress.com/2015/08/16/16-october-5561-bce-julian-or-gregorian/",
+    "claimed_bounds": [
+      "11091 BCE",
+      "4508 BCE"
+    ],
+    "interval_source": "https://nileshoak.wordpress.com/2019/08/02/faq-frequently-asked-questions/"
+  },
+  "normalized_date_label": {
+    "calendar": "proleptic Julian",
+    "astronomical_year": -5560,
+    "month": 10,
+    "day": 16,
+    "civil_midnight_jd": -309443.5,
+    "time_scale": "unspecified by date-only label; this is a calendar boundary"
+  },
+  "scenarios": [
+    {
+      "id": "hip2-zero-rv",
+      "epoch": 1991.25,
+      "radial_velocity_km_s": [
+        0.0,
+        0.0
+      ],
+      "mean_pole_tilt_arcsec": 0.0,
+      "quarter_year_brackets": [
+        {
+          "start": -10250.4296875,
+          "end": -10250.421875,
+          "resolved_numeric": true
+        },
+        {
+          "start": -4634.015625,
+          "end": -4634.0078125,
+          "resolved_numeric": true
+        }
+      ],
+      "annual_brackets": [
+        {
+          "start": -10250.4296875,
+          "end": -10250.421875,
+          "resolved_numeric": true
+        },
+        {
+          "start": -4634.015625,
+          "end": -4634.0078125,
+          "resolved_numeric": true
+        }
+      ],
+      "masked_samples": 0
+    },
+    {
+      "id": "hip-original",
+      "epoch": 2000.0,
+      "radial_velocity_km_s": [
+        0.0,
+        0.0
+      ],
+      "mean_pole_tilt_arcsec": 0.0,
+      "quarter_year_brackets": [
+        {
+          "start": -11098.6015625,
+          "end": -11098.59375,
+          "resolved_numeric": true
+        },
+        {
+          "start": -4504.859375,
+          "end": -4504.8515625,
+          "resolved_numeric": true
+        }
+      ],
+      "annual_brackets": [
+        {
+          "start": -11098.6015625,
+          "end": -11098.59375,
+          "resolved_numeric": true
+        },
+        {
+          "start": -4504.859375,
+          "end": -4504.8515625,
+          "resolved_numeric": true
+        }
+      ],
+      "masked_samples": 0
+    },
+    {
+      "id": "perspective-stress",
+      "epoch": 1991.25,
+      "radial_velocity_km_s": [
+        -20.0,
+        20.0
+      ],
+      "mean_pole_tilt_arcsec": 0.0,
+      "quarter_year_brackets": [
+        {
+          "start": -10113.171875,
+          "end": -10113.1640625,
+          "resolved_numeric": true
+        },
+        {
+          "start": -4651.21875,
+          "end": -4651.2109375,
+          "resolved_numeric": true
+        }
+      ],
+      "annual_brackets": [
+        {
+          "start": -10113.171875,
+          "end": -10113.1640625,
+          "resolved_numeric": true
+        },
+        {
+          "start": -4651.21875,
+          "end": -4651.2109375,
+          "resolved_numeric": true
+        }
+      ],
+      "masked_samples": 0
+    },
+    {
+      "id": "perspective-stress-opposite",
+      "epoch": 1991.25,
+      "radial_velocity_km_s": [
+        20.0,
+        -20.0
+      ],
+      "mean_pole_tilt_arcsec": 0.0,
+      "quarter_year_brackets": [
+        {
+          "start": -10401.9375,
+          "end": -10401.9296875,
+          "resolved_numeric": true
+        },
+        {
+          "start": -4616.859375,
+          "end": -4616.8515625,
+          "resolved_numeric": true
+        }
+      ],
+      "annual_brackets": [
+        {
+          "start": -10401.9375,
+          "end": -10401.9296875,
+          "resolved_numeric": true
+        },
+        {
+          "start": -4616.859375,
+          "end": -4616.8515625,
+          "resolved_numeric": true
+        }
+      ],
+      "masked_samples": 0
+    },
+    {
+      "id": "pole-tilt-plus",
+      "epoch": 1991.25,
+      "radial_velocity_km_s": [
+        0.0,
+        0.0
+      ],
+      "mean_pole_tilt_arcsec": 5.0,
+      "quarter_year_brackets": [
+        {
+          "start": -10250.2265625,
+          "end": -10250.21875,
+          "resolved_numeric": true
+        },
+        {
+          "start": -4633.7578125,
+          "end": -4633.75,
+          "resolved_numeric": true
+        }
+      ],
+      "annual_brackets": [
+        {
+          "start": -10250.2265625,
+          "end": -10250.21875,
+          "resolved_numeric": true
+        },
+        {
+          "start": -4633.7578125,
+          "end": -4633.75,
+          "resolved_numeric": true
+        }
+      ],
+      "masked_samples": 0
+    },
+    {
+      "id": "pole-tilt-minus",
+      "epoch": 1991.25,
+      "radial_velocity_km_s": [
+        0.0,
+        0.0
+      ],
+      "mean_pole_tilt_arcsec": -5.0,
+      "quarter_year_brackets": [
+        {
+          "start": -10250.640625,
+          "end": -10250.6328125,
+          "resolved_numeric": true
+        },
+        {
+          "start": -4634.265625,
+          "end": -4634.2578125,
+          "resolved_numeric": true
+        }
+      ],
+      "annual_brackets": [
+        {
+          "start": -10250.640625,
+          "end": -10250.6328125,
+          "resolved_numeric": true
+        },
+        {
+          "start": -4634.265625,
+          "end": -4634.2578125,
+          "resolved_numeric": true
+        }
+      ],
+      "masked_samples": 0
+    }
+  ],
+  "artifacts": {
+    "input_sha256": "ab84c72dc2cc58710d75f2bce37fec60732d68cb6b6128fc1bc48246e330b6fc",
+    "hip2_sha256": "7bded0db5d7a32442889d0d6cc6a93ebe5ed2c517dbb700ae0f32f5bf8ff9eae",
+    "script_sha256": "c8070d741847bf655d606a0e3612df663042007d6d2bf27382ff16685e5c5ed2",
+    "samples_csv_sha256": "f1e0bca1ccb1c43e73804f7aac31c3d0c8a157c5ba59b316d7f28d0fec8ecc75"
+  }
+}
