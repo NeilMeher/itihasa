@@ -23,6 +23,14 @@ for (const { width, height } of [
     await expect(page.locator('[lang="sa-Deva"]')).toContainText('वसिष्ठः');
     const explore = page.getByRole('link', { name: 'Explore the two stars' });
     await expect(explore).toBeInViewport({ ratio: 1 });
+    await expect(explore.getByText('→', { exact: true })).toBeVisible({ visible: width === 1280 });
+    await expect(explore.getByText('↓', { exact: true })).toBeVisible({ visible: width !== 1280 });
+    const citation = page.getByRole('link', { name: 'BORI Bhīṣmaparvan 6.2.31', exact: true });
+    expect(await citation.evaluate((link) => {
+      const text = document.createRange();
+      text.selectNodeContents(link);
+      return text.getClientRects().length;
+    })).toBe(1);
     const slider = page.getByRole('slider', { name: 'Demo step' });
     await expect(slider).toBeEnabled();
     await page.screenshot({ path: testInfo.outputPath('first-screen.png') });
@@ -58,10 +66,11 @@ for (const { width, height } of [
     await slider.press('ArrowRight');
     await expect(slider).toHaveAttribute('aria-valuetext', 'Step 3 of 6');
     await expect(page.getByText('Alcor reaches the meridian first in this illustration.')).toBeVisible();
-    await page.getByText('All demo positions', { exact: true }).click();
-    await expect(page.getByRole('table')).toBeVisible();
+    const positions = page.getByText('All demo positions', { exact: true });
+    const table = page.getByRole('table');
+    await positions.click();
+    await expect(table).toBeVisible();
     await expect(page.getByRole('row', { name: '3 On the meridian 24 east' })).toBeVisible();
-    await page.getByText('All demo positions', { exact: true }).click();
 
     await page.getByRole('link', { name: 'Sources', exact: true }).click();
     await expect(page).toHaveURL(/#sources$/);
@@ -72,9 +81,15 @@ for (const { width, height } of [
     const oak = page.getByRole('link', { name: /read Oak’s original explanation/i });
     await expect(oak).toBeVisible();
     await expect(oak).toHaveAttribute('href', 'https://nileshoak.wordpress.com/2016/02/08/arundhati-vasistha/');
+    if (width === 360) {
+      await expect(table).toBeVisible();
+      expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(width);
+      await page.screenshot({ path: testInfo.outputPath('both-disclosures-open.png'), fullPage: true, animations: 'disabled' });
+    }
     await interpretation.press('Enter');
     await expect(oak).toBeHidden();
     await expect(interpretation).toBeFocused();
+    await positions.click();
     await expect(page.getByText(/historical dates are unavailable/i)).toBeVisible();
 
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(width);

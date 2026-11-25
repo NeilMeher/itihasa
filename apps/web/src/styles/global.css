@@ -80,6 +80,7 @@ h2 { font: 400 clamp(2rem, 3.4vw, 3rem)/1.12 var(--serif); letter-spacing: -.045
 }
 .start-link:hover { background: #693013; }
 .start-link:focus-visible { outline-color: var(--accent); }
+.start-arrow-down { display: none; }
 .verse {
   padding: 1.15rem 1.25rem;
   margin-block-start: 2.15rem;
@@ -93,7 +94,15 @@ h2 { font: 400 clamp(2rem, 3.4vw, 3rem)/1.12 var(--serif); letter-spacing: -.045
   margin-bottom: .75rem;
 }
 .sanskrit span, .transliteration span { display: block; }
-.verse figcaption { margin-top: .65rem; font-size: .83rem; color: var(--muted); }
+.verse figcaption {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .1rem .6rem;
+  margin-top: .65rem;
+  font-size: .83rem;
+  color: var(--muted);
+}
+.verse figcaption a { white-space: nowrap; }
 
 .sky {
   background: var(--sky);
@@ -189,6 +198,8 @@ h2 { font: 400 clamp(2rem, 3.4vw, 3rem)/1.12 var(--serif); letter-spacing: -.045
   .opening, .evidence { grid-template-columns: minmax(0, 1fr); }
   .intro { max-width: 39rem; }
   .lede { max-width: 48ch; }
+  .start-arrow-right { display: none; }
+  .start-arrow-down { display: inline; }
 }
 
 @media (max-width: 28rem) {

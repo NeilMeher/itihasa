@@ -42,7 +42,10 @@ const verseLines = passage.devanagari.map((line) => line.replace(/ (?=[।॥]$)
           <p class="lede">Before the battle at Kurukṣetra, Vyāsa tells King Dhṛtarāṣṭra that Arundhatī has put Vasiṣṭha behind her. Nilesh Nilkanth Oak reads the omen as a clue about two stars.</p>
 
           <nav class="intro-links" aria-label="Explore the investigation">
-            <a class="start-link" href="#sky">Explore the two stars <span aria-hidden="true">↓</span></a>
+            <a class="start-link" href="#sky">Explore the two stars
+              <span class="start-arrow-right" aria-hidden="true">→</span>
+              <span class="start-arrow-down" aria-hidden="true">↓</span>
+            </a>
             <a class="verse-link" href="#verse">Read the Sanskrit</a>
           </nav>
 
@@ -51,7 +54,10 @@ const verseLines = passage.devanagari.map((line) => line.replace(/ (?=[।॥]$)
               <p class="sanskrit" lang="sa-Deva">{verseLines.map((line) => <span>{line}</span>)}</p>
               <p>{passage.working_translation}</p>
             </blockquote>
-            <figcaption>{passage.translation_credit} · <a href="#passage-source">BORI {passage.locator}</a></figcaption>
+            <figcaption>
+              <span>{passage.translation_credit}</span>
+              <a href="#passage-source">BORI {passage.locator}</a>
+            </figcaption>
           </figure>
         </section>
 
