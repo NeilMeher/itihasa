@@ -174,14 +174,14 @@ export default function Explorer({ start }: { start?: string }) {
     </div>}
     {state.view === 'timeline' && <div className="explorer-stage">
       <section className="explorer-track" aria-label="Timeline">
-        <header className="explorer-track-intro"><p>{lanes[state.lane].time}</p><h2>{lanes[state.lane].name}</h2>
-          <p>{lanes[state.lane].description}</p></header>
         {selected && <button className="explorer-mobile-event" aria-label="Go to selected reading" onClick={(event) => {
           opener.current = event.currentTarget;
           graphOpener.current = false;
           setClosed(false);
           requestAnimationFrame(() => heading.current?.focus());
         }} disabled={!ready}><small>{selected.label}</small>{selected.title} <span aria-hidden="true">↓</span></button>}
+        <header className="explorer-track-intro"><p>{lanes[state.lane].time}</p><h2>{lanes[state.lane].name}</h2>
+          <p>{lanes[state.lane].description}</p></header>
         <div className="explorer-filters">
           <label>Scope<select disabled={!ready} value={state.scope} onChange={(event) => update({ ...state, scope: event.target.value })}>
             <option value="all">Whole lane</option>

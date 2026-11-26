@@ -16,6 +16,14 @@ test('touch from the first-screen map to dice, Draupadī, exile and the same tim
     await page.getByRole('link', { name: 'The dice match', exact: true }).tap();
     const story = page.getByRole('article', { name: reader });
     await expect(story.getByRole('heading', { name: 'The dice match' })).toBeInViewport();
+    const graph = page.getByRole('region', { name: 'Selected node and nearby connections' });
+    await graph.getByRole('button', { name: 'Follow Into the forest' }).tap();
+    await expect(story.getByRole('heading', { name: 'Into the forest' })).toBeFocused();
+    await story.getByRole('button', { name: 'Close reading' }).tap();
+    await expect(graph.locator('.map-hub')).toBeFocused();
+    await expect(story).toBeHidden();
+    await page.goBack();
+    await expect(story.getByRole('heading', { name: 'The dice match' })).toBeVisible();
     await story.getByRole('button', { name: 'Draupadī', exact: true }).tap();
     await expect(story.getByRole('heading', { name: 'Draupadī' })).toBeFocused();
     await story.getByRole('button', { name: 'Into the forest', exact: true }).tap();
@@ -34,6 +42,16 @@ test('touch from the first-screen map to dice, Draupadī, exile and the same tim
     await expect(overview).toBeVisible();
     await expect(page.getByRole('link', { name: /Continue exploring/ })).toHaveAttribute('href', /node=ma-episode-exile-start/);
   } finally { await context.close(); }
+});
+
+test('the default timeline shows its selected event before the first mobile scroll', async ({ page }) => {
+  await page.setViewportSize({ width: 360, height: 640 });
+  await page.goto('/explorer/');
+  const marker = page.getByRole('button', { name: 'Go to selected reading' });
+  await expect(marker).toBeInViewport({ ratio: 1 });
+  await expect(marker).toContainText('Who tells the Mahābhārata?');
+  await marker.press('Enter');
+  await expect(page.getByRole('article', { name: reader }).getByRole('heading', { name: 'Who tells the Mahābhārata?' })).toBeFocused();
 });
 
 test('keyboard search opens a branch, narrows exact references, and recovers from empty results at 390px', async ({ page }, info) => {

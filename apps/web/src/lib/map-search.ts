@@ -43,4 +43,5 @@ export function attachMapSearch(form: HTMLFormElement) {
   form.addEventListener('keydown', (event) => {
     if (event.key === 'Escape' && !box.hidden) { event.preventDefault(); input.focus(); close(); }
   });
+  if (input.value) void update();
 }

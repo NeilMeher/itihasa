@@ -140,10 +140,12 @@ test('calendar, transient birth input, exact chapter search and invalid selectio
   await page.getByText('Try the five calculation rules', { exact: true }).click();
   await page.locator('#limb-exercise').getByRole('combobox', { name: 'Limb' }).selectOption({ label: 'Nakshatra' });
   await expect(page.getByLabel('Practice result')).toContainText('of 27');
+  const publicSelection = await page.evaluate(() => localStorage.getItem('itihasa.public-selection.v1'));
   await page.goto('/birth-sky/');
   await page.getByRole('button', { name: 'Try an example' }).click();
   await expect(page.getByRole('region', { name: 'Birth sky result' })).toContainText('Makara');
   await expect(page).toHaveURL(/\/birth-sky\/$/);
+  expect(await page.evaluate(() => localStorage.getItem('itihasa.public-selection.v1'))).toBe(publicSelection);
   await page.getByLabel('Birth date').fill('2023-01-01');
   await page.getByRole('button', { name: 'Calculate birth sky' }).click();
   await expect(page.getByRole('alert')).toContainText('2024 through 2027');
