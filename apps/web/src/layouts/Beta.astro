@@ -2,6 +2,19 @@
 import '../styles/global.css';
 import '../styles/beta.css';
 const { title, summary = 'Explore Indian epics, astronomy, calendars, and history through their sources.' } = Astro.props;
+const navigation = [
+  { href: '/explorer/', label: 'Explorer' },
+  { href: '/library/', label: 'Library' },
+  { href: '/sky-calendar/', label: 'Sky & Calendar' },
+  { href: '/research/', label: 'Research' },
+  { href: '/search/', label: 'Search' },
+];
+const path = Astro.url.pathname;
+const family = path.startsWith('/mahabharata/parva/') ? { name: 'Mahābhārata', href: '/library/#mahabharata' } :
+  /^\/ramayana\/0[1-7]\//.test(path) ? { name: 'Rāmāyaṇa', href: '/library/#ramayana' } :
+  path.startsWith('/stories/') || path.startsWith('/epics/') ? { name: 'Library', href: '/library/' } :
+  ['/panchang/', '/birth-sky/', '/workshop/'].includes(path) || path.startsWith('/festivals/') ? { name: 'Sky & Calendar', href: '/sky-calendar/' } :
+  path === '/ramayana/research/' ? { name: 'Research', href: '/research/' } : undefined;
 ---
 <!doctype html>
 <html lang="en">
@@ -17,15 +30,16 @@ const { title, summary = 'Explore Indian epics, astronomy, calendars, and histor
       <div class="wrap masthead-inner beta-nav">
         <a class="wordmark" href="/" aria-label="Itihāsa home">Itihāsa<span aria-hidden="true">✦</span></a>
         <nav aria-label="Main navigation">
-          <a href="/epics/">Epics</a>
-          <a href="/panchang/">Calendar</a>
-          <a href="/search/">Search</a>
+          {navigation.map(({ href, label }) => <a href={href} aria-current={path === href || family?.href === href ? 'page' : undefined}>{label}</a>)}
         </nav>
       </div>
     </header>
-    <main id="main" class="wrap" tabindex="-1"><slot /></main>
+    <main id="main" class="wrap" tabindex="-1">
+      {family && <nav class="beta-crumbs" aria-label="Breadcrumb"><a href={family.href}>{family.name}</a><span aria-hidden="true">/</span><span aria-current="page">{title}</span></nav>}
+      <slot />
+    </main>
     <footer class="wrap beta-footer">
-      <a href="/mind-map/">Mind map</a>
+      <a href="/explorer/?view=map">Mind Map in Explorer</a>
       <a href="/coverage/">Coverage &amp; evidence status</a>
       <a href="/research/">Research notebook</a>
       <a href="/">Home</a>

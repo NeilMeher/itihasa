@@ -3,6 +3,7 @@ import Beta from '../../layouts/Beta.astro';
 import ChapterReading from '../../components/ChapterReading.astro';
 import { kandaUrl, ramaPassageUrl, ramayana, ramayanaIndex, ramayanaReadings, ramayanaSceneUrl } from '../../lib/ramayana';
 import registry from '../../../../../content/coverage-registry.json';
+import { explorerHref } from '../../lib/explorer';
 import '../../styles/epic-route.css';
 export function getStaticPaths() {
   return ramayana.books.map((book) => ({ params: { kanda: String(book.number).padStart(2, '0') }, props: { book } }));
@@ -11,6 +12,7 @@ const { book } = Astro.props;
 const index = ramayanaIndex.books[book.number - 1];
 const coverage = registry.works.ramayana.books[book.number - 1];
 const entries = new Map(ramayana.episodes.filter((scene) => scene.book === book.number).map((scene) => [scene.chapter, scene]));
+const annotated = [...entries.keys()];
 ---
 <Beta title={`${book.name} Kāṇḍa`} summary={book.summary}>
   <header class="beta-intro route-opening">
@@ -18,6 +20,7 @@ const entries = new Map(ramayana.episodes.filter((scene) => scene.book === book.
     <h1>{book.name} Kāṇḍa</h1>
     <p lang="sa-Deva">{book.devanagari}</p>
     <p class="lede">{book.summary}</p>
+    <a href={explorerHref({ lane: 'ramayana', scope: 'kanda-' + book.number })}>This kāṇḍa in the Explorer →</a>
   </header>
   <section class="beta-band" aria-labelledby="sarga-index">
     <nav class="route-links" aria-label="Neighbouring books">
@@ -30,13 +33,14 @@ const entries = new Map(ramayana.episodes.filter((scene) => scene.book === book.
       const sarga = offset + 1;
       const scene = entries.get(sarga);
       const annotation = scene && ramayanaReadings.get(scene.id);
+      const nearest = annotated.reduce((best, next) => Math.abs(next - sarga) < Math.abs(best - sarga) ? next : best, annotated[0]);
       return <li id={`sarga-${sarga}`}>
         <div class="route-links"><h3>{book.number}.{sarga}</h3><a href={ramaPassageUrl(book.number, line)}>Sanskrit chapter start ↗</a></div>
         {scene && annotation ? <>
           <p>Chapter annotation</p>
-          <ChapterReading annotation={annotation} edition="Baroda Critical Edition" textUrl={index.url} graphUrl={`/mind-map/?node=ra-chapter-${book.number}-${sarga}`} />
+          <ChapterReading annotation={annotation} edition="Baroda Critical Edition" textUrl={index.url} graphUrl={explorerHref({ node: `ra-chapter-${book.number}-${sarga}`, view: 'map' })} />
           <a href={ramayanaSceneUrl(scene.id)}>Open the scene and route →</a>
-        </> : <p>Index and primary source only</p>}
+        </> : <p>Index and primary source only{nearest && <> · <a href={`#sarga-${nearest}`}>Closest annotated sarga in this kāṇḍa</a></>}</p>}
         <nav class="route-links" aria-label={`Sargas around ${book.number}.${sarga}`}>
           {sarga > 1 && <a href={`#sarga-${sarga - 1}`}>← {book.number}.{sarga - 1}</a>}
           {sarga < index.chapterStarts.length && <a href={`#sarga-${sarga + 1}`}>{book.number}.{sarga + 1} →</a>}

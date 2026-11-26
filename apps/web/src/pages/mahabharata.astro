@@ -1,4 +1,46 @@
 ---
-import MahabharataPage from './index.astro';
+import Beta from '../layouts/Beta.astro';
+import MahabharataAtlas from '../components/MahabharataAtlas';
+import atlas from '../../../../content/mahabharata-atlas.json';
+import graph from '../../../../content/project-graph.json';
+import coverage from '../../../../content/coverage-registry.json';
+import { parvaUrl, scenes } from '../lib/mahabharata';
+import '../styles/mahabharata.css';
+const totals = coverage.works.mahabharata;
+const nodeTitles = new Map(graph.nodes.map((node) => [node.id, node.title]));
+const branches = Object.fromEntries(scenes.map(({ id }) => {
+  const node = `ma-episode-${id}`;
+  return [id, graph.edges.filter((edge) => (edge.from === node || edge.to === node) && edge.to !== 'work-mahabharata')
+    .slice(0, 3).map((edge) => {
+      const other = edge.from === node ? edge.to : edge.from;
+      return { id: other, title: nodeTitles.get(other)!, relation: edge.relation };
+    })];
+}));
 ---
-<MahabharataPage />
+<Beta title="Explore the Mahābhārata" summary="Follow the epic across 18 parvas, explore its geography and sky, and inspect how the dating arguments work.">
+  <header class="ma-opening">
+    <p class="ma-kicker"><span lang="sa-Deva">महाभारतम्</span> <span aria-hidden="true">/</span> THE SANSKRIT EPIC</p>
+    <h1>Mahābhārata</h1>
+    <p class="ma-deck">Follow the Kuru family from the dice hall to Kurukṣetra and beyond. Read the passages, explore the sky, and test the proposed dating constraints.</p>
+    <a href="/explorer/?lane=mahabharata">Open the connected Timeline and Mind Map →</a>
+  </header>
+  <MahabharataAtlas client:load graphBranches={branches} />
+  <noscript>
+    <section class="ma-noscript">
+      <h2>The 18 parvas</h2>
+      <ol>{atlas.books.map((book) => <li><a href={parvaUrl(book.number)}>{book.name} · {book.title}</a><p>{book.summary}</p></li>)}</ol>
+    </section>
+  </noscript>
+  <aside class="ma-coverage">
+    <div><h2>Reading coverage</h2><p>{totals.indexed.toLocaleString('en')} BORI chapters indexed, {totals.annotated} with chapter annotations, and {totals.sceneLinkedOnly} more with selected scene readings.</p></div>
+    <a href="/coverage/">See coverage</a>
+  </aside>
+  <nav class="link-grid" aria-label="Other areas of Itihāsa">
+    <a href="/mind-map/">Mind map</a>
+    <a href="/ramayana/">Rāmāyaṇa atlas</a>
+    <a href="/krishna/">Kṛṣṇa across three texts</a>
+    <a href="/epics/">Epics &amp; Purāṇas</a><a href="/panchang/">Today’s Pañchāṅga</a>
+    <a href="/birth-sky/">My Birth Sky</a><a href="/workshop/">Sūrya Siddhānta</a>
+    <a href="/research/">Research notebook</a><a href="/swarajya/">Maratha Swarajya</a>
+  </nav>
+</Beta>

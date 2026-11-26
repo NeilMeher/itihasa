@@ -15,7 +15,7 @@ export default function RamayanaRoute() {
   const [playing, setPlaying] = useState(false);
   const person = people.find((item) => item.id === selection.person);
   const arc = person ? episodes.filter((item) => item.people.includes(person.id)) : episodes;
-  const scene = arc.find((item) => item.id === selection.scene) ?? arc[0];
+  const scene = episodes.find((item) => item.id === selection.scene) ?? arc[0];
   const at = arc.indexOf(scene);
   const place = places.find((item) => item.id === (selection.place || scene.place));
   const note = ramayanaReadings.get(scene.id)!;
@@ -76,7 +76,7 @@ export default function RamayanaRoute() {
         {books.map((book) => <option key={book.number} value={book.number}>{book.name} · {book.title}</option>)}
       </select></label>
       <div className="route-step">
-        <button disabled={!ready || !at} aria-label="Previous Rāmāyaṇa scene" onClick={() => choose(arc[at - 1].id)}>←</button>
+        <button disabled={!ready || at < 1} aria-label="Previous Rāmāyaṇa scene" onClick={() => choose(arc[at - 1].id)}>←</button>
         <button disabled={!ready} onClick={() => {
           if (playing) { setPlaying(false); return; }
           if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) choose(arc[(at + 1) % arc.length].id);
@@ -85,8 +85,9 @@ export default function RamayanaRoute() {
         <button disabled={!ready || at === arc.length - 1} aria-label="Next Rāmāyaṇa scene" onClick={() => choose(arc[at + 1].id)}>→</button>
       </div>
     </div>
-    <label className="route-scrub">Scene {at + 1} of {arc.length}
-      <input disabled={!ready} type="range" min="0" max={arc.length - 1} value={at} aria-valuetext={scene.title}
+    {at < 0 && <p className="small-note">The selected scene is outside {person?.name}’s trail. <button onClick={() => choose(scene.id, '')}>Show all scenes</button></p>}
+    <label className="route-scrub">{at < 0 ? 'Scene outside this trail' : 'Scene ' + (at + 1) + ' of ' + arc.length}
+      <input disabled={!ready} type="range" min="0" max={arc.length - 1} value={Math.max(0, at)} aria-valuetext={scene.title}
         onChange={(event) => choose(arc[Number(event.target.value)].id)} />
     </label>
     <div className="route-stage">

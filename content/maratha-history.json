@@ -181,6 +181,15 @@
       "precision": "Approximate modern locality",
       "summary": "The district gazetteer names the locality in the October 1760 campaign. No battle footprint is drawn.",
       "source": "maratha-panipat-letters"
+    },
+    {
+      "id": "khed",
+      "name": "Khed in the succession account",
+      "lon": null,
+      "lat": null,
+      "precision": "Named historical locality",
+      "summary": "The gazetteer names Khed. No exact battlefield position is assigned here.",
+      "source": "maratha-satara"
     }
   ],
   "events": [
@@ -277,6 +286,19 @@
     },
     {
       "period": "satara",
+      "id": "khed-allegiance",
+      "year": 1707,
+      "date": "12 October 1707",
+      "precision": "Day in the gazetteer",
+      "title": "Allegiance changes at Khed",
+      "place": "khed",
+      "authority": "Rival claims of Shahu and Tarabai",
+      "summary": "As Shahu advanced, Dhanaji Jadhav did not engage his force, according to the district gazetteer. Parashurampant Pratinidhi withdrew toward Satara.",
+      "consequence": "The change in allegiance advanced Shahu’s claim and connects the campaign to his later installation at Satara.",
+      "source": "maratha-satara"
+    },
+    {
+      "period": "satara",
       "id": "shahu",
       "year": 1707,
       "date": "1707–1708",
@@ -313,6 +335,19 @@
       "summary": "After a siege led by Chimaji Appa, the Portuguese lost Vasai. The change concerned a fort and a port with commercial and administrative needs.",
       "consequence": "A surviving port account from the same year opens a different question from who won the siege.",
       "source": "maratha-vasai"
+    },
+    {
+      "period": "satara",
+      "id": "vasai-port-account",
+      "year": 1739,
+      "date": "1739",
+      "precision": "Year of the account",
+      "title": "A port ledger records trade and diplomacy",
+      "place": "vasai",
+      "authority": "Shankaraji Keshav, port administration under the Peshwas",
+      "summary": "The account records money and goods credited after the seizure of English ships in the previous year. It then records an instruction to return the goods because relations were friendly.",
+      "consequence": "The ledger shows how an order about diplomatic relations affected what the port could keep. It dates a fiscal record after the change of control.",
+      "source": "maratha-port-ledger"
     },
     {
       "period": "administration",

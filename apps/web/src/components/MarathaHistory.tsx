@@ -25,10 +25,11 @@ export default function MarathaHistory() {
     function restore() {
       const query = new URLSearchParams(window.location.search);
       const site = places.find((item) => item.id === query.get('place'))?.id ?? '';
+      const requestedEvent = events.find((item) => item.id === query.get('event'));
       setSelection({
-        event: events.find((item) => item.id === query.get('event'))?.id ?? events.find((item) => item.place === site)?.id ?? events[0].id,
+        event: requestedEvent?.id ?? events.find((item) => item.place === site)?.id ?? events[0].id,
         place: site,
-        focus: query.get('focus') === 'place' || (site && !query.get('event')) ? 'place' : 'event',
+        focus: query.get('focus') === 'place' || (site && requestedEvent?.place !== site) ? 'place' : 'event',
       });
     }
     restore();

@@ -21,8 +21,8 @@
           "book": 3,
           "indexed": 299,
           "sceneLinkedOnly": 3,
-          "annotated": 7,
-          "indexOnly": 289
+          "annotated": 8,
+          "indexOnly": 288
         },
         {
           "book": 4,
@@ -35,8 +35,8 @@
           "book": 5,
           "indexed": 197,
           "sceneLinkedOnly": 1,
-          "annotated": 5,
-          "indexOnly": 191
+          "annotated": 6,
+          "indexOnly": 190
         },
         {
           "book": 6,
@@ -49,8 +49,8 @@
           "book": 7,
           "indexed": 173,
           "sceneLinkedOnly": 7,
-          "annotated": 2,
-          "indexOnly": 164
+          "annotated": 3,
+          "indexOnly": 163
         },
         {
           "book": 8,
@@ -77,15 +77,15 @@
           "book": 11,
           "indexed": 27,
           "sceneLinkedOnly": 1,
-          "annotated": 1,
-          "indexOnly": 25
+          "annotated": 2,
+          "indexOnly": 24
         },
         {
           "book": 12,
           "indexed": 353,
           "sceneLinkedOnly": 2,
-          "annotated": 5,
-          "indexOnly": 346
+          "annotated": 6,
+          "indexOnly": 345
         },
         {
           "book": 13,
@@ -131,9 +131,9 @@
         }
       ],
       "indexed": 1995,
-      "indexOnly": 1913,
+      "indexOnly": 1908,
       "sceneLinkedOnly": 40,
-      "annotated": 42,
+      "annotated": 47,
       "scenes": 34,
       "battleDays": 18,
       "evidence": {
@@ -151,57 +151,57 @@
           "book": 1,
           "indexed": 76,
           "sceneLinkedOnly": 0,
-          "annotated": 4,
-          "indexOnly": 72
+          "annotated": 5,
+          "indexOnly": 71
         },
         {
           "book": 2,
           "indexed": 111,
           "sceneLinkedOnly": 0,
-          "annotated": 5,
-          "indexOnly": 106
+          "annotated": 6,
+          "indexOnly": 105
         },
         {
           "book": 3,
           "indexed": 71,
           "sceneLinkedOnly": 0,
-          "annotated": 3,
-          "indexOnly": 68
+          "annotated": 4,
+          "indexOnly": 67
         },
         {
           "book": 4,
+          "indexed": 66,
+          "sceneLinkedOnly": 0,
+          "annotated": 5,
+          "indexOnly": 61
+        },
+        {
+          "book": 5,
           "indexed": 66,
           "sceneLinkedOnly": 0,
           "annotated": 4,
           "indexOnly": 62
         },
         {
-          "book": 5,
-          "indexed": 66,
-          "sceneLinkedOnly": 0,
-          "annotated": 3,
-          "indexOnly": 63
-        },
-        {
           "book": 6,
           "indexed": 116,
           "sceneLinkedOnly": 0,
-          "annotated": 7,
-          "indexOnly": 109
+          "annotated": 8,
+          "indexOnly": 108
         },
         {
           "book": 7,
           "indexed": 100,
           "sceneLinkedOnly": 0,
-          "annotated": 3,
-          "indexOnly": 97
+          "annotated": 4,
+          "indexOnly": 96
         }
       ],
       "indexed": 606,
-      "indexOnly": 577,
+      "indexOnly": 570,
       "sceneLinkedOnly": 0,
-      "annotated": 29,
-      "scenes": 29
+      "annotated": 36,
+      "scenes": 36
     }
   },
   "legacy": {
@@ -215,8 +215,8 @@
     "places": 4,
     "terrainSamples": 7,
     "periods": 9,
-    "datedRecords": 20,
-    "historyPlaces": 13,
+    "datedRecords": 22,
+    "historyPlaces": 14,
     "logisticsDossiers": 4
   }
 }

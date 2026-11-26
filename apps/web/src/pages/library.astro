@@ -1,0 +1,38 @@
+---
+import Beta from '../layouts/Beta.astro';
+import mahabharata from '../../../../content/mahabharata-atlas.json';
+import coverage from '../../../../content/coverage-registry.json';
+import { parvaUrl } from '../lib/mahabharata';
+import { kandaUrl, ramayana } from '../lib/ramayana';
+import { journey } from '../lib/library';
+const { works } = coverage;
+---
+<Beta title="Library">
+  <header class="beta-intro"><h1>Library</h1><p class="lede">Open a book, a reading, or the exact passage. Each contents list shows where editorial coverage has reached.</p></header>
+  <nav class="route-links" aria-label="Library contents"><a href="#mahabharata">Mahābhārata</a> · <a href="#ramayana">Rāmāyaṇa</a> · <a href="#companion">Kṛṣṇa and related texts</a> · <a href="#maratha">Maratha history</a></nav>
+  <article class="reading-width">
+    <section class="beta-band" id="mahabharata">
+      <h2>Mahābhārata</h2>
+      <p>{works.mahabharata.indexed.toLocaleString('en')} indexed · {works.mahabharata.annotated} annotated · {works.mahabharata.sceneLinkedOnly} scene-linked only. <a href="/explorer/?lane=mahabharata">Open the timeline</a></p>
+      <ol class="reading-list">{mahabharata.books.map((book, index) => <li>
+        <a href={parvaUrl(book.number)}>{book.name} · {book.title}</a><p>{works.mahabharata.books[index].indexed} indexed, {works.mahabharata.books[index].annotated} annotated</p>
+      </li>)}</ol>
+    </section>
+    <section class="beta-band" id="ramayana">
+      <h2>Rāmāyaṇa</h2><p>{works.ramayana.indexed} indexed · {works.ramayana.annotated} annotated. <a href="/explorer/?lane=ramayana">Open the timeline</a></p>
+      <ol class="reading-list">{ramayana.books.map((book, index) => <li><a href={kandaUrl(book.number)}>{book.name} · {book.title}</a>
+        <p>{works.ramayana.books[index].indexed} indexed, {works.ramayana.books[index].annotated} annotated</p></li>)}</ol>
+    </section>
+    <section class="beta-band" id="companion">
+      <h2>Kṛṣṇa and related texts</h2>
+      <p><a href="/krishna/">Compare the three texts</a> · <a href="/explorer/?lane=purana">Follow the readings</a></p>
+      <ul class="reading-list">{journey.map((item) => <li><a href={item.path}>{item.title}</a></li>)}
+        <li><a href="/stories/harivamsa-kamsa/">Kaṃsa’s death in the Harivaṃśa</a></li></ul>
+      <p><a href="/epics/">Browse all collected epic and Purāṇic readings</a></p>
+    </section>
+    <section class="beta-band" id="maratha">
+      <h2>Maratha documents and sites</h2>
+      <p><a href="/swarajya/history/">Documented chronology and sources</a> · <a href="/swarajya/#terrain">Raigad terrain</a> · <a href="/swarajya/#escape">Agra account comparison</a></p>
+    </section>
+  </article>
+</Beta>

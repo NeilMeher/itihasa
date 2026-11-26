@@ -1,4 +1,11 @@
 .beta-nav nav { flex-wrap: wrap; justify-content: end; }
+.beta-nav nav a[aria-current] { text-decoration: underline; text-underline-offset: .3em; }
+.beta-crumbs { display: flex; flex-wrap: wrap; gap: .4rem; padding-top: .8rem; color: var(--muted); font-size: .85rem; }
+@media (max-width: 600px) {
+  .beta-nav.masthead-inner { flex-wrap: wrap; gap: .15rem .6rem; padding-block: .6rem .42rem; }
+  .beta-nav nav { justify-content: start; gap: .15rem .72rem; flex: 1 1 100%; }
+  .beta-nav nav a { min-height: 2.15rem; display: inline-flex; align-items: center; font-size: .77rem; }
+}
 .beta-footer { border-top: 1px solid var(--rule); display: flex; flex-wrap: wrap; gap: .8rem 1.4rem; margin-top: 3rem; padding-block: 1.25rem 2rem; font-size: .88rem; }
 .beta-intro { padding-block: clamp(1.85rem, 5vw, 4rem) 1.5rem; }
 .beta-intro h1 { font-size: clamp(2.5rem, 6vw, 5rem); max-width: 20ch; }
@@ -36,6 +43,7 @@
 .search-list li { padding-block: .6rem; border-bottom: 1px solid var(--rule); }
 .search-list li > a { font-weight: 650; }
 .search-list p { color: var(--muted); }
+.search-context { display: block; color: var(--muted); }
 input[type="search"], .beta-form select, .beta-form input { display: block; width: 100%; min-height: 2.75rem; padding: .45rem .7rem; border: 1px solid #837563; border-radius: .3rem; background: var(--paper-light); color: inherit; font: inherit; }
 input[type="search"] { margin: .3rem 0 .6rem; }
 .beta-form { display: flex; flex-wrap: wrap; align-items: end; gap: .7rem; margin-bottom: 1rem; }

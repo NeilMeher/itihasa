@@ -2,23 +2,24 @@ import { expect, test } from '@playwright/test';
 
 test('home opens each major product area', async ({ page }, testInfo) => {
   const routes = [
-    ['Epics & Purāṇas', '/epics/'], ['Today’s Pañchāṅga', '/panchang/'], ['My Birth Sky', '/birth-sky/'],
-    ['Sūrya Siddhānta', '/workshop/'], ['Research notebook', '/research/'], ['Maratha Swarajya', '/swarajya/'],
+    ['Mahābhārata', '/explorer/?lane=mahabharata&node=ma-episode-dice'],
+    ['Rāmāyaṇa', '/explorer/?lane=ramayana&node=ra-episode-sita-exile'],
+    ['Swarajya and Maratha history', '/explorer/?lane=maratha&node=maratha-event-capital'],
+    ['Sky and Calendar', '/sky-calendar/'], ['Research notebook', '/research/'], ['Library', '/library/'],
   ];
   await page.setViewportSize({ width: 360, height: 640 });
   await page.goto('/');
-  const hero = page.getByRole('button', { name: 'Next scene', exact: true });
+  const hero = page.getByRole('link', { name: /Open the Explorer/ });
   await expect(hero).toBeInViewport({ ratio: 1 });
-  await expect(hero).toBeEnabled();
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(360);
   await page.screenshot({ path: testInfo.outputPath('home-360.png'), fullPage: true });
   await hero.press('Enter');
-  await expect(page).toHaveURL(/scene=vow/);
-  await expect(page.getByRole('heading', { name: 'The vow that changes the throne' })).toBeVisible();
+  await expect(page).toHaveURL(/\/explorer\/$/);
+  await expect(page.getByRole('heading', { name: 'Who tells the Mahābhārata?' })).toBeVisible();
   for (const [name, path] of routes) {
     await page.goto('/');
     await page.locator('.link-grid').getByRole('link', { name, exact: true }).click();
-    await expect(page).toHaveURL(new RegExp(`${path}$`));
+    expect(new URL(page.url()).pathname + new URL(page.url()).search).toBe(path);
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(360);
   }

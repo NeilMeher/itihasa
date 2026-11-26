@@ -5,7 +5,7 @@ import marathaHistory from '../../../../content/maratha-history.json';
 
 type Source = { title: string; edition: string; attribution: string; url: string };
 type Passage = { id: string; source: string; chapter: string; locator: string; reading: string; url?: string; excerpt?: string };
-type Episode = {
+export type Episode = {
   id: string; collection: string; path: string; title: string; question: string; summary: string;
   people: string[]; places: string[]; aliases: string[]; passages: Passage[]; related: string[];
 };

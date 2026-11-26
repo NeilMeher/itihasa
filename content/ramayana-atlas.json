@@ -63,6 +63,15 @@
       "related": ""
     },
     {
+      "id": "allies-created",
+      "book": 1,
+      "chapter": 16,
+      "title": "The gods prepare allies for Rāma",
+      "people": [],
+      "place": "",
+      "related": ""
+    },
+    {
       "id": "rama-birth",
       "book": 1,
       "chapter": 17,
@@ -162,6 +171,18 @@
       "related": ""
     },
     {
+      "id": "bharata-return-road",
+      "book": 2,
+      "chapter": 105,
+      "title": "Bharata leaves with the sandals",
+      "people": [
+        "bharata",
+        "shatrughna"
+      ],
+      "place": "chitrakuta",
+      "related": ""
+    },
+    {
       "id": "panchavati",
       "book": 3,
       "chapter": 14,
@@ -170,6 +191,19 @@
         "sita",
         "rama",
         "lakshmana"
+      ],
+      "place": "panchavati",
+      "related": ""
+    },
+    {
+      "id": "godavari-season",
+      "book": 3,
+      "chapter": 15,
+      "title": "Lakṣmaṇa describes the cold season",
+      "people": [
+        "lakshmana",
+        "rama",
+        "sita"
       ],
       "place": "panchavati",
       "related": ""
@@ -253,6 +287,19 @@
       "related": ""
     },
     {
+      "id": "sugriva-obligation",
+      "book": 4,
+      "chapter": 31,
+      "title": "Hanumān reminds Sugrīva of the agreement",
+      "people": [
+        "sugriva",
+        "hanuman",
+        "lakshmana"
+      ],
+      "place": "kishkindha",
+      "related": ""
+    },
+    {
       "id": "leap",
       "book": 5,
       "chapter": 1,
@@ -284,6 +331,18 @@
         "sita",
         "hanuman",
         "rama"
+      ],
+      "place": "lanka",
+      "related": ""
+    },
+    {
+      "id": "sita-deadline",
+      "book": 5,
+      "chapter": 35,
+      "title": "Sītā tells Hanumān how much time is left",
+      "people": [
+        "sita",
+        "hanuman"
       ],
       "place": "lanka",
       "related": ""
@@ -326,7 +385,32 @@
       "place": "setu",
       "related": "/ramayana/research/#setu"
     },
-    {"id":"mandodari","book":6,"chapter":99,"title":"Mandodarī mourns Rāvaṇa","people":["mandodari","ravana","rama","vibhishana"],"place":"lanka","related":""},
+    {
+      "id": "ravana-duel",
+      "book": 6,
+      "chapter": 88,
+      "title": "Rāma and Rāvaṇa remain in the field",
+      "people": [
+        "rama",
+        "ravana"
+      ],
+      "place": "lanka",
+      "related": ""
+    },
+    {
+      "id": "mandodari",
+      "book": 6,
+      "chapter": 99,
+      "title": "Mandodarī mourns Rāvaṇa",
+      "people": [
+        "mandodari",
+        "ravana",
+        "rama",
+        "vibhishana"
+      ],
+      "place": "lanka",
+      "related": ""
+    },
     {
       "id": "fire",
       "book": 6,
@@ -353,7 +437,18 @@
       "place": "setu",
       "related": ""
     },
-    {"id":"restoration","book":6,"chapter":116,"title":"Bharata returns authority","people":["bharata","rama"],"place":"ayodhya","related":""},
+    {
+      "id": "restoration",
+      "book": 6,
+      "chapter": 116,
+      "title": "Bharata returns authority",
+      "people": [
+        "bharata",
+        "rama"
+      ],
+      "place": "ayodhya",
+      "related": ""
+    },
     {
       "id": "second-exile",
       "book": 7,
@@ -368,7 +463,31 @@
       "place": "ganga",
       "related": ""
     },
-    {"id":"twins","book":7,"chapter":58,"title":"Vālmīki names Sītā’s twins","people":["sita","valmiki","kusha","lava"],"place":"","related":""},
+    {
+      "id": "twins",
+      "book": 7,
+      "chapter": 58,
+      "title": "Vālmīki names Sītā’s twins",
+      "people": [
+        "sita",
+        "valmiki",
+        "kusha",
+        "lava"
+      ],
+      "place": "",
+      "related": ""
+    },
+    {
+      "id": "cyavana-account",
+      "book": 7,
+      "chapter": 59,
+      "title": "Cyavana tells Śatrughna about Lavaṇa",
+      "people": [
+        "shatrughna"
+      ],
+      "place": "",
+      "related": ""
+    },
     {
       "id": "earth",
       "book": 7,
@@ -384,9 +503,24 @@
     }
   ],
   "people": [
-    {"id":"mandodari","name":"Mandodarī","devanagari":"मन्दोदरी","summary":"Rāvaṇa’s wife. Her lament shows the war’s effect on the defeated household."},
-    {"id":"kusha","name":"Kuśa","devanagari":"कुश","summary":"One of Sītā’s twin sons. Vālmīki names him in the forest."},
-    {"id":"lava","name":"Lava","devanagari":"लव","summary":"One of Sītā’s twin sons. He is raised with Kuśa at the hermitage."},
+    {
+      "id": "mandodari",
+      "name": "Mandodarī",
+      "devanagari": "मन्दोदरी",
+      "summary": "Rāvaṇa’s wife. Her lament shows the war’s effect on the defeated household."
+    },
+    {
+      "id": "kusha",
+      "name": "Kuśa",
+      "devanagari": "कुश",
+      "summary": "One of Sītā’s twin sons. Vālmīki names him in the forest."
+    },
+    {
+      "id": "lava",
+      "name": "Lava",
+      "devanagari": "लव",
+      "summary": "One of Sītā’s twin sons. He is raised with Kuśa at the hermitage."
+    },
     {
       "id": "sita",
       "name": "Sītā",
@@ -470,6 +604,12 @@
       "name": "Nala the builder",
       "devanagari": "नल",
       "summary": "The figure commissioned to build the sea crossing in Yuddhakāṇḍa."
+    },
+    {
+      "id": "shatrughna",
+      "name": "Śatrughna",
+      "devanagari": "शत्रुघ्न",
+      "summary": "Daśaratha’s son accompanies Bharata and later asks Cyavana about Lavaṇa’s power."
     }
   ],
   "places": [

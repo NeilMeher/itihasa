@@ -4,7 +4,7 @@ test('read a chapter and follow its shareable Sanskrit citations', async ({ page
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/search/');
   await page.getByRole('searchbox').fill('द्रौपदी');
-  await page.getByRole('link', { name: 'Who had authority to stake Draupadī?' }).click();
+  await page.getByRole('link', { name: 'Who had authority to stake Draupadī?', exact: true }).click();
   await expect(page).toHaveURL(/parva\/02\/#chapter-60$/);
   await page.locator('#chapter-60').getByText('Who had authority to stake Draupadī?', { exact: true }).click();
   const source = page.locator('#passage-02060007c');
@@ -177,7 +177,7 @@ test('birth sky compares frames and the workshop carries the longitude past 360 
 test('Kṛṣṇa companion traces the arena comparison and the festival calculation', async ({ page }, info) => {
   await page.goto('/search/');
   await page.getByRole('searchbox').fill('कृष्ण');
-  await page.getByRole('link', { name: 'Kṛṣṇa across three texts', exact: true }).click();
+  await page.locator('.search-list a[href="/krishna/"]').click();
   await page.getByRole('link', { name: 'Mathurā arena' }).click();
   await expect(page.getByRole('link', { name: /Vaidya Critical Edition/ })).toHaveAttribute('href', /HV_76.40$/);
   await expect(page.locator('#city')).toContainText('BORI Critical Edition');

@@ -1,0 +1,33 @@
+---
+import Beta from '../layouts/Beta.astro';
+import Explorer from '../components/Explorer';
+import { timeline, validateExplorerContent } from '../lib/explorer-content';
+import '../styles/mind-map.css';
+import '../styles/mahabharata.css';
+import '../styles/explorer.css';
+validateExplorerContent();
+---
+<Beta title="Explorer">
+  <header class="explorer-intro">
+    <h1>Itihāsa Explorer</h1>
+    <p class="lede">Choose an event to read what happened. Switch to the Mind Map to follow its people, places, and sources.</p>
+  </header>
+  <Explorer client:load />
+  <noscript>
+    <section class="beta-band" aria-label="Browse readings without JavaScript">
+      <h2>Continue with the readings</h2>
+      <p>The interactive views need JavaScript. The readings and source links remain available.</p>
+      <ul class="reading-list">
+        <li><a href="/library/">Library and primary texts</a></li>
+        <li><a href="/ramayana/">Rāmāyaṇa guide</a></li>
+        <li><a href="/swarajya/history/">Maratha history guide</a></li>
+        <li><a href="/research/">Research methods</a></li>
+      </ul>
+      <details><summary>War day passages</summary>
+        <ol class="reading-list">
+          {timeline.mahabharata.filter((item) => item.day).map((item) => <li>{item.title} · <a href={item.sources[0].href}>{item.sources[0].label}</a></li>)}
+        </ol>
+      </details>
+    </section>
+  </noscript>
+</Beta>

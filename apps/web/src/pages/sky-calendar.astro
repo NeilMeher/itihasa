@@ -1,0 +1,15 @@
+---
+import Beta from '../layouts/Beta.astro';
+import { timeline } from '../lib/explorer-content';
+import { explorerHref } from '../lib/explorer';
+---
+<Beta title="Sky and Calendar">
+  <header class="beta-intro"><h1>Sky and Calendar</h1><p class="lede">Find a day’s calendar, compare a rising sign, or work through a sky calculation.</p></header>
+  <section class="link-grid" aria-label="Daily tools and sky lessons">
+    {timeline.sky.map((item) => <article>
+      <h2><a href={item.href}>{item.title}</a></h2><p>{item.summary}</p>
+      <a href={explorerHref({ lane: 'sky', node: item.id })}>See its connections →</a>
+    </article>)}
+    <article><h2><a href="/arundhati/">Explore the two stars</a></h2><p>Six illustrative positions show what “ahead” can mean at a meridian.</p></article>
+  </section>
+</Beta>

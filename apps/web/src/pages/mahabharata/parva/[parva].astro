@@ -5,6 +5,7 @@ import atlas from '../../../../../../content/mahabharata-atlas.json';
 import annotations from '../../../../../../content/mahabharata-annotations.json';
 import registry from '../../../../../../content/coverage-registry.json';
 import { chaptersFor, parvaUrl, readings, sourceUrl } from '../../../lib/mahabharata';
+import { explorerHref } from '../../../lib/explorer';
 import '../../../styles/mahabharata.css';
 
 export function getStaticPaths() {
@@ -15,6 +16,7 @@ const { book } = Astro.props;
 const chapters = chaptersFor(book.number);
 const coverage = registry.works.mahabharata.books[book.number - 1];
 const chapterNotes = new Map(annotations.filter((item) => item.book === book.number).map((item) => [item.chapter, item]));
+const annotated = [...chapterNotes.keys()];
 ---
 <Beta title={`${book.name} Parva · Mahābhārata`} summary={book.summary}>
   <header class="ma-opening ma-guide-opening">
@@ -22,6 +24,7 @@ const chapterNotes = new Map(annotations.filter((item) => item.book === book.num
     <p class="ma-kicker">Parva {book.number} of 18</p>
     <h1>{book.name} Parva</h1>
     <p class="ma-deck">{book.summary}</p>
+    <a href={explorerHref({ lane: 'mahabharata', scope: 'parva-' + book.number })}>This parva in the Explorer →</a>
   </header>
   <section class="ma-story ma-guide" aria-labelledby="chapter-title">
     <nav class="ma-reader-nav" aria-label="Parva sequence">
@@ -36,12 +39,13 @@ const chapterNotes = new Map(annotations.filter((item) => item.book === book.num
     <ol class="ma-chapter-list">
       {chapters.map(({ chapter, line, readings: excerpts }) => {
         const annotation = chapterNotes.get(chapter);
+        const nearest = annotated.reduce((best, next) => Math.abs(next - chapter) < Math.abs(best - chapter) ? next : best, annotated[0]);
         return (
         <li id={`chapter-${chapter}`}>
           <div><h3>{book.number}.{chapter}</h3><a href={sourceUrl(line)}>Sanskrit chapter start ↗</a></div>
           {annotation && <>
             <p>Chapter annotation</p>
-            <ChapterReading annotation={annotation} edition="BORI Critical Edition" textUrl={book.url} graphUrl={`/mind-map/?node=ma-chapter-${book.number}-${chapter}`} />
+            <ChapterReading annotation={annotation} edition="BORI Critical Edition" textUrl={book.url} graphUrl={explorerHref({ node: `ma-chapter-${book.number}-${chapter}`, view: 'map' })} />
           </>}
           {excerpts.length ? <>
             <p>Selected scene reading</p>
@@ -49,7 +53,7 @@ const chapterNotes = new Map(annotations.filter((item) => item.book === book.num
               <a href={`/mahabharata/?scene=${scene.id}`}>{scene.title} →</a>
               {Number(readings[scene.id].line.slice(2, 5)) === chapter && <p>{scene.summary}</p>}
             </div>)}
-          </> : !annotation && <p>Index and primary source only</p>}
+          </> : !annotation && <p>Index and primary source only{nearest && <> · <a href={`#chapter-${nearest}`}>Closest annotated chapter in this parva</a></>}</p>}
           <nav class="ma-reader-nav ma-neighbours" aria-label={`Chapters around ${book.number}.${chapter}`}>
             {chapter > 1 && <a href={`#chapter-${chapter - 1}`}>← {book.number}.{chapter - 1}</a>}
             {chapter < chapters.length && <a href={`#chapter-${chapter + 1}`}>{book.number}.{chapter + 1} →</a>}

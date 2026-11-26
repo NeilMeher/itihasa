@@ -7,6 +7,7 @@ from pathlib import Path
 
 CONTENT = Path(__file__).resolve().parents[1] / "content"
 OUTPUT = CONTENT / "project-graph.json"
+CATALOG = CONTENT / "explorer-catalog.json"
 
 
 def read(name, fallback=None):
@@ -74,6 +75,22 @@ def build():
         for scene, why in person["links"]:
             locator, url = scene_urls[scene]
             edge(f"ma-person-{id_}", f"ma-episode-{scene}", "appears in", f"BORI {locator}", why, locator_url=url)
+    for day in reading["warDays"]:
+        if day.get("scene"):
+            continue
+        id_ = f'ma-day-{day["day"]}'
+        line = day["marker"]
+        book, chapter, verse = (int(part) for part in (line[:2], line[2:5], line[5:8]))
+        url = f'{atlas["books"][book - 1]["url"]}#:~:text={line}'
+        add(id_, "episode", "mahabharata", f'War day {day["day"]}', day["event"], f'/mahabharata/?day={day["day"]}')
+        edge(id_, "ma-place-kurukshetra", "takes place in", f"BORI {book}.{chapter}.{verse}", day["boundary"], locator_url=url)
+    for earlier, later in zip(reading["warDays"], reading["warDays"][1:]):
+        left = f'ma-episode-{earlier["scene"]}' if earlier.get("scene") else f'ma-day-{earlier["day"]}'
+        right = f'ma-episode-{later["scene"]}' if later.get("scene") else f'ma-day-{later["day"]}'
+        line = later["marker"]
+        book, chapter, verse = (int(part) for part in (line[:2], line[2:5], line[5:8]))
+        edge(left, right, "precedes", f"BORI {book}.{chapter}.{verse}", later["boundary"],
+             locator_url=f'{atlas["books"][book - 1]["url"]}#:~:text={line}')
     for note in read("mahabharata-annotations"):
         book, chapter, line = note["book"], note["chapter"], note["anchors"][0]
         id_ = f"ma-chapter-{book}-{chapter}"
@@ -91,6 +108,13 @@ def build():
     edge("ma-episode-exile-start", "ma-episode-hidden-year", "precedes", "BORI 2.66.18–19 and 4.1", "The thirteenth year tests whether the brothers can remain unrecognized.", locator_url="https://indology.info/bombay/mahabharata/text/UR/MBh04.txt#:~:text=04001020c")
     edge("ma-episode-hidden-year", "ma-episode-peace", "precedes", "Narrative sequence, Virāṭa to Udyoga", "The completed term lets the exiles seek a settlement before the battle.", locator_url="https://indology.info/bombay/mahabharata/text/UR/MBh05.txt#:~:text=05070016a")
     edge("ma-episode-peace", "ma-episode-gita", "precedes", "Udyoga to Bhīṣma", "The court’s refusal precedes the armies assembling at Kurukṣetra.", locator_url="https://indology.info/bombay/mahabharata/text/UR/MBh05.txt#:~:text=05125026a")
+    edge("ma-person-draupadi", "ma-episode-exile-start", "appears in", "BORI 3.28.1–5",
+         "From the forest, Draupadī recalls the family’s departure and challenges Yudhiṣṭhira’s restraint.",
+         locator_url="https://indology.info/bombay/mahabharata/text/UR/MBh03.txt#:~:text=03028001a")
+    if any(note["book"] == 7 and note["chapter"] == 17 for note in read("mahabharata-annotations")):
+        edge("ma-day-12", "ma-chapter-7-17", "has an annotated opening", "BORI 7.17.1–7",
+             "The oath-bound force’s deployment opens the separate fight against Arjuna.",
+             locator_url="https://indology.info/bombay/mahabharata/text/UR/MBh07.txt#:~:text=07017001a")
 
     rama = read("ramayana-atlas", {})
     if rama:
@@ -122,6 +146,9 @@ def build():
         edge("ra-place-setu", "source-setu-study", "is measured by", "Modern bathymetry", "ICESat-2 returns give information about modern depth, not an epoch for the construction in the text.", "setu-study")
         edge("ra-episode-rama-birth", "story-rama-birth", "has edition comparison", "Baroda 1.17.6 and Southern 1.18.8–10", "The birth chapter has a separate reading that shows the additional detail in the Southern Recension.", "southern-ramayana")
         edge("ra-person-janaka", "ra-person-sita", "raises", "Baroda 1.65.14", "Janaka recounts finding Sītā while ploughing the ground.", "baroda", f'{ram_index["books"][0]["url"]}#:~:text=1065014a')
+        edge("ra-episode-ring", "ra-episode-sita-deadline", "leads to", "Baroda 5.35.7–8",
+             "Once the token has established trust, Sītā explains the deadline to Hanumān.", "baroda",
+             f'{ram_index["books"][4]["url"]}#:~:text=5035007a')
 
     maratha = read("maratha-history", {})
     if maratha:
@@ -189,6 +216,40 @@ def build():
          "https://vedabase.io/en/library/sb/10/3/7-8/")
     edge("tradition-janmashtami", "tool-panchang", "is explored in", "Delhi, 16 August 2025",
          "Compare the tithi, time of day and both month conventions for the modern example.", "panchang-method")
+    for id_, title, href, why, guide, source in (
+        ("tool-birth-sky", "Compare the birth sky", "/birth-sky/", "The birth tool uses the Moon’s sidereal longitude for its nakshatra.", "concept-nakshatra", "panchang-method"),
+        ("tool-rama-navami", "Rāma Navamī", "/festivals/rama-navami/", "The lesson compares the literary birth and the modern ninth tithi observance.", "story-rama-birth", "southern-ramayana"),
+        ("tool-observer", "Explore the observer sky", "/mahabharata/?scene=omens&view=sky", "The observer view shows the meridian and modern sky positions at selected sites and dates.", "concept-meridian", "usno-sidereal"),
+        ("tool-mean-sun", "Calculate the mean Sun", "/workshop/", "The arithmetic lesson computes a mean longitude from elapsed days in Burgess’s edition.", "tool-panchang", "burgess-mean-sun"),
+    ):
+        add(id_, "concept", "sky", title, why, href)
+        edge(id_, guide, "explains a related calculation", "Modern educational lesson", why, source)
+
+    for clue in read("mahabharata-evidence"):
+        if clue["id"] == "stars":
+            continue
+        id_ = f'research-{clue["id"]}'
+        related = {"eclipse": "jayadratha", "season": "bhishma-dies", "dwarka": "dvaraka"}.get(clue["id"], "omens")
+        href = f'/mahabharata/?scene={related}&view=evidence&clue={clue["id"]}'
+        add(id_, "claim", "sources", clue["title"], clue["claim"], href, [clue["group"]])
+        source_id = f'evidence-{clue["id"]}'
+        creator = "Nilesh Nilkanth Oak"
+        if clue["id"] == "eclipse":
+            creator = "Kisari Mohan Ganguli"
+        elif clue["id"] == "population":
+            creator = "Vagheesh M. Narasimhan and colleagues"
+        elif clue["id"] == "hastinapura":
+            creator = "B. B. Lal"
+        sources[source_id] = {
+            "creator": creator, "work": clue["title"], "edition": "Public reference in the evidence catalogue",
+            "locator": clue["locator"], "url": clue["url"], "basis": clue["status"],
+            "use": "Linked reference and editorial paraphrase", "review": "Editorial evidence record",
+        }
+        add(f"source-{source_id}", "source", "sources", clue["locator"], f"{creator} · {clue['status']}", clue["url"])
+        edge(id_, f"source-{source_id}", "cites", clue["status"], clue["limit"], source_id)
+        if clue["id"] in ("eclipse", "season", "dwarka", "planets"):
+            edge(f"ma-episode-{related}", id_, "opens the investigation", clue["locator"],
+                 "The story opens the evidence record and its assumptions.", source_id)
 
     ids = {node["id"] for node in nodes}
     if len(ids) != len(nodes) or any(not re.fullmatch(r"[a-z\d-]+", id_) for id_ in ids):
@@ -220,14 +281,39 @@ def safe_href(url):
     return url.startswith("https://") or (url.startswith("/") and not url.startswith("//"))
 
 
+def explorer_catalog(graph):
+    """Keep the reading index small. The Mind Map loads full edge evidence on demand."""
+    nodes = graph["nodes"]
+    by_id = {node["id"]: node for node in nodes}
+    neighbors = {id_: set() for id_ in by_id}
+    appearances = {}
+    for edge in graph["edges"]:
+        left, right = edge["from"], edge["to"]
+        neighbors[left].add(right)
+        neighbors[right].add(left)
+        if by_id[left]["kind"] == "person" and by_id[right]["kind"] == "episode":
+            appearances.setdefault(left, set()).add(right)
+    return {
+        "nodes": nodes,
+        "sources": graph["sources"],
+        "neighbors": {id_: sorted(ids) for id_, ids in neighbors.items() if ids},
+        "appearances": {id_: sorted(ids) for id_, ids in appearances.items()},
+        "relations": sorted({edge["relation"] for edge in graph["edges"]}),
+    }
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
     graph = build()
+    catalog = explorer_catalog(graph)
     if args.check:
         if graph != json.loads(OUTPUT.read_bytes()):
             raise SystemExit("Project graph is out of date")
+        if catalog != json.loads(CATALOG.read_bytes()):
+            raise SystemExit("Explorer catalogue is out of date")
     else:
-        OUTPUT.write_text(json.dumps(graph, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8", newline="\n")
+        for path, payload in ((OUTPUT, graph), (CATALOG, catalog)):
+            path.write_text(json.dumps(payload, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8", newline="\n")
     print(f'{len(graph["nodes"])} graph nodes, {len(graph["edges"])} sourced directed edges')
