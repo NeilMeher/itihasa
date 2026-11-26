@@ -6,134 +6,134 @@
         {
           "book": 1,
           "indexed": 225,
-          "sceneLinkedOnly": 9,
-          "annotated": 0,
+          "sceneLinkedOnly": 6,
+          "annotated": 3,
           "indexOnly": 216
         },
         {
           "book": 2,
           "indexed": 72,
-          "sceneLinkedOnly": 9,
-          "annotated": 0,
+          "sceneLinkedOnly": 4,
+          "annotated": 5,
           "indexOnly": 63
         },
         {
           "book": 3,
           "indexed": 299,
-          "sceneLinkedOnly": 4,
-          "annotated": 0,
-          "indexOnly": 295
+          "sceneLinkedOnly": 3,
+          "annotated": 7,
+          "indexOnly": 289
         },
         {
           "book": 4,
           "indexed": 67,
-          "sceneLinkedOnly": 4,
-          "annotated": 0,
+          "sceneLinkedOnly": 3,
+          "annotated": 1,
           "indexOnly": 63
         },
         {
           "book": 5,
           "indexed": 197,
-          "sceneLinkedOnly": 3,
-          "annotated": 0,
-          "indexOnly": 194
+          "sceneLinkedOnly": 1,
+          "annotated": 5,
+          "indexOnly": 191
         },
         {
           "book": 6,
           "indexed": 117,
-          "sceneLinkedOnly": 7,
-          "annotated": 0,
+          "sceneLinkedOnly": 5,
+          "annotated": 2,
           "indexOnly": 110
         },
         {
           "book": 7,
           "indexed": 173,
-          "sceneLinkedOnly": 9,
-          "annotated": 0,
+          "sceneLinkedOnly": 7,
+          "annotated": 2,
           "indexOnly": 164
         },
         {
           "book": 8,
           "indexed": 69,
-          "sceneLinkedOnly": 4,
-          "annotated": 0,
+          "sceneLinkedOnly": 3,
+          "annotated": 1,
           "indexOnly": 65
         },
         {
           "book": 9,
           "indexed": 64,
-          "sceneLinkedOnly": 2,
-          "annotated": 0,
+          "sceneLinkedOnly": 1,
+          "annotated": 1,
           "indexOnly": 62
         },
         {
           "book": 10,
           "indexed": 18,
-          "sceneLinkedOnly": 1,
-          "annotated": 0,
+          "sceneLinkedOnly": 0,
+          "annotated": 1,
           "indexOnly": 17
         },
         {
           "book": 11,
           "indexed": 27,
-          "sceneLinkedOnly": 2,
-          "annotated": 0,
+          "sceneLinkedOnly": 1,
+          "annotated": 1,
           "indexOnly": 25
         },
         {
           "book": 12,
           "indexed": 353,
-          "sceneLinkedOnly": 6,
-          "annotated": 0,
-          "indexOnly": 347
+          "sceneLinkedOnly": 2,
+          "annotated": 5,
+          "indexOnly": 346
         },
         {
           "book": 13,
           "indexed": 154,
-          "sceneLinkedOnly": 3,
-          "annotated": 0,
+          "sceneLinkedOnly": 0,
+          "annotated": 3,
           "indexOnly": 151
         },
         {
           "book": 14,
           "indexed": 96,
-          "sceneLinkedOnly": 1,
-          "annotated": 0,
+          "sceneLinkedOnly": 0,
+          "annotated": 1,
           "indexOnly": 95
         },
         {
           "book": 15,
           "indexed": 47,
-          "sceneLinkedOnly": 1,
-          "annotated": 0,
+          "sceneLinkedOnly": 0,
+          "annotated": 1,
           "indexOnly": 46
         },
         {
           "book": 16,
           "indexed": 9,
-          "sceneLinkedOnly": 2,
-          "annotated": 0,
+          "sceneLinkedOnly": 1,
+          "annotated": 1,
           "indexOnly": 7
         },
         {
           "book": 17,
           "indexed": 3,
-          "sceneLinkedOnly": 3,
-          "annotated": 0,
+          "sceneLinkedOnly": 2,
+          "annotated": 1,
           "indexOnly": 0
         },
         {
           "book": 18,
           "indexed": 5,
-          "sceneLinkedOnly": 2,
-          "annotated": 0,
+          "sceneLinkedOnly": 1,
+          "annotated": 1,
           "indexOnly": 3
         }
       ],
       "indexed": 1995,
-      "indexOnly": 1923,
-      "sceneLinkedOnly": 72,
-      "annotated": 0,
+      "indexOnly": 1913,
+      "sceneLinkedOnly": 40,
+      "annotated": 42,
       "scenes": 34,
       "battleDays": 18,
       "evidence": {

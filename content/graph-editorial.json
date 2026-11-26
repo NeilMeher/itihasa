@@ -1,0 +1,24 @@
+{
+  "nodes": [
+    {"id":"claim-oak-ahead","kind":"claim","work":"mahabharata","title":"Oak’s meridian reading","summary":"Oak interprets Arundhatī being ahead of Vasiṣṭha as Alcor crossing the north–south meridian first.","href":"/mahabharata/?scene=omens&view=evidence&clue=stars","aliases":["Alcor","Mizar","ahead","अरुन्धती"]},
+    {"id":"concept-meridian","kind":"concept","work":"sky","title":"Meridian","summary":"The north–south line through the point directly above an observer. Crossing its upper part is the transit compared in the benchmark.","href":"/arundhati/#sky","aliases":["transit"]},
+    {"id":"concept-nakshatra","kind":"concept","work":"sky","title":"Nakshatra","summary":"In the calendar, one of 27 equal sectors along the Moon’s path. In a literary sky passage, the named group or asterism needs its own interpretation.","href":"/panchang/","aliases":["nakṣatra","नक्षत्र","lunar mansion"]},
+    {"id":"story-rama-birth","kind":"episode","work":"ramayana","title":"The birth of Rāma","summary":"Compare the brief Baroda passage with the longer Southern Recension passage, which names the lunar day and identifies the asterism by its presiding deity.","href":"/stories/rama-birth/","aliases":["Rama","राम","Punarvasu","पुनर्वसु"]},
+    {"id":"tradition-southern","kind":"tradition","work":"ramayana","title":"Southern Recension","summary":"A transmitted family of readings. The birth comparison identifies the IIT Kanpur text and uses that text’s own numbering.","href":"/stories/rama-birth/#southern","aliases":["Southern Ramayana"]},
+    {"id":"tool-panchang","kind":"concept","work":"sky","title":"Calculate the daily calendar","summary":"Pick a city and date. Look up the Moon’s nakshatra at sunrise and see when it changes.","href":"/panchang/","aliases":["panchang","pañchāṅga","पंचांग"]},
+    {"id":"maratha-place-raigad","kind":"place","work":"maratha","title":"Raigad","summary":"A hill fort and capital site. The terrain lesson follows a modern elevation transect across the fort.","href":"/swarajya/","aliases":["Raigarh","रायगड"]},
+    {"id":"maratha-event-capital","kind":"episode","work":"maratha","title":"The coronation at Raigad","summary":"The atlas places Shivaji Maharaj’s 1674 coronation at the fort and introduces its role as a capital.","href":"/swarajya/","aliases":["Shivaji","1674"]},
+    {"id":"institution-world-heritage","kind":"institution","work":"maratha","title":"UNESCO World Heritage Centre","summary":"Maintains the official inscription record and maps for the property that includes Raigad.","href":"https://whc.unesco.org/en/list/1739/","aliases":["UNESCO","1739"]}
+  ],
+  "edges": [
+    {"from":"ma-chapter-6-2","to":"claim-oak-ahead","relation":"is interpreted by","scope":"Mahābhārata · BORI 6.2.31","why":"Oak identifies the pair with Alcor and Mizar and supplies a geometric rule for the story’s relative position.","source":"oak-meridian"},
+    {"from":"claim-oak-ahead","to":"concept-meridian","relation":"uses","scope":"Oak’s 2016 interpretation","why":"The interpretation compares which star crosses the local meridian first.","source":"oak-meridian"},
+    {"from":"claim-oak-ahead","to":"source-itihasa-transit","relation":"is tested by","scope":"Modern mean geometry and separate historical scenarios","why":"The modern benchmark checks the upper-transit calculation on a known date. The historical sweep awaits independent review.","source":"itihasa-transit"},
+    {"from":"concept-meridian","to":"source-usno-sidereal","relation":"is explained by","scope":"Positional astronomy","why":"Local sidereal time connects the observer’s meridian to a star’s right ascension.","source":"usno-sidereal"},
+    {"from":"story-rama-birth","to":"concept-nakshatra","relation":"uses","scope":"Southern Recension 1.18.8–10","why":"The reference to Aditi is read as Punarvasu. The corresponding Baroda main-text line is briefer.","source":"southern-ramayana"},
+    {"from":"tradition-southern","to":"story-rama-birth","relation":"retells","scope":"IIT Kanpur Southern Recension 1.18.8–10","why":"This recension preserves the fuller astronomical description of the birth.","source":"southern-ramayana"},
+    {"from":"concept-nakshatra","to":"tool-panchang","relation":"is calculated in","scope":"Modern calendar, sunrise at selected city","why":"The calculator assigns the Moon’s sidereal longitude to one of the 27 sectors and gives the next change.","source":"panchang-method"},
+    {"from":"maratha-event-capital","to":"maratha-place-raigad","relation":"takes place in","scope":"1674 coronation","why":"The fort is the documented capital and coronation location in the heritage record.","source":"unesco-forts"},
+    {"from":"institution-world-heritage","to":"maratha-place-raigad","relation":"documents","scope":"Modern heritage listing, 2025","why":"Raigad is one of twelve components in the inscribed military landscapes.","source":"unesco-forts"}
+  ]
+}

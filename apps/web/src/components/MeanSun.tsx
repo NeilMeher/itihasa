@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import conventions from '../../../../content/conventions.json';
 
 const { revolutions, civil_days: civilDays, modern_sidereal_year_days: modernYearDays } = conventions.lessons['mean-sun'];
 
 export default function MeanSun() {
   const [elapsed, setElapsed] = useState(1);
+  const [ready, setReady] = useState(false);
+  useEffect(() => setReady(true), []);
   const turns = elapsed * revolutions / civilDays;
   const traditional = turns * 360;
   const modern = elapsed * 360 / modernYearDays;
@@ -12,7 +14,7 @@ export default function MeanSun() {
     <h2 id="calculation-title">Calculate the advance</h2>
     <div className="workshop-slider">
       <label htmlFor="elapsed">Elapsed civil days · {elapsed}</label>
-      <input id="elapsed" type="range" min={1} max={365} value={elapsed}
+      <input id="elapsed" type="range" min={1} max={365} value={elapsed} disabled={!ready}
         onChange={(event) => setElapsed(event.currentTarget.valueAsNumber)} />
     </div>
     <ol className="reading-list">

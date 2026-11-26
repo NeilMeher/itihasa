@@ -43,6 +43,7 @@ export default function MahabharataEvidence({ initial, filters, onClue }: {
 }) {
   const [group, setGroup] = useState('All');
   const [showRun, setShowRun] = useState(false);
+  const [starGeometry, setStarGeometry] = useState('transit');
   const [last, setLast] = useState<{ id: string; before: ReturnType<typeof windowFor>; approximate: boolean; removed: boolean }>();
 
   const focus = clues.find((item) => item.id === initial) ?? clues[0];
@@ -73,10 +74,21 @@ export default function MahabharataEvidence({ initial, filters, onClue }: {
       <p>Apply Oak’s published bounds one at a time. Approximate assumptions stay approximate when combined.</p>
       <p><strong>Historical result · Unavailable.</strong> The date comparison below retraces the author’s argument pending independent review.</p>
       <div className="ma-graph">
+        <label className="ma-model-toggle">Reading of “ahead” <select value={starGeometry} onChange={(event) => {
+          const next = event.target.value;
+          setStarGeometry(next);
+          onClue('stars', next === 'literal' ? filters.filter((id) => id !== 'stars') : filters);
+          setLast(undefined);
+        }}>
+          <option value="transit">Oak’s meridian crossing</option>
+          <option value="literal">Relative position with no observing rule</option>
+        </select></label>
+        {starGeometry === 'literal' && <p role="status">Removing the meridian rule removes the star bound. The verse still has a relative position, and the other selected constraints can still be combined.</p>}
         <div className="ma-graph-axis" aria-hidden="true">{axis.map((year) => <span key={year}>{year === 0 ? 'CE' : `${number.format(year)} BCE`}</span>)}</div>
         {clues.filter((clue) => clue.younger !== null).map((clue) => (
           <div className="ma-graph-row" key={clue.id}>
-            <label><input type="checkbox" checked={filters.includes(clue.id)} onChange={() => toggle(clue.id)} /><span>{clue.title}</span></label>
+            <label><input type="checkbox" disabled={clue.id === 'stars' && starGeometry === 'literal'}
+              checked={filters.includes(clue.id)} onChange={() => toggle(clue.id)} /><span>{clue.title}</span></label>
             <div className="ma-range" aria-hidden="true">
               <span className={filters.includes(clue.id) ? 'selected' : ''} style={band(clue.older ?? limit, clue.younger!)} />
               <i style={{left: `${left(candidate)}%`}}/>

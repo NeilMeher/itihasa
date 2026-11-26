@@ -123,6 +123,7 @@ body:has(.ma-opening) .wordmark { color: #f4ebd6; }
 .ma-combined { border-top: 1px solid var(--ma-edge); margin-top: .48rem; }
 .ma-candidate { margin-top: .4rem; color: #d7d0b7; font-size: .83rem; }.ma-candidate strong { color: var(--ma-gold); }
 .ma-model-toggle { margin-top: .5rem; display: block; font-size: .78rem; color: #b9cbbb; }
+.ma-model-toggle select { display: block; max-width: 100%; margin: .2rem 0 .65rem; min-height: 2rem; font: inherit; color: #eeeadd; background: #1c3028; border: 1px solid var(--ma-edge); }
 .ma-prereview { padding: .5rem 0 0; color: #c6d3ca; font-size: .82rem; }
 .ma-prereview .ma-range { margin: .5rem 0; }
 .ma-evidence-index { display: grid; grid-template-columns: minmax(12rem, .85fr) minmax(0, 2fr); gap: .8rem; }
@@ -210,6 +211,7 @@ body:has(.ma-opening) .wordmark { color: #f4ebd6; }
 .ma-people button { min-height: 2.25rem; color: var(--ma-green); }
 .ma-speaker { font-size: .85rem; }
 .ma-source-links button { font-size: .8rem; }
+.ma-graph-branches { padding-left: 1rem; font-size: .85rem; margin-top: .35rem; }
 .ma-map-switch { display: flex; flex-wrap: wrap; gap: .25rem; }
 .ma-map-switch button {
   border: 1px solid var(--ma-edge); color: #e7e8d7; background: #253d32; padding: .25rem .38rem; font: inherit;

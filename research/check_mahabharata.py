@@ -65,6 +65,14 @@ def check(source_dir):
         selected[number].update(annotation["chapters"])
     for person in people.values():
         assert all(scene in scene_books for scene, _ in person["links"]), person["name"]
+    annotations = read("annotations")
+    positions = set()
+    for note in annotations:
+        key = (note["book"], note["chapter"])
+        assert key not in positions and note["scene"] in scene_books.keys() | {""}, key
+        assert all(note[field].strip() for field in ("title", "voice", "summary", "aftermath")), key
+        assert note["anchors"] and all(passage(line) == key for line in note["anchors"]), key
+        positions.add(key)
 
     wagers = [line for line, _, _ in reading["wagers"]]
     assert wagers == sorted(wagers) and wagers[-2:] == ["02058027a", "02058031a"]
@@ -99,6 +107,7 @@ def check(source_dir):
 
     print("Parva chapters:", ", ".join(f"{number} {len(selected[number])}/{count}" for number, count in enumerate(COUNTS, 1)))
     print(f"{sum(COUNTS)} chapters, {sum(map(len, selected.values()))} linked to {len(scene_books)} scene readings")
+    print(f"{len(positions)} dedicated chapter annotations across {len({book for book, _ in positions})} parvas")
     print(f"18 war days, {len(people)} people, {len(places)} places and {len(clues)} evidence records")
     print(f"{len(anchors)} distinct passage anchors {'found in the upstream sources' if source_dir else 'validated structurally'}")
 

@@ -2,8 +2,20 @@
 import Beta from '../layouts/Beta.astro';
 import MahabharataAtlas from '../components/MahabharataAtlas';
 import atlas from '../../../../content/mahabharata-atlas.json';
-import { annotatedChapterCount, chapterCount, parvaUrl, scenes } from '../lib/mahabharata';
+import graph from '../../../../content/project-graph.json';
+import coverage from '../../../../content/coverage-registry.json';
+import { parvaUrl, scenes } from '../lib/mahabharata';
 import '../styles/mahabharata.css';
+const totals = coverage.works.mahabharata;
+const nodeTitles = new Map(graph.nodes.map((node) => [node.id, node.title]));
+const branches = Object.fromEntries(scenes.map(({ id }) => {
+  const node = `ma-episode-${id}`;
+  return [id, graph.edges.filter((edge) => (edge.from === node || edge.to === node) && edge.to !== 'work-mahabharata')
+    .slice(0, 3).map((edge) => {
+      const other = edge.from === node ? edge.to : edge.from;
+      return { id: other, title: nodeTitles.get(other)!, relation: edge.relation };
+    })];
+}));
 ---
 <Beta title="Explore the Mahābhārata" summary="Follow the epic across 18 parvas, explore its geography and sky, and inspect how the dating arguments work.">
   <header class="ma-opening">
@@ -11,7 +23,7 @@ import '../styles/mahabharata.css';
     <h1>Mahābhārata</h1>
     <p class="ma-deck">Follow the Kuru family from the dice hall to Kurukṣetra and beyond. Read the passages, explore the sky, and test the proposed dating constraints.</p>
   </header>
-  <MahabharataAtlas client:load />
+  <MahabharataAtlas client:load graphBranches={branches} />
   <noscript>
     <section class="ma-noscript">
       <h2>The 18 parvas</h2>
@@ -19,10 +31,11 @@ import '../styles/mahabharata.css';
     </section>
   </noscript>
   <aside class="ma-coverage">
-    <div><h2>Reading coverage</h2><p>All {chapterCount.toLocaleString('en')} BORI chapters are indexed. {annotatedChapterCount} link to one or more of the atlas’s {scenes.length} selected readings.</p></div>
+    <div><h2>Reading coverage</h2><p>{totals.indexed.toLocaleString('en')} BORI chapters indexed, {totals.annotated} with chapter annotations, and {totals.sceneLinkedOnly} more with selected scene readings.</p></div>
     <a href="/coverage/">See coverage</a>
   </aside>
   <nav class="link-grid" aria-label="Other areas of Itihāsa">
+    <a href="/mind-map/">Mind map</a>
     <a href="/epics/">Epics &amp; Purāṇas</a><a href="/panchang/">Today’s Pañchāṅga</a>
     <a href="/birth-sky/">My Birth Sky</a><a href="/workshop/">Sūrya Siddhānta</a>
     <a href="/research/">Research notebook</a><a href="/swarajya/">Maratha Swarajya</a>

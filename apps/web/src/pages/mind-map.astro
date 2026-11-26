@@ -1,0 +1,30 @@
+---
+import Beta from '../layouts/Beta.astro';
+import ProjectMindMap from '../components/ProjectMindMap';
+import graph from '../../../../content/project-graph.json';
+import { mapFor, type ReaderGraph } from '../lib/project-graph';
+import '../styles/mind-map.css';
+---
+<Beta title="Mind map" summary="Follow the sources that connect people, places, episodes and ideas across Itihāsa.">
+  <header class="beta-intro map-intro">
+    <h1>Follow a connection</h1>
+    <p class="lede">Start with someone or something you recognize. Follow a connection, then inspect the passage or record that supports it.</p>
+    <nav class="map-starts" aria-label="Starting points">
+      <a href={mapFor('ma-person-draupadi')}>Draupadī</a>
+      <a href={mapFor('ma-chapter-6-2')}>Vyāsa’s sky omen</a>
+      <a href={mapFor('story-rama-birth')}>Rāma’s birth</a>
+      <a href={mapFor('maratha-place-raigad')}>Raigad</a>
+      <a href={mapFor('concept-nakshatra')}>Nakshatra</a>
+    </nav>
+  </header>
+  <ProjectMindMap client:load graph={graph as ReaderGraph} />
+  <noscript>
+    <nav aria-label="Open related readings directly"><ul>
+      <li><a href="/mahabharata/?scene=dice">The dice hall</a></li>
+      <li><a href="/mahabharata/parva/06/#chapter-2">Vyāsa’s omen in Bhīṣmaparvan</a></li>
+      <li><a href="/stories/rama-birth/">Rāma’s birth</a></li>
+      <li><a href="/swarajya/">Raigad and Swarajya</a></li>
+      <li><a href="/panchang/">Calculate a day’s nakshatra</a></li>
+    </ul></nav>
+  </noscript>
+</Beta>

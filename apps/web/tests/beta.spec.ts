@@ -110,6 +110,7 @@ test('birth sky resolves an example, civil-day possibilities, and missing locati
 test('workshop responds to keyboard and map keeps the Agra route uncertain', async ({ page }, testInfo) => {
   await page.goto('/workshop/');
   await expect(page.getByText('0.985603°', { exact: false })).toBeVisible();
+  await expect(page.getByRole('slider')).toBeEnabled();
   await page.getByRole('slider').press('ArrowRight');
   await expect(page.getByRole('slider')).toHaveValue('2');
   await expect(page.getByText('1.971205°', { exact: false })).toBeVisible();

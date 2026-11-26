@@ -1,11 +1,12 @@
-import { useEffect, useRef, useState } from 'react';
+import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import atlas from '../../../../content/mahabharata-atlas.json';
 import reading from '../../../../content/mahabharata-reading.json';
 import clues from '../../../../content/mahabharata-evidence.json';
 import { chapterCount, chaptersFor, locator, parvaUrl, people, readings, scenes, sourceUrl } from '../lib/mahabharata';
+import { foldSearch, mapFor } from '../lib/project-graph';
 import MahabharataMap from './MahabharataMap';
-import MahabharataEvidence from './MahabharataEvidence';
-import MahabharataSky from './MahabharataSky';
+const MahabharataEvidence = lazy(() => import('./MahabharataEvidence'));
+const MahabharataSky = lazy(() => import('./MahabharataSky'));
 
 type Mode = 'story' | 'sky' | 'evidence';
 type Position = { mode: Mode; scene: string; place: string; clue: string; day: number; constraints: string[] };
@@ -30,17 +31,15 @@ function fromUrl(): Position {
   };
 }
 
-function normalize(value: string) {
-  return value.toLowerCase().normalize('NFD').replace(/\p{M}/gu, '');
-}
-
 function commander(day: number) {
   if (day <= 10) return 'Bhīṣma';
   if (day <= 15) return 'Droṇa';
   return day <= 17 ? 'Karṇa' : 'Śalya';
 }
 
-export default function MahabharataAtlas() {
+export default function MahabharataAtlas({ graphBranches }: {
+  graphBranches: Record<string, { id: string; title: string; relation: string }[]>;
+}) {
   const [state, setState] = useState<Position>(start);
   const [ready, setReady] = useState(false);
   const [playing, setPlaying] = useState(false);
@@ -61,9 +60,9 @@ export default function MahabharataAtlas() {
   const chapterMatch = query.trim().match(/^(\d{1,2})\.(\d{1,3})$/);
   const jumpBook = chapterMatch && atlas.books[Number(chapterMatch[1]) - 1];
   const jumpChapter = jumpBook && chaptersFor(jumpBook.number)[Number(chapterMatch[2]) - 1];
-  const matches = query.trim() ? scenes.filter((item) => normalize([
+  const matches = query.trim() ? scenes.filter((item) => foldSearch([
     item.title, item.summary, atlas.books[item.book - 1].name, ...readings[item.id].people.map((id) => people[id].name),
-  ].join(' ')).includes(normalize(query.trim()))) : [];
+  ].join(' ')).includes(foldSearch(query.trim()))) : [];
 
   useEffect(() => {
     function restore() {
@@ -140,9 +139,11 @@ export default function MahabharataAtlas() {
         }}>← Return to {scene.title}</button>
         <span>{book.name} {scene.book} · {place?.name ?? 'Story context'}</span>
       </div>}
-      {state.mode === 'sky' && <MahabharataSky place={state.place} clue={state.clue || scene.clue} />}
-      {state.mode === 'evidence' && <MahabharataEvidence initial={state.clue || scene.clue} filters={state.constraints}
-        onClue={(clue, constraints = state.constraints) => update({ ...state, clue, constraints })} />}
+      {state.mode !== 'story' && <Suspense fallback={<p className="ma-lab" role="status">Opening {state.mode === 'sky' ? 'the sky map' : 'the dating evidence'}…</p>}>
+        {state.mode === 'sky' && <MahabharataSky place={state.place} clue={state.clue || scene.clue} />}
+        {state.mode === 'evidence' && <MahabharataEvidence initial={state.clue || scene.clue} filters={state.constraints}
+          onClue={(clue, constraints = state.constraints) => update({ ...state, clue, constraints })} />}
+      </Suspense>}
       {state.mode === 'story' && <section className="ma-story" aria-label="Narrative timeline">
         <div className="ma-story-bar">
           <h2>Follow the story</h2>
@@ -169,7 +170,7 @@ export default function MahabharataAtlas() {
           <div className="ma-narration" role="status"><span>{book.number}. {book.name}</span><span>{scene.title}</span></div>
         </div>
         <div className="ma-jump">
-          <label>Jump to parva <select value={scene.book} onChange={(event) => selectScene(scenes.find((item) => item.book === Number(event.target.value))!.id)}>
+          <label>Jump to parva <select disabled={!ready} value={scene.book} onChange={(event) => selectScene(scenes.find((item) => item.book === Number(event.target.value))!.id)}>
             {atlas.books.map((item) => <option key={item.number} value={item.number}>{item.number}. {item.name} · {item.title}</option>)}
           </select></label>
           <label>Find a scene, person, or chapter <input type="search" ref={searchInput} defaultValue={query} placeholder="Dice, Draupadī, or 2.60" onChange={(event) => setQuery(event.target.value)} /></label>
@@ -214,6 +215,12 @@ export default function MahabharataAtlas() {
             {excerpt.people.length > 0 && <div className="ma-people" aria-label="People in the scene">
               {excerpt.people.map((id) => <button key={id} className="ma-flat" onClick={(event) => openPanel({ kind: 'person', id }, event.currentTarget)}>{people[id].name}</button>)}
             </div>}
+            <details className="ma-chapters">
+              <summary>Connections in the mind map</summary>
+              <ul className="ma-graph-branches">{graphBranches[scene.id]?.map((branch) =>
+                <li key={branch.id}>{branch.relation} · <a href={mapFor(branch.id)}>{branch.title}</a></li>)}</ul>
+              <a href={mapFor(`ma-episode-${scene.id}`)}>Open this scene in the mind map →</a>
+            </details>
           </article>
           <MahabharataMap selected={state.place} onSelect={(id) => update({ ...state, place: id })} onScene={(id) => selectScene(id, true, undefined, false)} />
         </div>
@@ -267,6 +274,7 @@ export default function MahabharataAtlas() {
         {panel?.kind === 'person' && <>
           <h2 id="ma-dialog-title">{people[panel.id].name}</h2>
           <p>{people[panel.id].bio}</p>
+          <a href={mapFor(`ma-person-${panel.id}`)}>Follow {people[panel.id].name} in the mind map →</a>
           <ul>{people[panel.id].links.map(([id, title]) => <li key={id}><button className="ma-text-button" onClick={() => {
             dialog.current?.close();
             selectScene(id, true, undefined, false);

@@ -1,0 +1,37 @@
+---
+import { passagePart, type ChapterAnnotation } from '../lib/chapter-reading';
+interface Props {
+  annotation: ChapterAnnotation;
+  edition: string;
+  textUrl: string;
+  graphUrl?: string;
+}
+const { annotation, edition, textUrl, graphUrl } = Astro.props;
+---
+<details class="chapter-reading">
+  <summary>{annotation.title}</summary>
+  <div class="chapter-prose">
+    <p class="chapter-voice">{annotation.voice}</p>
+    <p>{annotation.summary}</p>
+    <p>{annotation.aftermath}</p>
+    <p class="chapter-voice">{edition} · Editorial paraphrase</p>
+    <ul class="chapter-citations" aria-label="Shareable passage citations">
+      {annotation.anchors.map((line) => <li id={`passage-${line}`}>
+        <a href={`${textUrl}#:~:text=${line}`}>{passagePart(line)} · Sanskrit ↗</a>
+        <a href={`#passage-${line}`} aria-label={`Link to passage ${passagePart(line)}`}>#</a>
+      </li>)}
+    </ul>
+    {graphUrl && <a href={graphUrl}>Follow this chapter in the mind map →</a>}
+  </div>
+</details>
+<style>
+  .chapter-reading { margin-block: .55rem; color: inherit; }
+  .chapter-reading summary { color: var(--accent); font-weight: 650; }
+  .chapter-prose { margin-block: .5rem; max-width: 66ch; padding-left: .7rem; border-left: 2px solid var(--rule); }
+  .chapter-prose p { margin-block: .4rem; }
+  .chapter-voice { font-size: .8rem; color: var(--muted); }
+  .chapter-citations { display: flex; flex-wrap: wrap; gap: .4rem 1rem; margin: .5rem 0; padding: 0; list-style: none; font-size: .8rem; }
+  .chapter-citations li { display: flex; gap: .4rem; scroll-margin-top: 1rem; }
+  .chapter-citations li:target { outline: 1px solid var(--accent); outline-offset: 3px; }
+  .chapter-reading:has(:target) .chapter-prose { content-visibility: visible; }
+</style>

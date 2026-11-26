@@ -1,4 +1,5 @@
 import raw from '../../../../content/library.json';
+import chapterNotes from '../../../../content/mahabharata-annotations.json';
 
 type Source = { title: string; edition: string; attribution: string; url: string };
 type Passage = { id: string; source: string; chapter: string; locator: string; reading: string; url?: string; excerpt?: string };
@@ -33,4 +34,8 @@ export const searchEntries = [
     { url: e.path, title: e.title, text: e.question, aliases: [...e.aliases, ...e.people, ...e.places].join(' ') },
     ...e.passages.map((p) => ({ url: `${e.path}#${p.id}`, title: p.locator, text: e.title, aliases: p.chapter })),
   ]),
+  ...chapterNotes.map((chapter) => ({
+    url: `/mahabharata/parva/${String(chapter.book).padStart(2, '0')}/#chapter-${chapter.chapter}`,
+    title: chapter.title, text: chapter.summary, aliases: `${chapter.book}.${chapter.chapter} ${chapter.aliases.join(' ')}`,
+  })),
 ];
