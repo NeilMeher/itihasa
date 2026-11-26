@@ -4,7 +4,7 @@ import { mkdir, writeFile } from 'node:fs/promises';
 const prefix = process.argv[2] ?? 'preview';
 const base = process.argv[3] ?? 'http://127.0.0.1:4323';
 const pathname = process.argv[4] ?? '/mahabharata/';
-const dir = '.tools/expansion-qa';
+const dir = process.argv[5] ?? '.tools/expansion-qa';
 await mkdir(dir, { recursive: true });
 const browser = await chromium.launch();
 const results = {};
@@ -29,6 +29,8 @@ try {
       const response = await page.goto(base + pathname, { waitUntil: 'domcontentloaded' });
       if (!response?.ok()) throw new Error(`${pathname} returned ${response?.status()}`);
       if (pathname === '/mahabharata/') await page.locator('button[aria-label="Next scene"]:enabled').waitFor();
+      else if (pathname === '/') await page.getByRole('link', { name: 'Open the Explorer' }).waitFor();
+      else if (pathname.startsWith('/explorer/') && !pathname.includes('view=map')) await page.getByRole('region', { name: 'Timeline', exact: true }).getByRole('searchbox').and(page.locator(':enabled')).waitFor();
       else await page.locator('input[type="search"]:enabled').last().waitFor();
       const ready = Math.round(performance.now() - started);
       await page.waitForLoadState('networkidle');

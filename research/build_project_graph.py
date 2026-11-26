@@ -8,6 +8,7 @@ from pathlib import Path
 CONTENT = Path(__file__).resolve().parents[1] / "content"
 OUTPUT = CONTENT / "project-graph.json"
 CATALOG = CONTENT / "explorer-catalog.json"
+EDGES = CONTENT / "explorer-edges.json"
 
 
 def read(name, fallback=None):
@@ -307,13 +308,11 @@ if __name__ == "__main__":
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
     graph = build()
-    catalog = explorer_catalog(graph)
-    if args.check:
-        if graph != json.loads(OUTPUT.read_bytes()):
-            raise SystemExit("Project graph is out of date")
-        if catalog != json.loads(CATALOG.read_bytes()):
-            raise SystemExit("Explorer catalogue is out of date")
-    else:
-        for path, payload in ((OUTPUT, graph), (CATALOG, catalog)):
+    outputs = ((OUTPUT, graph), (CATALOG, explorer_catalog(graph)), (EDGES, graph["edges"]))
+    for path, payload in outputs:
+        if args.check:
+            if not path.is_file() or payload != json.loads(path.read_bytes()):
+                raise SystemExit(f"{path.name} is out of date")
+        else:
             path.write_text(json.dumps(payload, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8", newline="\n")
     print(f'{len(graph["nodes"])} graph nodes, {len(graph["edges"])} sourced directed edges')

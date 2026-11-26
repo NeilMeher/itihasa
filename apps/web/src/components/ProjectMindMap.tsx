@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
-import data from '../../../../content/project-graph.json';
+import catalog from '../../../../content/explorer-catalog.json';
+import edges from '../../../../content/explorer-edges.json';
 import { foldSearch, mapFor, type GraphEdge, type GraphNode, type ReaderGraph } from '../lib/project-graph';
 import { withQuery } from '../lib/selection';
 
-const graph: ReaderGraph = data;
+const graph: ReaderGraph = { nodes: catalog.nodes, sources: catalog.sources, edges };
 const firstNode = 'ma-person-draupadi';
 const hub = [50, 49];
 const spokes = [[26, 15], [74, 15], [12, 49], [88, 49], [26, 83], [74, 83]];

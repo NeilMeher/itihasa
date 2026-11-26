@@ -83,8 +83,12 @@ test('Sītā’s ring selection survives the graph, reading, reload and navigati
   await page.reload();
   await expect(page.getByText('Following Sītā', { exact: false })).toBeVisible();
   await story.getByRole('button', { name: 'Geography' }).click();
+  await expect(story.getByText('Modern reference geography.', { exact: false })).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(390);
   await page.screenshot({ path: info.outputPath('explorer-sita-390.png'), fullPage: true });
+  await story.getByRole('button', { name: 'Laṅkā and the Aśoka grove', exact: true }).click();
+  await expect(story).toContainText('Literary location');
+  await expect(story).toContainText('No point is plotted for this location.');
 });
 
 test('Panipat is an active place until its dated event replaces the coronation', async ({ page }, info) => {
@@ -103,6 +107,7 @@ test('Panipat is an active place until its dated event replaces the coronation',
   await page.goBack();
   await expect(story.getByRole('heading', { name: 'Panipat', exact: true })).toBeVisible();
   await expect(story.getByRole('button', { name: 'Geography' })).toHaveAttribute('aria-pressed', 'true');
+  await expect(story.getByRole('button', { name: 'Inspect Panipat on the map' })).toHaveAttribute('aria-pressed', 'true');
   await page.screenshot({ path: info.outputPath('explorer-panipat-1280.png'), fullPage: true });
 });
 

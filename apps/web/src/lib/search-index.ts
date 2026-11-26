@@ -2,7 +2,7 @@ import maIndex from '../../../../content/mahabharata-chapters.json';
 import raIndex from '../../../../content/ramayana-chapters.json';
 import maNotes from '../../../../content/mahabharata-annotations.json';
 import raNotes from '../../../../content/ramayana-annotations.json';
-import readerGraph from '../../../../content/project-graph.json';
+import catalog from '../../../../content/explorer-catalog.json';
 import { searchEntries } from './library';
 import { explorerHref } from './explorer';
 
@@ -31,7 +31,7 @@ export const entries: SearchEntry[] = [
   { url: '/library/', title: 'Library', text: 'Browse editions, books and reading coverage.', aliases: 'parva kanda sarga', context: 'Library · Contents' },
   { url: '/sky-calendar/', title: 'Sky and Calendar', text: 'Browse calculators, festivals, and observer tools.', aliases: 'tithi Rahu Kāla ऋतु', context: 'Sky and Calendar · Tools' },
   ...searchEntries.map((entry) => ({ ...entry, context: legacyContext(entry.url) })),
-  ...readerGraph.nodes.map((node) => ({
+  ...catalog.nodes.map((node) => ({
     url: explorerHref({ node: node.id, view: 'map' }), title: node.title, text: node.summary,
     aliases: node.aliases.join(' '), context: workLabels[node.work] + ' · ' + kinds[node.kind],
   })),
