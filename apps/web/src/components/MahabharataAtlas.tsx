@@ -201,7 +201,10 @@ export default function MahabharataAtlas() {
             </div>
             <div className="ma-scene-actions">
               {scene.id === 'exile-start' && <button className="ma-flat" onClick={() => selectScene('nala', true, undefined, false)}>Enter Bṛhadaśva’s story →</button>}
-              {excerpt.nestedUnder && <button className="ma-flat" onClick={() => selectScene(excerpt.nestedUnder!, true, undefined, false)}>← Return to the forest exile</button>}
+              {scene.id === 'rule' && <button className="ma-flat" onClick={() => selectScene('liberation', true, undefined, false)}>Hear the father and son →</button>}
+              {excerpt.nestedUnder && <button className="ma-flat" onClick={() => selectScene(excerpt.nestedUnder!, true, undefined, false)}>
+                {excerpt.nestedUnder === 'exile-start' ? '← Return to the forest exile' : '← Return to Bhīṣma and Yudhiṣṭhira'}
+              </button>}
               {scene.id === 'dice' && <button className="ma-flat" onClick={() => selectScene('exile-start', true, undefined, false)}>Follow the consequence into exile →</button>}
               {scene.id === 'peace' && <button className="ma-flat" onClick={() => selectScene('gita', true, 1, false)}>Go to battle day 1 →</button>}
               {scene.id === 'omens' && <a href="/arundhati/">Open the illustrative two-star lesson →</a>}

@@ -11,14 +11,34 @@
       "summary": "A throne is won, lost, and argued for again."
     },
     {
+      "id": "disguise",
+      "title": "The year in disguise",
+      "summary": "The exiles enter Virāṭa’s household and try to keep their identities hidden."
+    },
+    {
+      "id": "peace",
+      "title": "The peace mission",
+      "summary": "An envoy seeks a settlement while family ties test the alliances."
+    },
+    {
       "id": "war",
       "title": "Kurukṣetra",
-      "summary": "From the failed peace mission through the commanders of the war."
+      "summary": "The battle passes from Bhīṣma to Droṇa, Karṇa and Śalya."
     },
     {
       "id": "aftermath",
       "title": "After the battle",
-      "summary": "Grief, government, and what victory costs."
+      "summary": "Bereaved families confront the dead and learn whom they lost."
+    },
+    {
+      "id": "teachings",
+      "title": "Bhīṣma’s teachings",
+      "summary": "The new king asks how to govern, endure danger, and give."
+    },
+    {
+      "id": "rebuilding",
+      "title": "The restored kingdom",
+      "summary": "Arjuna follows the sacrificial horse. The older generation leaves the court."
     },
     {
       "id": "departure",
@@ -58,7 +78,7 @@
       "number": 4,
       "name": "Virāṭa",
       "title": "A year in hiding",
-      "arc": "exile",
+      "arc": "disguise",
       "summary": "The exiles enter Virāṭa’s service under assumed names. A cattle raid forces Arjuna back into action.",
       "place": "matsya",
       "url": "https://indology.info/bombay/mahabharata/text/UR/MBh04.txt"
@@ -67,7 +87,7 @@
       "number": 5,
       "name": "Udyoga",
       "title": "Before the armies march",
-      "arc": "exile",
+      "arc": "peace",
       "summary": "Envoys attempt a settlement while the two sides seek allies. Kṛṣṇa’s peace mission comes before the armies face one another.",
       "place": "hastinapura",
       "url": "https://indology.info/bombay/mahabharata/text/UR/MBh05.txt"
@@ -130,7 +150,7 @@
       "number": 12,
       "name": "Śānti",
       "title": "How should a king rule?",
-      "arc": "aftermath",
+      "arc": "teachings",
       "summary": "Yudhiṣṭhira struggles with the cost of victory. Bhīṣma teaches him about government, emergencies, and liberation.",
       "place": "kurukshetra",
       "url": "https://indology.info/bombay/mahabharata/text/UR/MBh12.txt"
@@ -139,7 +159,7 @@
       "number": 13,
       "name": "Anuśāsana",
       "title": "Bhīṣma’s final teachings",
-      "arc": "aftermath",
+      "arc": "teachings",
       "summary": "Bhīṣma continues his teaching, including discussions of gifts and duties. At the end of the book he dies.",
       "place": "kurukshetra",
       "url": "https://indology.info/bombay/mahabharata/text/UR/MBh13.txt"
@@ -148,7 +168,7 @@
       "number": 14,
       "name": "Āśvamedhika",
       "title": "Rebuilding the kingdom",
-      "arc": "aftermath",
+      "arc": "rebuilding",
       "summary": "Yudhiṣṭhira performs the horse sacrifice. Arjuna follows the released horse and encounters challenges from other rulers.",
       "place": "hastinapura",
       "url": "https://indology.info/bombay/mahabharata/text/UR/MBh14.txt"
@@ -157,7 +177,7 @@
       "number": 15,
       "name": "Āśramavāsika",
       "title": "The elders leave court",
-      "arc": "aftermath",
+      "arc": "rebuilding",
       "summary": "Dhṛtarāṣṭra, Gāndhārī, and Kuntī withdraw to the forest. News of their deaths reaches Yudhiṣṭhira.",
       "place": "hastinapura",
       "url": "https://indology.info/bombay/mahabharata/text/UR/MBh15.txt"
@@ -285,6 +305,17 @@
       "title": "Kṛṣṇa’s peace mission",
       "place": "hastinapura",
       "summary": "Kṛṣṇa travels to the Kuru court to seek a settlement. The mission ends without an agreement and preparations for battle continue.",
+      "locator": "",
+      "url": "https://indology.info/bombay/mahabharata/text/UR/MBh05.txt",
+      "clue": "",
+      "deepLink": ""
+    },
+    {
+      "id": "karna-loyalty",
+      "book": 5,
+      "title": "Karṇa answers Kuntī",
+      "place": "",
+      "summary": "Kuntī tells Karṇa he is her son. He promises to spare four brothers but still chooses to fight Arjuna.",
       "locator": "",
       "url": "https://indology.info/bombay/mahabharata/text/UR/MBh05.txt",
       "clue": "",
@@ -423,6 +454,17 @@
       "deepLink": ""
     },
     {
+      "id": "karna-revealed",
+      "book": 11,
+      "title": "The brother they did not know",
+      "place": "",
+      "summary": "At the water rites, Kuntī asks the Pāṇḍavas to mourn Karṇa as their eldest brother.",
+      "locator": "",
+      "url": "https://indology.info/bombay/mahabharata/text/UR/MBh11.txt",
+      "clue": "",
+      "deepLink": ""
+    },
+    {
       "id": "rule",
       "book": 12,
       "title": "Lessons in kingship",
@@ -430,6 +472,39 @@
       "summary": "While Bhīṣma lies wounded, Yudhiṣṭhira seeks guidance on ruling and on the duties that come with power.",
       "locator": "",
       "url": "https://indology.info/bombay/mahabharata/text/UR/MBh12.txt",
+      "clue": "",
+      "deepLink": ""
+    },
+    {
+      "id": "crisis",
+      "book": 12,
+      "title": "When a ruler is in danger",
+      "place": "kurukshetra",
+      "summary": "Yudhiṣṭhira asks what a weak king can do when allies and resources have gone.",
+      "locator": "",
+      "url": "https://indology.info/bombay/mahabharata/text/UR/MBh12.txt",
+      "clue": "",
+      "deepLink": ""
+    },
+    {
+      "id": "liberation",
+      "book": 12,
+      "title": "What can wait until tomorrow?",
+      "place": "",
+      "summary": "Bhīṣma tells of a son who challenges his father’s assumption that he can postpone the search for liberation.",
+      "locator": "",
+      "url": "https://indology.info/bombay/mahabharata/text/UR/MBh12.txt",
+      "clue": "",
+      "deepLink": ""
+    },
+    {
+      "id": "giving",
+      "book": 13,
+      "title": "What makes a gift matter?",
+      "place": "kurukshetra",
+      "summary": "Bhīṣma praises giving land and retells Nārada’s argument for the importance of giving food.",
+      "locator": "",
+      "url": "https://indology.info/bombay/mahabharata/text/UR/MBh13.txt",
       "clue": "",
       "deepLink": ""
     },

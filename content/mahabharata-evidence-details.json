@@ -24,38 +24,43 @@
     "links":[["BORI 6.43.54","https://indology.info/bombay/mahabharata/text/UR/MBh06.txt#:~:text=06043054a"]]
   },
   "eclipse": {
-    "text": "The royal omens in BORI 6.3.28–29 differ in setting from the darkness at Jayadratha’s death in BORI 7.121. Ganguli’s translation of the latter credits Kṛṣṇa’s yoga. Historical eclipse wording and day claims still need a passage-by-passage catalogue.",
+    "text": "Oak discusses a coppery Kārttika Moon in BORI 6.2.23 and solar and lunar obscuration in 6.3.28–29. He gives 16 and 30 October 5561 BCE as a candidate pair, counting 13 days between the two dates and leaving the omen’s assignment to the first day open. The darkness at Jayadratha’s death in BORI 7.121 belongs to a separate narrative setting. Ganguli’s translation credits Kṛṣṇa’s yoga.",
     "method": "Test syzygy, lunar node distance, contact geometry and horizon at the proposed site. A long-term Earth-rotation model controls where a solar shadow might cross. No historical eclipse or local visibility check ran here.",
     "dependencies": "Uses the same lunar ephemeris and candidate times as the lunar clue. The Jayadratha scene carries its own textual assumption.",
-    "links":[["BORI 7.121","https://indology.info/bombay/mahabharata/text/UR/MBh07.txt#:~:text=07121016a"],["Edition comparison","/stories/jayadratha/"]]
+    "links":[["Oak’s response on eclipses and day counting","https://nileshoak.wordpress.com/2016/01/23/isolating-problem-of-eclipse-evidence-from-the-problem-of-present-tense/"],["BORI 6.2.23, the Kārttika Moon","https://indology.info/bombay/mahabharata/text/UR/MBh06.txt#:~:text=06002023a"],["BORI 7.121","https://indology.info/bombay/mahabharata/text/UR/MBh07.txt#:~:text=07121016a"],["Edition comparison","/stories/jayadratha/"]]
   },
   "dwarka": {
     "text": "BORI 16.8.40 narrates the inundation. Oak’s 2020 summary item 10 gives 5525 BCE for the flooding he proposes.",
-    "method": "Rao and colleagues surveyed the seabed off modern Dwarka and considered structures, pottery and anchors in relation to historic settlement. An object’s proposed age, depositional context and a possible inundation are different measurements. A matched dated stratigraphic layer is needed to connect them.",
+    "method": "Rao’s 1987 survey compared recovered structures, pottery and anchors to known assemblages. It proposed 1400–1300 BCE for particular Lustrous Red Ware by ceramic comparison, with limited old organic material for direct dating. The proposal dates pottery. Connecting it to a particular inundation requires a securely dated depositional horizon.",
     "dependencies": "Oak’s summary treats this as corroboration. The atlas has no source-backed link that converts the marine material into a numerical war-date constraint.",
-    "links":[["BORI 16.8.40","https://indology.info/bombay/mahabharata/text/UR/MBh16.txt#:~:text=16008040c"]]
+    "links":[["BORI 16.8.40","https://indology.info/bombay/mahabharata/text/UR/MBh16.txt#:~:text=16008040c"],["Rao’s ceramic comparison, print p. 28","https://nopr.niscpr.res.in/bitstream/123456789/38461/1/IJMS%2016%281%29%2022-30.pdf#page=7"]],
+    "track":{"older":1400,"younger":1300,"unit":"bce","label":"Dwarka and Bet Dwarka ceramic comparison · approx. 1400–1300 BCE"}
   },
   "rakhigarhi": {
     "text": "Shinde et al. (Cell, 2019), sample I6113 from the Rakhigarhi cemetery. The paper analysed one genome after screening 61 individuals and compared its ancestry to other ancient populations.",
     "method": "The laboratory extracted and sequenced ancient DNA for ancestry analysis. Collagen preservation prevented direct radiocarbon dating of the burial. The reported 2800–2300 BCE context comes from seven radiocarbon dates on charcoal from the habitation area. The burial’s absolute age remains uncertain.",
     "dependencies": "Oak lists genetics as corroboration in his project summary. A paper, passage, or specimen association stating how I6113 would date the war has yet to be identified.",
-    "track":{"older":2800,"younger":2300,"label":"Rakhigarhi habitation charcoal · 2800–2300 BCE"}
+    "track":{"older":2800,"younger":2300,"unit":"bce","label":"Rakhigarhi habitation charcoal · 2800–2300 BCE"}
   },
   "population": {
     "text": "Narasimhan et al. (Science, 2019) compared genome-wide data from 523 ancient individuals in South and Central Asian contexts over roughly the last 8,000 years.",
     "method": "The team used dated assemblages and individual sample contexts, then modelled shared ancestry and mixture. Limits vary by sample location, radiocarbon coverage and the sampled populations that stand in for past groups.",
-    "dependencies": "The population model supplies context for comparisons with Harappan ancestry. The atlas has yet to locate a source linking a specific sample in this study to a specific war event."
+    "dependencies": "The population model supplies context for comparisons with Harappan ancestry. The atlas has yet to locate a source linking a specific sample in this study to a specific war event.",
+    "track":{"older":8000,"younger":0,"unit":"ago","label":"Ancient-DNA sampling scope · approximately the past 8,000 years"}
   },
   "rivers": {
     "text": "Singh et al. (Nature Communications, 2017) tested how the Ghaggar–Hakra palaeochannel relates to former Sutlej flow and to urban settlements of the Indus civilisation.",
-    "method": "The team used sediment provenance and optically stimulated luminescence to date deposits. They place the diversion of the large river by around 8,000 years ago. The estimate concerns the channel’s history and leaves the epic river’s identity and remembered times open.",
+    "method": "The team used sediment provenance and optically stimulated luminescence to date deposits. They report that the Sutlej began abandoning that valley after about 15,000 years ago and completed the shift shortly after about 8,000 years ago. The history of the channel leaves the epic river’s identity and remembered times open.",
     "dependencies": "Oak’s project summary names hydrology generally. It gives no testable match to this particular channel deposit or to the date of a named battle.",
-    "links":[["Singh et al., 2017","https://www.nature.com/articles/s41467-017-01643-9"]]
+    "links":[["Singh et al., 2017","https://www.nature.com/articles/s41467-017-01643-9"]],
+    "track":{"older":15000,"younger":8000,"unit":"ago","label":"Approximate Sutlej channel abandonment sequence · 15,000–8,000 years ago"}
   },
   "hastinapura": {
     "text": "B. B. Lal’s excavation report identifies Period II at Hastināpura by Painted Grey Ware and discusses an erosion or flood horizon and a subsequent break in occupation.",
-    "method": "The excavation used stratigraphy and comparison of ceramic assemblages. The report assigns a relative cultural sequence and proposes dates. The layer requires independent absolute dates and an evidentiary link to a narrated person or event before it can bear on the war.",
-    "dependencies": "This context is linked to the map’s modern site. Oak’s specific use of the excavation and its proposed historical associations still needs a cited edition and page."
+    "method": "The excavation used stratigraphy and comparison of ceramic assemblages. Lal’s Table I puts Period II at approximately 1100–800 BCE. An independent absolute date for the layer and a link to a narrated person or event would be needed to make it a war-date test.",
+    "dependencies": "This context is linked to the map’s modern site. Oak’s specific use of the excavation and its proposed historical associations still needs a cited edition and page.",
+    "links":[["Lal’s Table I, print p. 12a","https://ignca.gov.in/Asi_data/87815.pdf"]],
+    "track":{"older":1100,"younger":800,"unit":"bce","label":"Hastināpura Period II · Lal’s approx. 1100–800 BCE"}
   },
   "candidate": {
     "text": "In his 2015 calendar note Oak specifies 16 October 5561 BCE as proleptic Julian. The atlas consulted his public posts and linked book overview. Precise page and figure references for the full 2011 book await an accessible copy.",

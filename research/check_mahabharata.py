@@ -17,8 +17,8 @@ def read(name):
 
 
 def check(source_dir):
-    atlas, reading, index, evidence, details, sky = (
-        read(name) for name in ("atlas", "reading", "chapters", "evidence", "evidence-details", "sky")
+    atlas, reading, index, evidence, details, sky, rivers = (
+        read(name) for name in ("atlas", "reading", "chapters", "evidence", "evidence-details", "sky", "rivers")
     )
     if source_dir and extract(source_dir) != index:
         raise ValueError("Chapter index drifted from the upstream source files")
@@ -76,6 +76,16 @@ def check(source_dir):
         assert entry["event"] and passage(entry["line"])[0] >= 6, entry
         assert entry.get("scene", "frame") in scene_books, entry
     assert sum(clue["younger"] is not None for clue in evidence) == 3
+    for clue in evidence:
+        detail = details[clue["id"]]
+        for url in [clue["primary"], *(link[1] for link in detail.get("links", []))]:
+            if "#:~:text=" in url:
+                passage(url.split("#:~:text=")[-1])
+        if track := detail.get("track"):
+            assert clue["younger"] is None and track["unit"] in ("bce", "ago")
+            assert 0 <= track["younger"] < track["older"] <= (3500 if track["unit"] == "bce" else 16000)
+    assert len(sky["objects"]) == 19 and len(set(sky["hips"].values())) == 12
+    assert set(sky["objects"][7:]) == sky["hips"].keys()
     for site in sky["sites"]:
         days = sky["samples"][site["id"]]
         assert len(days) == len(sky["days"])
@@ -84,6 +94,8 @@ def check(source_dir):
             assert all(len(frame) == len(sky["objects"]) for frame in frames)
             assert all(-90 <= alt <= 90 and 0 <= az <= 360 for frame in frames for alt, az in frame)
     assert all(len(day) == 49 and all(0 <= phase < 360 for phase in day) for day in sky["moonPhase"])
+    assert re.fullmatch("[a-f0-9]{64}", rivers["sha256"])
+    assert len(rivers["rivers"]) == 3 and len(rivers["bounds"]) == 4
 
     print("Parva chapters:", ", ".join(f"{number} {len(selected[number])}/{count}" for number, count in enumerate(COUNTS, 1)))
     print(f"{sum(COUNTS)} chapters, {sum(map(len, selected.values()))} linked to {len(scene_books)} scene readings")

@@ -23,7 +23,7 @@ function label(oldest: number | null, youngest: number) {
     : `${number.format(oldest)}–${number.format(youngest)} BCE`;
 }
 
-type Detail = { text: string; method: string; dependencies: string; links?: string[][]; track?: { older: number; younger: number; label: string } };
+type Detail = { text: string; method: string; dependencies: string; links?: string[][]; track?: { older: number; younger: number; unit: string; label: string } };
 const catalogue: Record<string, Detail> = details;
 
 function windowFor(ids: string[]) {
@@ -34,8 +34,8 @@ function windowFor(ids: string[]) {
   };
 }
 
-function windowLabel({ oldest, youngest }: ReturnType<typeof windowFor>) {
-  return oldest < youngest ? 'No common span' : label(oldest, youngest);
+function windowLabel({ oldest, youngest }: ReturnType<typeof windowFor>, approximate = false) {
+  return oldest < youngest ? 'No common span' : `${approximate ? 'Approx. ' : ''}${label(oldest, youngest)}`;
 }
 
 export default function MahabharataEvidence({ initial, filters, onClue }: {
@@ -43,7 +43,7 @@ export default function MahabharataEvidence({ initial, filters, onClue }: {
 }) {
   const [group, setGroup] = useState('All');
   const [showRun, setShowRun] = useState(false);
-  const [last, setLast] = useState<{ id: string; before: ReturnType<typeof windowFor>; removed: boolean }>();
+  const [last, setLast] = useState<{ id: string; before: ReturnType<typeof windowFor>; approximate: boolean; removed: boolean }>();
 
   const focus = clues.find((item) => item.id === initial) ?? clues[0];
   const detail = catalogue[focus.id];
@@ -54,10 +54,12 @@ export default function MahabharataEvidence({ initial, filters, onClue }: {
   const available = clues.filter((item) => group === 'All' || item.group === group);
   const plotted = model.labeled_intervals.filter((item) => item.label !== 'mizar-first');
   const bandClue = clues.find((item) => item.id === last?.id);
+  const approximate = filters.some((id) => id !== 'stars');
+  const contextScale = detail.track?.unit === 'bce' ? 3500 : 16000;
 
   function toggle(id: string) {
     const removed = filters.includes(id);
-    setLast({ id, before: combined, removed });
+    setLast({ id, before: combined, approximate, removed });
     setGroup('All');
     onClue(id, removed ? filters.filter((item) => item !== id) : [...filters, id]);
   }
@@ -88,13 +90,13 @@ export default function MahabharataEvidence({ initial, filters, onClue }: {
             {selected.length > 0 && oldest >= youngest && <span className="selected" style={band(oldest, youngest)} />}
             <i style={{left: `${left(candidate)}%`}} />
           </div>
-          <span className="ma-range-label">{!selected.length ? 'Choose one or more clues' : `${filters.some((id) => id !== 'stars') && oldest >= youngest ? 'Approx. ' : ''}${windowLabel(combined)}`}</span>
+          <span className="ma-range-label">{!selected.length ? 'Choose one or more clues' : windowLabel(combined, approximate)}</span>
         </div>
         {last && bandClue?.younger != null && <div className="ma-range-change" role="status">
           <strong>{last.removed ? 'Removed' : 'Applied'} {bandClue.title}</strong>
-          <dl><div><dt>Before</dt><dd>{windowLabel(last.before)}</dd></div>
+          <dl><div><dt>Before</dt><dd>{windowLabel(last.before, last.approximate)}</dd></div>
             <div><dt>Clue range</dt><dd>{bandClue.id === 'season' ? 'Approx. ' : ''}{label(bandClue.older, bandClue.younger)}</dd></div>
-            <div><dt>After</dt><dd>{windowLabel(combined)}</dd></div></dl>
+            <div><dt>After</dt><dd>{windowLabel(combined, approximate)}</dd></div></dl>
           <p>{last.before.oldest === oldest && last.before.youngest === youngest
             ? 'No change. The other selected bounds already give this overlap.'
             : last.removed ? 'The overlap is computed from the remaining clues.' : 'The overlap keeps the years allowed by every selected bound.'}</p>
@@ -128,11 +130,14 @@ export default function MahabharataEvidence({ initial, filters, onClue }: {
           <h3>{focus.title}</h3><p>{focus.claim}</p>
           <p>{detail.text}</p><p><strong>Measurement.</strong> {detail.method}</p>
           <p><strong>Dependencies.</strong> {detail.dependencies}</p><p>{focus.limit}</p>
-          {detail.track && <div className="ma-prereview">
+          {detail.track && <figure className="ma-prereview ma-context-track">
             <strong>{detail.track.label}</strong>
-            <div className="ma-range" aria-hidden="true"><span className="uncertain" style={band(detail.track.older, detail.track.younger)} /></div>
-            <p>Archaeological context track, shown on a 12,000 BCE to CE scale.</p>
-          </div>}
+            <div className="ma-range" aria-hidden="true"><span className="uncertain" style={{
+              left: `${100 * (contextScale - detail.track.older) / contextScale}%`,
+              width: `${100 * (detail.track.older - detail.track.younger) / contextScale}%`,
+            }} /></div>
+            <figcaption>{detail.track.unit === 'bce' ? 'Study context · 3,500 BCE to the BCE/CE boundary.' : 'Study context · 16,000 years ago to recent time.'}</figcaption>
+          </figure>}
           <div className="ma-source-links"><a href={focus.url}>{focus.locator} ↗</a>{focus.primary && <a href={focus.primary}>Related primary source ↗</a>}
             {detail.links?.map(([title, url]) => <a key={url} href={url}>{title} ↗</a>)}</div>
         </article>

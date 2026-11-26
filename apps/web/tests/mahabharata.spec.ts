@@ -20,7 +20,7 @@ test('dice wagers, source locator, exile and nested story at 360px', async ({ pa
   await expect(wagers.last()).toContainText('Draupadī');
   const question = page.getByRole('region', { name: 'Who answers Draupadī?' });
   await expect(question.getByRole('link', { name: 'Draupadī 2.60.7 ↗' })).toHaveAttribute('href', /MBh02\.txt#:~:text=02060007c$/);
-  await question.scrollIntoViewIfNeeded();
+  await question.getByRole('heading').evaluate((heading) => heading.scrollIntoView({ block: 'start' }));
   await page.screenshot({ path: info.outputPath('dice-question-360.png') });
   await page.getByRole('button', { name: /Follow the consequence/ }).click();
   await expect(page.getByRole('heading', { name: 'Into the forest' })).toBeFocused();
@@ -91,7 +91,10 @@ test('the observer sky returns to the same passage at 390px', async ({ page }, i
   await expect(page.getByText(/0\.000° from the ICRS north pole/)).toBeVisible();
   await page.getByRole('button', { name: 'Moon, phase & tithi', exact: true }).click();
   await expect(page.getByRole('table').getByRole('row', { name: /2025-01-07/ })).toBeVisible();
-  await page.getByRole('heading', { name: 'Read the sky from the ground' }).scrollIntoViewIfNeeded();
+  await page.getByText('Choose another catalogue star', { exact: true }).click();
+  await page.getByRole('button', { name: 'Polaris', exact: true }).click();
+  await expect(page.getByText('HIP 11767', { exact: true })).toBeVisible();
+  await page.locator('.ma-observatory').evaluate((instrument) => instrument.scrollIntoView({ block: 'start' }));
   await page.screenshot({ path: info.outputPath('observer-sky-390.png') });
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(390);
   await page.getByRole('button', { name: /Return to Vyāsa reads the omens/ }).click();
@@ -117,8 +120,14 @@ test('reported filters show their effect and a DNA record dates context', async 
   await expect(page.getByRole('checkbox', { name: /Rakhigarhi/ })).toHaveCount(0);
   await page.getByRole('heading', { name: 'The Rakhigarhi genome' }).scrollIntoViewIfNeeded();
   await page.screenshot({ path: info.outputPath('dating-dna-1280.png') });
+  await page.getByRole('heading', { name: 'The Rakhigarhi genome' }).evaluate((heading) => heading.scrollIntoView({ block: 'start' }));
+  await page.screenshot({ path: info.outputPath('rakhigarhi-study-1280.png') });
   await page.reload();
   await expect(page.getByRole('heading', { name: 'The Rakhigarhi genome' })).toBeVisible();
+  await expect(page.getByRole('checkbox', { name: 'Arundhatī and Vasiṣṭha' })).toBeChecked();
+  await page.setViewportSize({ width: 360, height: 640 });
+  await page.getByRole('checkbox', { name: /local prereview star-transit/ }).check();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(360);
 });
 
 test('later parvas, final journey, motion preference and 200% layout zoom', async ({ page }, info) => {
@@ -128,8 +137,13 @@ test('later parvas, final journey, motion preference and 200% layout zoom', asyn
   await page.getByLabel('Jump to parva').selectOption('11');
   await expect(page.getByRole('heading', { name: 'Gāndhārī on the battlefield' })).toBeVisible();
   await page.getByRole('button', { name: 'Play story', exact: true }).click();
-  await expect(page.getByRole('heading', { name: 'Lessons in kingship' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'The brother they did not know' })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Play story', exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Bhīṣma’s teachings', exact: true }).click();
+  await expect(page.getByRole('heading', { name: 'Lessons in kingship' })).toBeVisible();
+  await page.getByRole('button', { name: /Hear the father and son/ }).click();
+  await expect(page.getByRole('heading', { name: 'What can wait until tomorrow?' })).toBeFocused();
+  await page.getByRole('button', { name: /Return to Bhīṣma and Yudhiṣṭhira/ }).click();
   await page.getByRole('button', { name: 'The last journeys', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'The end of Dvārakā' })).toBeVisible();
   await page.getByRole('slider').press('ArrowRight');
@@ -143,4 +157,30 @@ test('later parvas, final journey, motion preference and 200% layout zoom', asyn
   await page.getByRole('link', { name: /Parva guide & chapter index/ }).click();
   await expect(page).toHaveURL(/parva\/18\/#chapter-3/);
   await expect(page.locator('.ma-chapter-list > li')).toHaveCount(5);
+});
+
+test('timed story playback advances, pauses, and restarts', async ({ page }) => {
+  await page.clock.install();
+  await page.goto('/mahabharata/');
+  await page.getByRole('button', { name: 'Play story', exact: true }).click();
+  await page.clock.fastForward(8_100);
+  await expect(page.getByRole('heading', { name: 'The vow that changes the throne' })).toBeVisible();
+  await page.getByRole('button', { name: 'Pause story', exact: true }).click();
+  await page.clock.fastForward(8_100);
+  await expect(page.getByRole('heading', { name: 'The vow that changes the throne' })).toBeVisible();
+  await page.getByRole('button', { name: 'Restart', exact: true }).click();
+  await expect(page.getByRole('heading', { name: 'Who tells the Mahābhārata?' })).toBeVisible();
+});
+
+test.describe('without JavaScript', () => {
+  test.use({ javaScriptEnabled: false });
+
+  test('parva navigation and chapter text links work', async ({ page }) => {
+    await page.goto('/mahabharata/');
+    const fallback = page.locator('noscript');
+    await expect(fallback.getByRole('link')).toHaveCount(18);
+    await fallback.getByRole('link', { name: /Sabhā/ }).click();
+    await expect(page.locator('.ma-chapter-list > li')).toHaveCount(72);
+    await expect(page.locator('#chapter-60').getByRole('link', { name: /Sanskrit chapter start/ })).toHaveAttribute('href', /02060001a$/);
+  });
 });

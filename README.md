@@ -1,6 +1,6 @@
 # Itihāsa local beta
 
-Itihāsa starts with a question, then shows the story, an interaction, and the source. The beta includes nine annotated episodes, two festival lessons, a modern calendar and birth-sky calculator, one Sūrya Siddhānta exercise, and a Swarajya timeline and terrain view.
+The beta opens with the Mahābhārata atlas. It connects the narrative, the 18 BORI parva guides, geographic references, a calculated modern sky, and the published dating argument. The wider library also includes other epic readings, festival lessons, calendar and birth-sky tools, a Sūrya Siddhānta exercise, and the Swarajya timeline.
 
 ## Launch on Windows
 
@@ -26,6 +26,8 @@ Run from the repository root. The browser suite starts and stops its own copy of
 ```powershell
 uv run --locked --project research python research/check_evidence.py
 uv run --locked --project research python research/check_beta_content.py
+uv run --locked --project research python research/check_mahabharata.py
+uv run --locked --project research python research/build_mahabharata_sky.py --check
 uv run --locked --project research python research/check_arundhati.py
 uv run --locked --project research python research/run_arundhati_history.py --check
 uv run --locked --project research python -m unittest discover -s research -v
@@ -40,5 +42,6 @@ npm.cmd run test:browser
 Set `ITIHASA_PYTHON` to the full path of the locked environment’s Python executable if the QA shell cannot find uv. The browser screenshots are stored in `test-results/`.
 
 - [Beta coverage, check results and Antigravity prompt](docs/Beta-Handoff.md)
+- [Mahābhārata atlas coverage, check results and walkthrough](docs/Mahabharata-Atlas.md)
 - [Arundhatī–Vasiṣṭha method and modern benchmark](docs/Arundhati-Method.md)
 - [Research run manifest](research/runs/arundhati-prereview-v1/manifest.json)

@@ -13,6 +13,11 @@ DIST = Path(__file__).resolve().parent.parent / "apps/web/dist"
 API = {"/api/v1/panchang": calendar, "/api/v1/birth-sky": birth_sky}
 
 
+class BetaServer(ThreadingHTTPServer):
+    # Concurrent browser pages can open several static asset connections at once.
+    request_queue_size = 32
+
+
 class BetaHandler(SimpleHTTPRequestHandler):
     def log_message(self, format, *args):
         # Keep requests, including personal form submissions, off the console.
@@ -62,7 +67,7 @@ def main():
     if not (DIST / "index.html").is_file():
         parser.error("Build the site first with npm run build.")
     handler = partial(BetaHandler, directory=str(DIST))
-    with ThreadingHTTPServer(("127.0.0.1", args.port), handler) as server:
+    with BetaServer(("127.0.0.1", args.port), handler) as server:
         print(f"Itihasa beta is available at http://127.0.0.1:{server.server_port}/", flush=True)
         try:
             server.serve_forever()

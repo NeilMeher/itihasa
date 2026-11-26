@@ -1,8 +1,8 @@
 """Build a bounded, modern teaching sky for the Mahabharata atlas.
 
-Solar-system positions are topocentric from Astronomy Engine. Two named stars
-use the existing Hipparcos fixture and the same ERFA conventions as the modern
-transit check. The data are for teaching sky geometry, separate from epic dates.
+Solar-system positions are topocentric from Astronomy Engine. Stars use the
+Hipparcos New Reduction and the same ERFA conventions as the transit benchmark.
+The data are for teaching sky geometry, separate from epic dates.
 """
 
 import argparse
@@ -16,6 +16,7 @@ import erfa
 
 ROOT = Path(__file__).resolve().parent.parent
 FIXTURE = ROOT / "research/fixtures/arundhati-modern.json"
+FIELD_STARS = ROOT / "research/fixtures/mahabharata-modern-stars.json"
 OUTPUT = ROOT / "content/mahabharata-sky.json"
 DAYS = [(2025, 1, 1), (2025, 1, 7), (2025, 1, 13), (2025, 1, 20)]
 SITES = [
@@ -27,8 +28,6 @@ BODIES = [
     astro.Body.Sun, astro.Body.Moon, astro.Body.Mercury, astro.Body.Venus,
     astro.Body.Mars, astro.Body.Jupiter, astro.Body.Saturn,
 ]
-CODES = ("Alcor", "Mizar A")
-STAR_CATALOGUE = "https://vizier.cds.unistra.fr/viz-bin/VizieR?-source=I%2F311%2Fhip2"
 ENGINE = "https://github.com/cosinekitty/astronomy"
 
 
@@ -43,13 +42,12 @@ def at_site(moment, site, stars, catalogue_epoch):
         objects.append([round(horizon.altitude, 2), round(horizon.azimuth, 2)])
 
     matrix = erfa.pnm06a(2451545.0, time.tt)
-    for star in stars:
-        ra = radians(star["ra_deg"])
-        dec = radians(star["dec_deg"])
-        pm_ra = radians(star["pm_ra_cosdec_mas_per_year"] / 3_600_000) / cos(dec)
-        pm_dec = radians(star["pm_dec_mas_per_year"] / 3_600_000)
+    for ra_deg, dec_deg, parallax, pm_ra_cosdec_mas, pm_dec_mas in stars:
+        ra, dec = radians(ra_deg), radians(dec_deg)
+        pm_ra = radians(pm_ra_cosdec_mas / 3_600_000) / cos(dec)
+        pm_dec = radians(pm_dec_mas / 3_600_000)
         ra_now, dec_now, *_ = erfa.pmsafe(
-            ra, dec, pm_ra, pm_dec, star["parallax_mas"] / 1000, 0,
+            ra, dec, pm_ra, pm_dec, parallax / 1000, 0,
             *erfa.epj2jd(catalogue_epoch), 2451545.0, time.tt,
         )
         ra_date, dec_date = erfa.c2s(matrix @ erfa.s2c(ra_now, dec_now))
@@ -76,21 +74,33 @@ def pole_at(epoch):
 
 def build():
     fixture = json.loads(FIXTURE.read_text(encoding="utf-8"))
+    field_stars = json.loads(FIELD_STARS.read_text(encoding="utf-8"))
     catalogue_epoch = fixture["catalogue"]["epoch_julian_year"]
-    stars = [fixture["stars"][key]["astrometry"] for key in ("alcor", "mizar")]
+    if catalogue_epoch != field_stars["epoch_julian_year"] or fixture["catalogue"]["frame"] != field_stars["frame"]:
+        raise ValueError("Star fixtures must share a frame and reference epoch")
+    stars = []
+    for key, name in (("alcor", "Alcor"), ("mizar", "Mizar A")):
+        star = fixture["stars"][key]
+        astrometry = star["astrometry"]
+        stars.append([name, star["hip"], astrometry["ra_deg"], astrometry["dec_deg"], astrometry["parallax_mas"],
+                      astrometry["pm_ra_cosdec_mas_per_year"], astrometry["pm_dec_mas_per_year"]])
+    stars.extend(field_stars["rows"])
+    directions = [row[2:] for row in stars]
     samples = {}
     for site in SITES:
         nights = []
         for day in DAYS:
             start = datetime(*day, tzinfo=UTC) - timedelta(hours=5, minutes=30)
-            nights.append([at_site(start + timedelta(minutes=30 * step), site, stars, catalogue_epoch) for step in range(49)])
+            nights.append([at_site(start + timedelta(minutes=30 * step), site, directions, catalogue_epoch) for step in range(49)])
         samples[site[0]] = nights
     return {
         "status": "modern reference",
         "timeZone": "IST (UTC+05:30)",
-        "method": "Airless apparent horizon, topocentric solar-system positions. The two stars use Hipparcos astrometry propagated with ERFA and rotated into the true equator and equinox of date. Samples every 30 minutes.",
+        "method": "Airless topocentric solar-system positions from Astronomy Engine. Hipparcos star directions use ERFA proper motion and the true equator and equinox of date, neglecting radial velocity, local parallax and annual aberration. Samples every 30 minutes with interpolation between them.",
         "source": ENGINE,
-        "catalogue": STAR_CATALOGUE,
+        "catalogue": field_stars["url"],
+        "pairCatalogue": fixture["catalogue"]["url"],
+        "hips": {row[0]: row[1] for row in stars},
         "days": ["-".join(f"{value:02d}" for value in day) for day in DAYS],
         "moonPhase": [
             [moon_phase(datetime(*day, tzinfo=UTC) + timedelta(minutes=30 * step - 330)) for step in range(49)]
@@ -98,7 +108,7 @@ def build():
         ],
         "poles": [pole_at(epoch) for epoch in (-10000, -5000, 0, 2000)],
         "sites": [{"id": ident, "name": name, "lat": lat, "lon": lon} for ident, name, lat, lon in SITES],
-        "objects": [body.name for body in BODIES] + list(CODES),
+        "objects": [body.name for body in BODIES] + [row[0] for row in stars],
         "samples": samples,
     }
 
@@ -113,4 +123,4 @@ if __name__ == "__main__":
             raise SystemExit("Observer sky dataset differs from the locked calculation")
     else:
         OUTPUT.write_text(json.dumps(fixture, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8", newline="\n")
-    print("Verified 588 observer frames, 196 lunar phase samples and 4 precession epochs")
+    print(f"Verified 588 observer frames for {len(fixture['objects'])} objects, 196 lunar phase samples and 4 precession epochs")

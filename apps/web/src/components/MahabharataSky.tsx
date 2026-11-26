@@ -10,6 +10,7 @@ const size = 720;
 const centre = size / 2;
 const rim = 296;
 const radians = Math.PI / 180;
+const featuredObjects = colors.length;
 
 function interpolate(left: number[], right: number[], fraction: number) {
   const azimuth = ((right[1] - left[1] + 540) % 360) - 180;
@@ -64,6 +65,7 @@ export default function MahabharataSky({ place, clue }: { place: string; clue: s
   }, [playing]);
 
   const frames = data?.samples[site][day];
+  const catalogueIds: Record<string, number> = data?.hips ?? {};
   const index = Math.floor(time);
   const objects = frames?.[index].map((value, body) =>
     interpolate(value, frames[Math.min(index + 1, 48)][body], time - index),
@@ -104,8 +106,8 @@ export default function MahabharataSky({ place, clue }: { place: string; clue: s
       const distance = rim * (1 - altitude / 90);
       const x = centre + Math.sin(azimuth * radians) * distance;
       const y = centre - Math.cos(azimuth * radians) * distance;
-      const radius = body < 2 ? 9 : 5;
-      ctx.fillStyle = colors[body]; ctx.beginPath(); ctx.arc(x, y, radius, 0, 2 * Math.PI); ctx.fill();
+      const radius = body < 2 ? 9 : body < featuredObjects ? 5 : 4;
+      ctx.fillStyle = colors[body] ?? '#b8daf1'; ctx.beginPath(); ctx.arc(x, y, radius, 0, 2 * Math.PI); ctx.fill();
       if (body === selected) {
         ctx.strokeStyle = '#fff8da'; ctx.beginPath(); ctx.arc(x, y, radius + 6, 0, 2 * Math.PI); ctx.stroke();
         ctx.strokeStyle = '#f4eee14b';
@@ -122,10 +124,6 @@ export default function MahabharataSky({ place, clue }: { place: string; clue: s
         : !data || !objects ? <p role="status">Loading sky samples…</p> : (
         <>
         <div className="ma-observatory">
-          <div className="ma-sky-disc">
-            <canvas ref={canvas} width={size} height={size} role="img" aria-label="All-sky map with the zenith at its centre and the horizon at the rim" />
-            <p>Zenith at the centre · Horizon at the edge · Meridian runs north to south through the zenith</p>
-          </div>
           <div className="ma-sky-settings">
             <div className="ma-selects">
               <label>Observing site<select value={site} onChange={(event) => setSite(event.target.value as Site)}>
@@ -146,20 +144,33 @@ export default function MahabharataSky({ place, clue }: { place: string; clue: s
               }}>{playing ? 'Pause sky' : 'Play sky'}</button>
               <button aria-label="Sky forward thirty minutes" onClick={() => { setPlaying(false); setTime(Math.min(48, time + 1)); }}>+30 min</button>
             </div>
-            <div className="ma-sky-objects" aria-label="Sky objects">{data.objects.map((name, body) => (
+          </div>
+          <div className="ma-sky-disc">
+            <canvas ref={canvas} width={size} height={size} role="img" aria-label="All-sky map with the zenith at its centre and the horizon at the rim" />
+            <p>Zenith at the centre · Horizon at the edge · Meridian runs north to south through the zenith</p>
+          </div>
+          <div className="ma-sky-settings ma-sky-readouts">
+            <div className="ma-sky-objects" aria-label="Sun, Moon, planets and the two-star pair">{data.objects.slice(0, featuredObjects).map((name, body) => (
               <button key={name} aria-pressed={selected === body} onClick={() => setSelected(body)}>
                 <span aria-hidden="true" style={{background: colors[body]}} />{name}
               </button>
             ))}</div>
+            <details className="ma-sky-method ma-reference-stars">
+              <summary>Choose another catalogue star</summary>
+              <div className="ma-sky-objects" aria-label="Reference stars">{data.objects.slice(featuredObjects).map((name, offset) => (
+                <button key={name} aria-pressed={selected === offset + featuredObjects} onClick={() => setSelected(offset + featuredObjects)}>{name}</button>
+              ))}</div>
+            </details>
             <div className="ma-object-readout"><strong>{data.objects[selected]}</strong>
               <span>{objects[selected][0] >= 0 ? 'Above horizon' : 'Below horizon'} · Alt {objects[selected][0].toFixed(1)}° · Az {objects[selected][1].toFixed(1)}° {compass(objects[selected][1])}</span>
+              {catalogueIds[data.objects[selected]] && <span>HIP {catalogueIds[data.objects[selected]]}</span>}
             </div>
             <details className="ma-sky-method"><summary>Read the positions</summary>
               <table><caption>Local positions at {timeLabel(time)}</caption><thead><tr><th>Object</th><th>Altitude</th><th>Azimuth</th><th>Horizon</th></tr></thead>
                 <tbody>{objects.map(([alt, az], i) => <tr key={data.objects[i]}><th>{data.objects[i]}</th><td>{alt.toFixed(1)}°</td><td>{az.toFixed(1)}°</td><td>{alt >= 0 ? 'Above' : 'Below'}</td></tr>)}</tbody>
               </table>
               <p>{data.method} The chart shows geometric positions, including objects that daylight can conceal.</p>
-              <p><a href={data.source}>Astronomy Engine</a> · <a href={data.catalogue}>Hipparcos catalogue</a></p>
+              <p><a href={data.source}>Astronomy Engine</a> · <a href={data.catalogue}>Hipparcos field stars</a> · <a href={data.pairCatalogue}>Hipparcos Alcor and Mizar A rows</a></p>
             </details>
           </div>
         </div>
