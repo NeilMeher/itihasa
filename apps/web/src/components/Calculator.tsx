@@ -74,6 +74,8 @@ function LimbExercise({ result }: { result: Calendar }) {
     {angular ? <>
       <p>{angular.operation} gives {startingAngle.toFixed(3)}°. Each of the {angular.sectors} sectors spans {sectorWidth.toFixed(3)}°.</p>
       <output aria-label="Practice result">{position.toFixed(3)}° with a +{offset}° practice offset is in sector {Math.floor(position * angular.sectors / 360) + 1} of {angular.sectors}.</output>
+      {limbIndex === 1 && <div className="tithi-practice-wheel"><Wheel markers={[{ name: 'Sun', angle: 0 }, { name: 'Moon', angle: position }]}
+        label={`Practice Moon–Sun angle ${position.toFixed(3)}°.`} /></div>}
       <p className="small-note">The slider changes a practice angle. The next change above comes from the calculated sky.</p>
     </> : <output aria-label="Practice result">{offset === 0 ? 'At this sunrise' : `${offset} day${offset === 1 ? '' : 's'} later`} the weekday is {nextWeekday}.</output>}
   </details>;

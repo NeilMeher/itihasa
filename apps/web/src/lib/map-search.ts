@@ -25,6 +25,14 @@ export function attachMapSearch(form: HTMLFormElement) {
         const row = document.createElement('li');
         const link = document.createElement('a');
         link.href = result.node && previewNodes.has(result.node) ? mapReadingHref(result.node) : result.url;
+        if (result.branch && (result.node || result.reference)) {
+          link.dataset.homeResultBranch = result.branch;
+          link.dataset.title = result.title;
+          link.dataset.summary = result.context + '. ' + result.text;
+          link.dataset.reading = result.url;
+          if (result.node) link.dataset.homeNode = result.node;
+          if (result.reference) link.dataset.homeReference = result.url;
+        }
         link.textContent = result.title;
         const context = document.createElement('small');
         context.textContent = result.context;
@@ -39,6 +47,9 @@ export function attachMapSearch(form: HTMLFormElement) {
   };
   input.addEventListener('input', () => void update());
   input.addEventListener('focus', () => { if (box.hidden && input.value) void update(); });
+  box.addEventListener('click', (event) => {
+    if ((event.target as Element).closest('[data-home-result-branch]')) requestAnimationFrame(close);
+  });
   form.addEventListener('focusout', (event) => { if (!form.contains(event.relatedTarget as Node | null)) close(); });
   form.addEventListener('keydown', (event) => {
     if (event.key === 'Escape' && !box.hidden) { event.preventDefault(); input.focus(); close(); }

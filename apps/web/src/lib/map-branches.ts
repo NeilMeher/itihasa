@@ -1,9 +1,9 @@
 import type { Lane } from './explorer';
 
 type Entry = { label: string; node?: string; href?: string };
-type Branch = { id: Lane; label: string; cue: string; intro: string; groups: { label: string; entries: Entry[] }[] };
+export type MapBranch = { id: Lane; label: string; cue: string; intro: string; groups: { label: string; entries: Entry[] }[] };
 
-export const branches: Branch[] = [
+export const branches: MapBranch[] = [
   { id: 'mahabharata', label: 'Mahābhārata', cue: 'Court, exile and war', intro: 'Follow the story from the Kuru court to the forest, the battlefield and the debates after the war.', groups: [
     { label: 'Story arcs', entries: [{ label: 'The dice match', node: 'ma-episode-dice' }, { label: 'Into the forest', node: 'ma-episode-exile-start' }, { label: 'The peace mission', node: 'ma-episode-peace' }, { label: 'All eighteen war days', href: '/explorer/?lane=mahabharata&scope=war' }, { label: 'The aftermath', node: 'ma-episode-mourning' }] },
     { label: 'People and passages', entries: [{ label: 'Draupadī', node: 'ma-person-draupadi' }, { label: 'Karna', node: 'ma-person-karna' }, { label: 'Bhīṣma', node: 'ma-person-bhishma' }, { label: 'Kurukṣetra', node: 'ma-place-kurukshetra' }, { label: 'The BORI edition and eighteen parvas', href: '/library/#mahabharata' }] },
@@ -14,10 +14,11 @@ export const branches: Branch[] = [
   ] },
   { id: 'maratha', label: 'Swarajya and Maratha history', cue: 'Forts, records and campaigns', intro: 'Follow changes in authority through dated records, and see what the sources can tell us about forts and campaigns.', groups: [
     { label: 'Historical periods', entries: [{ label: 'The Deccan setting', node: 'maratha-period-deccan' }, { label: 'Shivaji Maharaj and Swarajya', node: 'maratha-period-shivaji' }, { label: 'Resistance and regency', node: 'maratha-period-resistance' }, { label: 'Satara and Shahu', node: 'maratha-period-satara' }, { label: 'Administration and expansion', node: 'maratha-period-administration' }, { label: 'The Panipat campaign', node: 'maratha-period-panipat' }, { label: 'Regional houses', node: 'maratha-period-houses' }, { label: 'The Company settlement', node: 'maratha-period-company' }, { label: 'Continuities after 1818', node: 'maratha-period-continuities' }] },
-    { label: 'Forts, ports and documents', entries: [{ label: 'Raigad', node: 'maratha-place-raigad' }, { label: 'Compare the Agra accounts', node: 'maratha-event-escape' }, { label: 'The Vasai port account', node: 'maratha-event-vasai-port-account' }, { label: 'Panipat’s supply routes', node: 'maratha-event-panipat-supply' }, { label: 'Raigad terrain and fort cases', href: '/swarajya/' }] },
+    { label: 'Forts, ports and documents', entries: [{ label: 'Raigad', node: 'maratha-place-raigad' }, { label: 'Compare the Agra accounts', node: 'maratha-event-escape' }, { label: 'The Vasai port account', node: 'maratha-event-vasai-port-account' }, { label: 'Panipat', node: 'maratha-place-panipat' }, { label: 'Panipat’s supply routes', node: 'maratha-event-panipat-supply' }, { label: 'Raigad terrain and fort cases', href: '/swarajya/' }] },
+    { label: 'People and records', entries: [{ label: 'Shivaji Maharaj', node: 'maratha-person-shivaji' }, { label: 'Tarabai', node: 'maratha-person-tarabai' }, { label: 'The coronation at Raigad', node: 'maratha-event-capital' }] },
   ] },
   { id: 'purana', label: 'Kṛṣṇa and related texts', cue: 'Harivaṃśa and Purāṇa readings', intro: 'Read episodes about Kṛṣṇa across their named texts and follow the documented link to an observance.', groups: [
-    { label: 'Readings and traditions', entries: [{ label: 'Kṛṣṇa', node: 'purana-person-krishna' }, { label: 'Kṛṣṇa’s birth', node: 'purana-episode-krishna-birth' }, { label: 'Kṛṣṇa in Gokula', node: 'purana-episode-krishna-gokula' }, { label: 'The Harivaṃśa arena account', node: 'purana-episode-harivamsa-kamsa' }, { label: 'Janmāṣṭamī', node: 'tradition-janmashtami' }, { label: 'Compare episodes across texts', href: '/krishna/' }] },
+    { label: 'Readings and traditions', entries: [{ label: 'Kṛṣṇa', node: 'purana-person-krishna' }, { label: 'Kṛṣṇa’s birth', node: 'purana-episode-krishna-birth' }, { label: 'Kṛṣṇa in Gokula', node: 'purana-episode-krishna-gokula' }, { label: 'The Harivaṃśa arena account', node: 'purana-episode-harivamsa-kamsa' }, { label: 'Kṛṣṇa in the Mahābhārata', node: 'ma-person-krishna' }, { label: 'Janmāṣṭamī', node: 'tradition-janmashtami' }, { label: 'Compare episodes across texts', href: '/krishna/' }] },
   ] },
   { id: 'sky', label: 'Sky & Calendar', cue: 'Daily tools and sky lessons', intro: 'Try a daily calculation, compare a festival example, or follow the sky from an observer’s point of view.', groups: [
     { label: 'Calculators and lessons', entries: [{ label: 'Pañchāṅga', node: 'tool-panchang' }, { label: 'Birth Sky', node: 'tool-birth-sky' }, { label: 'Observer sky', node: 'tool-observer' }, { label: 'Sūrya Siddhānta workshop', node: 'tool-mean-sun' }, { label: 'Nakshatra', node: 'concept-nakshatra' }] },

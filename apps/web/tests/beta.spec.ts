@@ -2,11 +2,11 @@ import { expect, test } from '@playwright/test';
 
 test('home opens each major product area', async ({ page }, testInfo) => {
   const routes = [
-    ['Mahābhārata', '/map/mahabharata/'],
-    ['Rāmāyaṇa', '/map/ramayana/'],
-    ['Swarajya and Maratha history', '/map/maratha/'],
-    ['Kṛṣṇa and related texts', '/map/purana/'],
-    ['Sky & Calendar', '/map/sky/'], ['Research and Sources', '/map/research/'],
+    ['Mahābhārata', 'mahabharata'],
+    ['Rāmāyaṇa', 'ramayana'],
+    ['Swarajya and Maratha history', 'maratha'],
+    ['Kṛṣṇa and related texts', 'purana'],
+    ['Sky & Calendar', 'sky'], ['Research and Sources', 'research'],
   ];
   await page.setViewportSize({ width: 360, height: 640 });
   await page.goto('/');
@@ -18,10 +18,13 @@ test('home opens each major product area', async ({ page }, testInfo) => {
   await hero.press('Enter');
   await expect(page).toHaveURL(/\/explorer\/$/);
   await expect(page.getByRole('heading', { name: 'Who tells the Mahābhārata?' })).toBeVisible();
-  for (const [name, path] of routes) {
+  for (const [name, branch] of routes) {
     await page.goto('/');
-    await map.getByRole('link', { name: new RegExp(name) }).click();
-    expect(new URL(page.url()).pathname + new URL(page.url()).search).toBe(path);
+    const link = map.getByRole('link', { name: new RegExp(name) });
+    await expect(link).toHaveAttribute('href', `/map/${branch}/`);
+    await expect(link).toHaveAttribute('aria-expanded', 'false');
+    await link.click();
+    await expect(page).toHaveURL(new RegExp(`/\\?branch=${branch}$`));
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(360);
   }

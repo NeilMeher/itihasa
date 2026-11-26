@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react';
-import { explorerHref, lanes, type Lane, type WorkspaceState } from '../lib/explorer';
+import { explorerHref, homeSelectionEvent, lanes, type Lane, type WorkspaceState } from '../lib/explorer';
 import { items, laneFor, nodes, placeById, timeline } from '../lib/explorer-content';
 import { includesPerson, initial, readingHref, resolve } from '../lib/explorer-state';
 import { foldSearch, type GraphNode } from '../lib/project-graph';
@@ -11,8 +11,11 @@ import { rememberSelection } from '../lib/explorer-resume';
 
 const ProjectMindMap = lazy(() => import('./ProjectMindMap'));
 
-export default function Explorer({ start }: { start?: string }) {
-  const [state, setState] = useState(() => start ? resolve(new URLSearchParams(), start).state : initial);
+type HomePanel = { onClose: () => void; onReady: () => void; onNavigate: () => void };
+
+export default function Explorer({ start, home }: { start?: string; home?: HomePanel }) {
+  const [state, setState] = useState(() => home ? resolve(new URLSearchParams(location.search)).state :
+    start ? resolve(new URLSearchParams(), start).state : initial);
   const [invalid, setInvalid] = useState('');
   const [ready, setReady] = useState(false);
   const [closed, setClosed] = useState(false);
@@ -35,9 +38,14 @@ export default function Explorer({ start }: { start?: string }) {
     }
     restore();
     setReady(true);
+    home?.onReady();
     window.addEventListener('popstate', restore);
-    return () => window.removeEventListener('popstate', restore);
-  }, [start]);
+    if (home) window.addEventListener(homeSelectionEvent, restore);
+    return () => {
+      window.removeEventListener('popstate', restore);
+      window.removeEventListener(homeSelectionEvent, restore);
+    };
+  }, [start, home]);
 
   useEffect(() => {
     const list = eventList.current;
@@ -69,7 +77,9 @@ export default function Explorer({ start }: { start?: string }) {
   function update(next: WorkspaceState, mode: 'push' | 'replace' = 'push') {
     setState(next);
     setInvalid('');
-    commitSelection(explorerHref(next), mode);
+    const homeBranch = home ? new URLSearchParams(location.search).get('branch') ?? next.lane : undefined;
+    commitSelection(explorerHref(next, homeBranch), mode);
+    home?.onNavigate();
     if (mode === 'push') rememberSelection(next);
   }
 
@@ -109,6 +119,7 @@ export default function Explorer({ start }: { start?: string }) {
   }
 
   function close() {
+    if (home) { home.onClose(); return; }
     setClosed(true);
     requestAnimationFrame(() => {
       const focus = opener.current?.isConnected ? opener.current :
@@ -130,9 +141,9 @@ export default function Explorer({ start }: { start?: string }) {
     update={update} />;
 
   return <div className="explorer-shell">
-    <nav className="explorer-breadcrumb" aria-label="Map category">
+    {!home && <nav className="explorer-breadcrumb" aria-label="Map category">
       <a href="/">← All Itihāsa</a>{branch && <a href={branchHref(branch.id)}>{branch.label} branch</a>}
-    </nav>
+    </nav>}
     <nav className="explorer-views" aria-label="Explorer views">
       <button disabled={!ready} aria-pressed={state.view === 'timeline'} onClick={() => changeView('timeline')}>Timeline</button>
       <button disabled={!ready} aria-pressed={state.view === 'map'} onClick={() => changeView('map')}>Mind Map</button>
@@ -161,6 +172,7 @@ export default function Explorer({ start }: { start?: string }) {
       <Suspense fallback={<p role="status">Opening the Mind Map…</p>}>
         <ProjectMindMap connected={{
           selection: state,
+          hasReader: Boolean(reader),
           previous: trail.at(-1),
           change: (next, push, trigger) => {
             if (next.node !== state.node) select(next.node, trigger);

@@ -4,10 +4,10 @@ import maNotes from '../../../../content/mahabharata-annotations.json';
 import raNotes from '../../../../content/ramayana-annotations.json';
 import catalog from '../../../../content/explorer-catalog.json';
 import { searchEntries } from './library';
-import { explorerHref } from './explorer';
+import { explorerHref, type Lane } from './explorer';
 import { foldSearch } from './project-graph';
 
-export type SearchEntry = { url: string; title: string; text: string; aliases: string; context: string; node?: string };
+export type SearchEntry = { url: string; title: string; text: string; aliases: string; context: string; node?: string; branch?: Lane; reference?: boolean };
 
 const workLabels: Record<string, string> = {
   mahabharata: 'Mahābhārata', ramayana: 'Rāmāyaṇa', maratha: 'Maratha history',
@@ -35,6 +35,7 @@ export const entries: SearchEntry[] = [
   ...catalog.nodes.map((node) => ({
     url: explorerHref({ node: node.id, view: 'map' }), title: node.title, text: node.summary,
     aliases: node.aliases.join(' '), context: workLabels[node.work] + ' · ' + kinds[node.kind], node: node.id,
+    branch: node.work === 'sources' || node.kind === 'claim' ? 'research' : node.work as Lane,
   })),
 ];
 const exact = new Map<number, Set<number>>();
@@ -57,12 +58,12 @@ export function indexedMatches(query: string): SearchEntry[] {
   if ((!requestedWork || ['bori', 'mahabharata'].includes(requestedWork)) && maIndex.parvas[book - 1]?.chapterStarts[chapter - 1]) {
     entries.push({ title: 'BORI chapter ' + book + '.' + chapter, text: 'Open its exact reference and the closest available readings.',
       aliases: '', context: 'Mahābhārata · ' + (exact.get(book)?.has(chapter) ? 'Annotated chapter' : 'Chapter locator'),
-      url: '/mahabharata/parva/' + padded + '/#chapter-' + chapter });
+      url: '/mahabharata/parva/' + padded + '/#chapter-' + chapter, branch: 'mahabharata', reference: true });
   }
   if ((!requestedWork || ['baroda', 'ramayana'].includes(requestedWork)) && raIndex.books[book - 1]?.chapterStarts[chapter - 1]) {
     entries.push({ title: 'Baroda sarga ' + book + '.' + chapter, text: 'Open its exact reference and the closest available readings.',
       aliases: '', context: 'Rāmāyaṇa · ' + (raExact.has(book + '.' + chapter) ? 'Annotated sarga' : 'Sarga locator'),
-      url: '/ramayana/' + padded + '/#sarga-' + chapter });
+      url: '/ramayana/' + padded + '/#sarga-' + chapter, branch: 'ramayana', reference: true });
   }
   return entries;
 }

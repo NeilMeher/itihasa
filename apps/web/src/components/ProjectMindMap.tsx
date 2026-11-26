@@ -10,6 +10,7 @@ const starter = { node: firstNode, work: 'all', relation: 'all', edge: '', depth
 type GraphSelection = Pick<typeof starter, 'node' | 'work' | 'relation' | 'edge'>;
 type ConnectedMap = {
   selection: GraphSelection;
+  hasReader?: boolean;
   previous?: string;
   change: (selection: GraphSelection, push: boolean, trigger?: HTMLElement) => void;
   back: () => void;
@@ -162,9 +163,9 @@ export default function ProjectMindMap({ connected }: { connected?: ConnectedMap
           })}
         </section>
         <section className="map-neighbors" aria-labelledby="map-selection">
-          <p className="map-node-kind">{node.kind} · {workNames[node.work]}</p>
-          <h2 id="map-selection" ref={heading} tabIndex={-1}>{node.title}</h2>
-          <p>{node.summary}</p>
+          {!connected?.hasReader && <p className="map-node-kind">{node.kind} · {workNames[node.work]}</p>}
+          <h2 id="map-selection" ref={heading} tabIndex={-1}>{connected?.hasReader ? 'Connections' : node.title}</h2>
+          {!connected?.hasReader && <p>{node.summary}</p>}
           {connected && node.kind === 'person' && <button onClick={() => connected.trail(node)}>Follow this person</button>}
           {node.href && <a href={connected ? connected.reading(node) : node.href.startsWith('/ramayana/?scene=') ? withQuery(node.href, { person }) : node.href}>Open {node.kind === 'source' ? 'source' : 'reading'} →</a>}
           {appearances.length > 0 && <details className="source-card">
@@ -174,7 +175,7 @@ export default function ProjectMindMap({ connected }: { connected?: ConnectedMap
               return <li key={edge.to}>{connected ? <button onClick={(event) => open(story.id, event.currentTarget)}>{story.title}</button> : <a href={story.href}>{story.title}</a>}<p>{edge.why} · {edge.scope}</p></li>;
             })}</ol>
           </details>}
-          <h3>Connected readings</h3>
+          {!connected?.hasReader && <h3>Connected readings</h3>}
           {currentEdges === undefined && <p role="status">Loading relationships…</p>}
           {currentEdges === null && <p role="status">Relationships are unavailable. Use the reading or Timeline links to continue.</p>}
           <ul aria-label="Sourced connections">

@@ -1,11 +1,13 @@
 ---
-import { branches, branchHref, mapReadingHref } from '../lib/map-branches';
+import { branches, branchHref } from '../lib/map-branches';
 import { journeys, journeyHref } from '../lib/map-journeys';
+import MapCategory from './MapCategory.astro';
 import '../styles/map-home.css';
 
 interface Props { selected?: (typeof branches)[number] }
 const { selected } = Astro.props;
 ---
+<div data-home-map={!selected ? '' : undefined}>
 <header class="map-home-header">
   {selected && <a href="/">← All Itihāsa</a>}
   <h1 style={selected ? `view-transition-name: branch-${selected.id}` : undefined}>{selected ? selected.label : 'Explore Itihāsa'}</h1>
@@ -17,25 +19,26 @@ const { selected } = Astro.props;
   <button type="submit">Find</button>
   <div hidden class="map-home-results" data-map-results></div>
 </form>
-{selected ? (
-  <div class:list={['map-category', 'branch-' + selected.id]} aria-label={selected.label + ' map branch'}>
-    {selected.groups.map((group) => <section class="map-category-group">
-      <h2>{group.label}</h2>
-      <ul>{group.entries.map((entry) => <li><a href={entry.node ? mapReadingHref(entry.node) : entry.href}>{entry.label}</a></li>)}</ul>
-    </section>)}
-  </div>
-) : (
+{selected ? <MapCategory branch={selected} /> : (<>
   <nav class="map-overview" aria-label="Whole-project Mind Map">
     <div class="map-center" aria-hidden="true"><span>✦</span><strong>Itihāsa</strong></div>
     <ul>{branches.map((branch) => <li class={'branch-' + branch.id}>
-      <a href={branchHref(branch.id)} class="map-category-link" style={`view-transition-name: branch-${branch.id}`}>
+      <a href={branchHref(branch.id)} class="map-category-link" data-home-branch={branch.id} aria-controls="home-branch" style={`view-transition-name: branch-${branch.id}`}>
         <span class="branch-mark" aria-hidden="true"></span>
         <span><strong>{branch.label}</strong><small>{branch.cue}</small></span>
         <span class="branch-arrow" aria-hidden="true">↗</span>
       </a>
     </li>)}</ul>
   </nav>
-)}
+  <div class="home-map-stage" data-home-stage hidden>
+    <div id="home-branch"></div>
+    <div class="home-map-reader" data-home-reader hidden>
+      <div data-home-preview></div>
+      <div data-home-explorer hidden></div>
+    </div>
+  </div>
+  {branches.map((branch) => <template data-branch-template={branch.id}><MapCategory branch={branch} inline /></template>)}
+</>)}
 <div class="map-home-shortcuts">
   <a hidden data-map-continue>Continue exploring →</a>
   <a href="/explorer/">Open the Explorer <span aria-hidden="true">→</span></a>
@@ -44,13 +47,17 @@ const { selected } = Astro.props;
 <section class="map-guides" aria-label="Guided journeys">
   <h2>Follow a question</h2>
   <ol>{journeys.filter((journey) => !selected || selected.id === journey.branch).map((journey) =>
-    <li><a href={journeyHref(journey, 0)}>{journey.title}</a> <small>{journey.steps.length} steps</small></li>
+    <li><a href={journeyHref(journey, 0)} data-home-guide={!selected ? journey.branch : undefined}>{journey.title}</a> <small>{journey.steps.length} steps</small></li>
   )}</ol>
 </section>
+</div>
 <script>
   import { attachMapSearch } from '../lib/map-search';
   import { resumeHref } from '../lib/explorer-resume';
+  import { attachHomeExplorer } from '../lib/home-explorer';
   for (const form of document.querySelectorAll<HTMLFormElement>('[data-map-search]')) attachMapSearch(form);
+  const home = document.querySelector<HTMLElement>('[data-home-map]');
+  if (home) attachHomeExplorer(home);
   function showResume() {
     const link = document.querySelector<HTMLAnchorElement>('[data-map-continue]');
     const href = resumeHref();

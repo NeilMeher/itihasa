@@ -32,8 +32,11 @@ export type WorkspaceState = {
   step: string;
 };
 
-export function explorerHref(fields: Partial<WorkspaceState> = {}) {
-  return withQuery('/explorer/', {
+export const homeSelectionEvent = 'itihasa:home-selection';
+
+export function explorerHref(fields: Partial<WorkspaceState> = {}, homeBranch?: string) {
+  return withQuery(homeBranch ? '/' : '/explorer/', {
+    branch: homeBranch,
     ...fields,
     scope: fields.scope === 'all' ? '' : fields.scope,
     view: fields.view === 'timeline' ? '' : fields.view,

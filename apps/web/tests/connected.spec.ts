@@ -51,7 +51,7 @@ test('Draupadī opens a profile and the dice and exile readings from the graph',
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto('/explorer/?node=ma-person-draupadi&view=map');
   const graph = page.locator('.map-neighbors');
-  await expect(graph.getByRole('heading', { name: 'Draupadī', exact: true })).toBeVisible();
+  await expect(page.getByRole('article', { name: 'Selected reading' }).getByRole('heading', { name: 'Draupadī', exact: true })).toBeVisible();
   await graph.getByRole('button', { name: 'Follow this person' }).click();
   await expect(page).toHaveURL(/person=ma-person-draupadi/);
   await expect(page.getByText('Following Draupadī', { exact: false })).toBeVisible();
@@ -64,7 +64,7 @@ test('Draupadī opens a profile and the dice and exile readings from the graph',
   await story.getByRole('link', { name: 'Chapter and primary text' }).click();
   await expect(page).toHaveURL(/\/parva\/03\/#chapter-/);
   await page.goBack();
-  await expect(graph.getByRole('heading', { name: 'Into the forest', exact: true })).toBeVisible();
+  await expect(story.getByRole('heading', { name: 'Into the forest', exact: true })).toBeVisible();
   await expect(story.getByRole('link', { name: 'Chapter and primary text' })).toBeVisible();
   await page.screenshot({ path: info.outputPath('explorer-draupadi-1280.png'), fullPage: true });
 });
@@ -157,7 +157,7 @@ test('calendar, transient birth input, exact chapter search and invalid selectio
   await expect(page.getByText('That Explorer item is unavailable.', { exact: false })).toBeVisible();
   await page.getByRole('searchbox').fill('द्रौपदी');
   await page.getByRole('button', { name: 'Draupadī person · Mahābhārata', exact: true }).click();
-  await expect(page.locator('.map-neighbors').getByRole('heading', { name: 'Draupadī', exact: true })).toBeVisible();
+  await expect(page.getByRole('article', { name: 'Selected reading' }).getByRole('heading', { name: 'Draupadī', exact: true })).toBeVisible();
 });
 
 test('scrubbing keeps focus and filters explain a selection outside the lane scope', async ({ page }) => {

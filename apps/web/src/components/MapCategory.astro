@@ -1,0 +1,45 @@
+---
+import { items, nodes } from '../lib/explorer-content';
+import { mapReadingHref, type MapBranch } from '../lib/map-branches';
+import { journeys, journeyHref } from '../lib/map-journeys';
+import mahabharata from '../../../../content/mahabharata-atlas.json';
+import { parvaUrl } from '../lib/mahabharata';
+import { kandaUrl, ramayana } from '../lib/ramayana';
+
+interface Props { branch: MapBranch; inline?: boolean }
+const { branch, inline } = Astro.props;
+const branchJourneys = journeys.filter((journey) => journey.branch === branch.id);
+---
+<div class:list={['map-category', 'branch-' + branch.id]} aria-label={branch.label + ' map branch'}>
+  {inline && <header class="map-category-heading">
+    <h2 tabindex="-1" data-branch-heading><span class="branch-mark" aria-hidden="true"></span>{branch.label}</h2>
+    <a href="/" data-home-reset>← All Itihāsa</a>
+  </header>}
+  {branch.groups.map((group) => <section class="map-category-group">
+    <h3>{group.label}</h3>
+    <ul>{group.entries.map((entry) => {
+      const node = entry.node ? nodes.get(entry.node) : undefined;
+      const reading = entry.node ? items.get(entry.node) : undefined;
+      return <li><a href={entry.node ? mapReadingHref(entry.node) : entry.href} data-home-node={inline ? entry.node : undefined}
+        data-title={inline ? reading?.title ?? node?.title : undefined} data-summary={inline ? reading?.summary ?? node?.summary : undefined}
+        data-reading={inline ? reading?.href ?? node?.href : undefined} data-passage={inline ? reading?.links[0]?.href ?? reading?.sources[0]?.href : undefined}
+        data-locator={inline ? reading?.label : undefined}>{entry.label}</a></li>;
+    })}</ul>
+  </section>)}
+  {inline && branch.id === 'mahabharata' && <details class="map-category-extra" data-days>
+    <summary>Choose one of the eighteen war days</summary>
+    <ul>{[...items.values()].filter((item) => item.day).map((day) => <li>
+      <a href={day.href} data-home-node={day.id} data-title={day.title} data-summary={day.summary} data-reading={day.href}
+        data-passage={day.links[0]?.href} data-locator={day.label}>Day {day.day}</a>
+    </li>)}</ul>
+  </details>}
+  {inline && (branch.id === 'mahabharata' || branch.id === 'ramayana') && <details class="map-category-extra">
+    <summary>{branch.id === 'mahabharata' ? 'Browse the eighteen parvas' : 'Browse the seven kāṇḍas'}</summary>
+    <ul>{(branch.id === 'mahabharata' ? mahabharata.books : ramayana.books).map((book) =>
+      <li><a href={branch.id === 'mahabharata' ? parvaUrl(book.number) : kandaUrl(book.number)}>{book.name}</a></li>)}</ul>
+  </details>}
+  {inline && branchJourneys.length > 0 && <section class="map-category-group map-category-guide">
+    <h3>Guided journey</h3>
+    <ul>{branchJourneys.map((journey) => <li><a href={journeyHref(journey, 0)} data-home-guide={branch.id}>{journey.title}</a></li>)}</ul>
+  </section>}
+</div>

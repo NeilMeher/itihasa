@@ -47,7 +47,7 @@ export default function ExplorerReader({ state, selected, ready, heading, onSele
     <header className="explorer-reading-header">
       <p>{selected?.label ?? (node?.kind ?? 'Reading') + ' · ' + lanes[state.lane].name}</p>
       <button aria-label="Close reading" disabled={!ready} onClick={onClose}>×</button>
-      <h2 ref={heading} tabIndex={-1}>{selected?.title ?? place?.name ?? node?.title}</h2>
+      <h2 className="explorer-reading-heading" ref={heading} tabIndex={-1}>{selected?.title ?? place?.name ?? node?.title}</h2>
     </header>
     <p className="explorer-summary">{selected?.summary ?? place?.summary ?? node?.summary}</p>
     <nav className="explorer-reading-tabs" aria-label="Reading views">

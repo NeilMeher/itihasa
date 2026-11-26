@@ -10,18 +10,22 @@ test('touch from the first-screen map to dice, Draupadī, exile and the same tim
     const overview = page.getByRole('navigation', { name: 'Whole-project Mind Map' });
     const branch = overview.getByRole('link', { name: /^Mahābhārata/ });
     await expect(branch).toBeInViewport({ ratio: 1 });
+    await expect(branch).toHaveAttribute('aria-expanded', 'false');
     await page.screenshot({ path: info.outputPath('after-home-360.png') });
     await branch.tap();
     await expect(page.getByRole('heading', { name: 'Mahābhārata', exact: true })).toBeVisible();
-    await page.getByRole('link', { name: 'The dice match', exact: true }).tap();
+    const dice = page.locator('#home-branch').getByRole('link', { name: 'The dice match', exact: true });
+    await dice.tap();
     const story = page.getByRole('article', { name: reader });
     await expect(story.getByRole('heading', { name: 'The dice match' })).toBeInViewport();
     const graph = page.getByRole('region', { name: 'Selected node and nearby connections' });
     await graph.getByRole('button', { name: 'Follow Into the forest' }).tap();
     await expect(story.getByRole('heading', { name: 'Into the forest' })).toBeFocused();
     await story.getByRole('button', { name: 'Close reading' }).tap();
-    await expect(graph.locator('.map-hub')).toBeFocused();
+    await expect(dice).toBeFocused();
     await expect(story).toBeHidden();
+    await page.goBack();
+    await expect(story.getByRole('heading', { name: 'Into the forest' })).toBeVisible();
     await page.goBack();
     await expect(story.getByRole('heading', { name: 'The dice match' })).toBeVisible();
     await story.getByRole('button', { name: 'Draupadī', exact: true }).tap();
@@ -50,6 +54,7 @@ test('the default timeline shows its selected event before the first mobile scro
   const marker = page.getByRole('button', { name: 'Go to selected reading' });
   await expect(marker).toBeInViewport({ ratio: 1 });
   await expect(marker).toContainText('Who tells the Mahābhārata?');
+  await expect(marker).toBeEnabled();
   await marker.press('Enter');
   await expect(page.getByRole('article', { name: reader }).getByRole('heading', { name: 'Who tells the Mahābhārata?' })).toBeFocused();
 });
@@ -81,7 +86,9 @@ test('rapid events, shared history and reduced motion keep the latest graph and 
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/');
   await page.screenshot({ path: info.outputPath('after-home-1280.png') });
-  await page.getByRole('navigation', { name: 'Whole-project Mind Map' }).getByRole('link', { name: /^Mahābhārata/ }).click();
+  const branch = page.getByRole('navigation', { name: 'Whole-project Mind Map' }).getByRole('link', { name: /^Mahābhārata/ });
+  await expect(branch).toHaveAttribute('aria-expanded', 'false');
+  await branch.click();
   await page.getByRole('link', { name: 'The dice match', exact: true }).click();
   const story = page.getByRole('article', { name: reader });
   const graph = page.getByRole('region', { name: 'Selected node and nearby connections' });
@@ -97,7 +104,7 @@ test('rapid events, shared history and reduced motion keep the latest graph and 
   await page.reload();
   await expect(story.getByRole('heading', { name: 'The dice match' })).toBeVisible();
   await expect(graph.getByRole('button', { name: 'Follow Into the forest' })).toBeVisible();
-  const [left, right] = await Promise.all([graph.boundingBox(), story.boundingBox()]);
+  const [left, right] = await Promise.all([page.locator('#home-branch').boundingBox(), story.boundingBox()]);
   expect(left!.x + left!.width).toBeLessThan(right!.x);
   await page.screenshot({ path: info.outputPath('after-reading-1280.png') });
 });
@@ -113,7 +120,8 @@ test('five questions lead to their cited readings, comparisons, and working cale
   const story = page.getByRole('article', { name: reader });
   for (const entry of cases) {
     await page.goto('/');
-    await page.getByRole('link', { name: entry.name }).click();
+    await expect(page.locator('[data-home-branch]').first()).toHaveAttribute('aria-expanded', 'false');
+    await page.getByRole('region', { name: 'Guided journeys' }).getByRole('link', { name: entry.name }).click();
     const guide = page.getByRole('region', { name: 'Guided journey' });
     const step = guide.getByRole('link', { name: entry.step });
     await step.click();
