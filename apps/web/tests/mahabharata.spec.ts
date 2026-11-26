@@ -67,8 +67,20 @@ test('peace, battle day, map, people and return from a source on desktop', async
 test('the observer sky returns to the same passage at 390px', async ({ page }, info) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.emulateMedia({ reducedMotion: 'reduce' });
-  await page.goto('/mahabharata/?scene=omens');
-  await page.getByRole('button', { name: /Open the observer sky/ }).click();
+  let releaseScript: () => void = () => {};
+  const scriptCanLoad = new Promise<void>((resolve) => { releaseScript = resolve; });
+  await page.route('**/_astro/MahabharataAtlas.*.js', async (route) => {
+    await scriptCanLoad;
+    await route.continue();
+  });
+  const observer = page.getByRole('button', { name: /Open the observer sky/ });
+  try {
+    await page.goto('/mahabharata/?scene=omens', { waitUntil: 'domcontentloaded' });
+    await expect(observer).toBeDisabled();
+  } finally {
+    releaseScript();
+  }
+  await observer.click();
   await expect(page.getByText('illustrative sky', { exact: true })).toBeVisible();
   await page.getByLabel('Observing site').selectOption('dvaraka');
   await page.getByLabel('Sample date').selectOption('2');

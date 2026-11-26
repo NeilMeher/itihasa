@@ -187,3 +187,31 @@ test('Kṛṣṇa companion traces the arena comparison and the festival calcula
   await page.getByRole('button', { name: 'Calculate day' }).click();
   await expect(page.getByRole('region', { name: 'Pañchāṅga result' })).toContainText('Kṛṣṇa paksha');
 });
+
+test('a battle marker and an alternate sky interpretation stay shareable at 360px', async ({ page }, info) => {
+  await page.setViewportSize({ width: 360, height: 640 });
+  await page.goto('/mahabharata/?scene=jayadratha&day=14');
+  await expect(page.getByRole('button', { name: 'Battle day 14', exact: true })).toHaveAttribute('aria-pressed', 'true');
+  await page.getByText('How the text marks day 14', { exact: true }).click();
+  await expect(page.getByRole('link', { name: /Boundary passage 7.63.1/ })).toHaveAttribute('href', /07063001a$/);
+  await expect(page.getByRole('link', { name: /Night fighting 7.135.31/ })).toBeVisible();
+  await page.getByRole('button', { name: 'Battle day 15', exact: true }).click();
+  await expect(page).toHaveURL(/day=15/);
+  await expect(page.getByRole('link', { name: /Boundary passage 7.162.2/ })).toHaveAttribute('href', /07162002a$/);
+  await page.getByText('Compare battle chapter numbering', { exact: true }).click();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(360);
+  await page.locator('.ma-war-days').scrollIntoViewIfNeeded();
+  await page.screenshot({ path: info.outputPath('war-days-360.png'), fullPage: true });
+
+  await page.goto('/mahabharata/?scene=omens&view=evidence&bounds=stars,season');
+  const reading = page.getByRole('combobox', { name: 'Reading of “ahead”' });
+  await expect(page.locator('.ma-combined')).toContainText('7,000–4,508 BCE');
+  await reading.selectOption('literal');
+  await expect(page.locator('.ma-combined')).toContainText('7,000–3,700 BCE');
+  await expect(page.getByRole('checkbox', { name: 'Arundhatī and Vasiṣṭha' })).toBeDisabled();
+  await expect(page).toHaveURL(/ahead=relative/);
+  await page.reload();
+  await expect(reading).toHaveValue('literal');
+  await expect(page.getByText(/^Historical result · Unavailable\./)).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(360);
+});

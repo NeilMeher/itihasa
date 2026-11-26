@@ -79,9 +79,15 @@ def check(source_dir):
     for entry in reading["wagers"] + reading["court"]:
         assert passage(entry[0])[0] == 2, entry
     passage("01002026a")
+    for line in ("06045063c", "07135031a", "10008001a", "08021035a"):
+        passage(line)
     assert [entry["day"] for entry in reading["warDays"]] == list(range(1, 19))
+    previous = ""
     for entry in reading["warDays"]:
         assert entry["event"] and passage(entry["line"])[0] >= 6, entry
+        assert entry["boundary"] and passage(entry["marker"])[0] in range(6, 10), entry
+        assert previous < entry["marker"], entry
+        previous = entry["marker"]
         assert entry.get("scene", "frame") in scene_books, entry
     assert sum(clue["younger"] is not None for clue in evidence) == 3
     for clue in evidence:
@@ -108,7 +114,7 @@ def check(source_dir):
     print("Parva chapters:", ", ".join(f"{number} {len(selected[number])}/{count}" for number, count in enumerate(COUNTS, 1)))
     print(f"{sum(COUNTS)} chapters, {sum(map(len, selected.values()))} linked to {len(scene_books)} scene readings")
     print(f"{len(positions)} dedicated chapter annotations across {len({book for book, _ in positions})} parvas")
-    print(f"18 war days, {len(people)} people, {len(places)} places and {len(clues)} evidence records")
+    print(f"18 war days with edition boundary markers, {len(people)} people, {len(places)} places and {len(clues)} evidence records")
     print(f"{len(anchors)} distinct passage anchors {'found in the upstream sources' if source_dir else 'validated structurally'}")
 
 

@@ -1,8 +1,7 @@
 ---
 import Beta from '../layouts/Beta.astro';
 import ProjectMindMap from '../components/ProjectMindMap';
-import graph from '../../../../content/project-graph.json';
-import { mapFor, type ReaderGraph } from '../lib/project-graph';
+import { mapFor } from '../lib/project-graph';
 import '../styles/mind-map.css';
 ---
 <Beta title="Mind map" summary="Follow the sources that connect people, places, episodes and ideas across Itihāsa.">
@@ -18,7 +17,7 @@ import '../styles/mind-map.css';
       <a href={mapFor('concept-nakshatra')}>Nakshatra</a>
     </nav>
   </header>
-  <ProjectMindMap client:load graph={graph as ReaderGraph} />
+  <ProjectMindMap client:load />
   <noscript>
     <nav aria-label="Open related readings directly"><ul>
       <li><a href="/mahabharata/?scene=dice">The dice hall</a></li>

@@ -9,9 +9,9 @@ const MahabharataEvidence = lazy(() => import('./MahabharataEvidence'));
 const MahabharataSky = lazy(() => import('./MahabharataSky'));
 
 type Mode = 'story' | 'sky' | 'evidence';
-type Position = { mode: Mode; scene: string; place: string; clue: string; day: number; constraints: string[] };
+type Position = { mode: Mode; scene: string; place: string; clue: string; day: number; constraints: string[]; useTransit: boolean };
 type ReadingPanel = { kind: 'person'; id: string } | { kind: 'sources' };
-const start: Position = { mode: 'story', scene: 'frame', place: '', clue: '', day: 1, constraints: [] };
+const start: Position = { mode: 'story', scene: 'frame', place: '', clue: '', day: 1, constraints: [], useTransit: true };
 const tabs: { id: Mode; label: string }[] = [
   { id: 'story', label: 'Story & map' }, { id: 'sky', label: 'Sky map' }, { id: 'evidence', label: 'Dating evidence' },
 ];
@@ -21,13 +21,16 @@ function fromUrl(): Position {
   const scene = scenes.find((item) => item.id === (query.get('scene') ?? query.get('episode')));
   const view = query.get('view');
   const day = Number(query.get('day'));
+  const useTransit = query.get('ahead') !== 'relative';
   return {
     scene: scene?.id ?? start.scene,
     place: atlas.places.find((item) => item.id === query.get('place'))?.id ?? scene?.place ?? '',
     clue: clues.find((item) => item.id === query.get('clue'))?.id ?? scene?.clue ?? '',
     mode: view === 'evidence' || view === 'sky' ? view : 'story',
     day: reading.warDays.some((item) => day === item.day) ? day : 1,
-    constraints: clues.filter((item) => item.younger !== null && query.get('bounds')?.split(',').includes(item.id)).map((item) => item.id),
+    constraints: clues.filter((item) => item.younger !== null && (useTransit || item.id !== 'stars') &&
+      query.get('bounds')?.split(',').includes(item.id)).map((item) => item.id),
+    useTransit,
   };
 }
 
@@ -99,7 +102,8 @@ export default function MahabharataAtlas({ graphBranches }: {
     const url = new URL(window.location.href);
     url.searchParams.delete('episode');
     for (const [key, value] of Object.entries({
-      scene: next.scene, view: next.mode, place: next.place, clue: next.clue, day: next.day === 1 ? '' : next.day, bounds: next.constraints.join(','),
+      scene: next.scene, view: next.mode, place: next.place, clue: next.clue, day: next.day === 1 ? '' : next.day,
+      bounds: next.constraints.join(','), ahead: next.useTransit ? '' : 'relative',
     })) {
       if (value) url.searchParams.set(key, String(value));
       else url.searchParams.delete(key);
@@ -141,7 +145,9 @@ export default function MahabharataAtlas({ graphBranches }: {
       </div>}
       {state.mode !== 'story' && <Suspense fallback={<p className="ma-lab" role="status">Opening {state.mode === 'sky' ? 'the sky map' : 'the dating evidence'}…</p>}>
         {state.mode === 'sky' && <MahabharataSky place={state.place} clue={state.clue || scene.clue} />}
-        {state.mode === 'evidence' && <MahabharataEvidence initial={state.clue || scene.clue} filters={state.constraints}
+        {state.mode === 'evidence' && <MahabharataEvidence initial={state.clue || scene.clue} filters={state.constraints} useTransit={state.useTransit}
+          onGeometry={(useTransit) => update({ ...state, clue: 'stars', useTransit,
+            constraints: useTransit ? state.constraints : state.constraints.filter((id) => id !== 'stars') })}
           onClue={(clue, constraints = state.constraints) => update({ ...state, clue, constraints })} />}
       </Suspense>}
       {state.mode === 'story' && <section className="ma-story" aria-label="Narrative timeline">
@@ -174,7 +180,7 @@ export default function MahabharataAtlas({ graphBranches }: {
             {atlas.books.map((item) => <option key={item.number} value={item.number}>{item.number}. {item.name} · {item.title}</option>)}
           </select></label>
           <label>Find a scene, person, or chapter <input type="search" ref={searchInput} defaultValue={query} placeholder="Dice, Draupadī, or 2.60" onChange={(event) => setQuery(event.target.value)} /></label>
-          <button className="ma-flat" onClick={() => selectScene(start.scene)}>Restart</button>
+          <button className="ma-flat" disabled={!ready} onClick={() => selectScene(start.scene)}>Restart</button>
         </div>
         {query.trim() && <ul className="ma-search-results" aria-label="Timeline search results">
           {jumpChapter && jumpBook && <li><a href={`${parvaUrl(jumpBook.number)}#chapter-${jumpChapter.chapter}`}>Chapter {jumpBook.number}.{jumpChapter.chapter} · {jumpChapter.readings.length ? 'Selected reading and source' : 'Index and source'} →</a></li>}
@@ -186,7 +192,7 @@ export default function MahabharataAtlas({ graphBranches }: {
           {!matches.length && !jumpChapter && <li>No matching scenes or chapters.</li>}
         </ul>}
         <div className="ma-arcs" aria-label="Select a story arc">
-          {atlas.arcs.map((item) => <button aria-pressed={arc.id === item.id} key={item.id} onClick={() =>
+          {atlas.arcs.map((item) => <button disabled={!ready} aria-pressed={arc.id === item.id} key={item.id} onClick={() =>
             selectScene(scenes.find((episode) => atlas.books[episode.book - 1].arc === item.id)!.id)}>{item.title}</button>)}
         </div>
         <div className="ma-stage">
@@ -198,7 +204,7 @@ export default function MahabharataAtlas({ graphBranches }: {
             <div className="ma-source-links">
               <a href={sourceUrl(excerpt.line)}>Read BORI {locator(excerpt.line)} ↗</a>
               <a href={`${parvaUrl(book.number)}#chapter-${Number(excerpt.line.slice(2, 5))}`}>Parva guide &amp; chapter index →</a>
-              <button className="ma-text-button" onClick={(event) => openPanel({ kind: 'sources' }, event.currentTarget)}>Passages &amp; editions</button>
+              <button className="ma-text-button" disabled={!ready} onClick={(event) => openPanel({ kind: 'sources' }, event.currentTarget)}>Passages &amp; editions</button>
             </div>
             <div className="ma-scene-actions">
               {scene.id === 'exile-start' && <button className="ma-flat" onClick={() => selectScene('nala', true, undefined, false)}>Enter Bṛhadaśva’s story →</button>}
@@ -209,11 +215,11 @@ export default function MahabharataAtlas({ graphBranches }: {
               {scene.id === 'dice' && <button className="ma-flat" onClick={() => selectScene('exile-start', true, undefined, false)}>Follow the consequence into exile →</button>}
               {scene.id === 'peace' && <button className="ma-flat" onClick={() => selectScene('gita', true, 1, false)}>Go to battle day 1 →</button>}
               {scene.id === 'omens' && <a href="/arundhati/">Open the illustrative two-star lesson →</a>}
-              <button className="ma-flat" onClick={() => changeMode('sky')}>Open the observer sky →</button>
-              {scene.clue && <button className="ma-flat" onClick={() => changeMode('evidence', scene.clue)}>Follow the evidence →</button>}
+              <button className="ma-flat" disabled={!ready} onClick={() => changeMode('sky')}>Open the observer sky →</button>
+              {scene.clue && <button className="ma-flat" disabled={!ready} onClick={() => changeMode('evidence', scene.clue)}>Follow the evidence →</button>}
             </div>
             {excerpt.people.length > 0 && <div className="ma-people" aria-label="People in the scene">
-              {excerpt.people.map((id) => <button key={id} className="ma-flat" onClick={(event) => openPanel({ kind: 'person', id }, event.currentTarget)}>{people[id].name}</button>)}
+              {excerpt.people.map((id) => <button key={id} className="ma-flat" disabled={!ready} onClick={(event) => openPanel({ kind: 'person', id }, event.currentTarget)}>{people[id].name}</button>)}
             </div>}
             <details className="ma-chapters">
               <summary>Connections in the mind map</summary>
@@ -234,14 +240,14 @@ export default function MahabharataAtlas({ graphBranches }: {
         </div>}
         <p className="ma-arc-note">{arc.summary} <span>The selected readings follow the order of the text, including its nested stories.</span></p>
         <div className="ma-episode-rail" aria-label={`Scenes in ${arc.title}`}>
-          {era.map((item) => <button key={item.id} aria-pressed={item.id === scene.id} onClick={() => selectScene(item.id)}>
+          {era.map((item) => <button key={item.id} disabled={!ready} aria-pressed={item.id === scene.id} onClick={() => selectScene(item.id)}>
             <span>{atlas.books[item.book - 1].name}</span>{item.title}
           </button>)}
         </div>
         <details className="ma-war-days" open={arc.id === 'war' || scene.id === 'peace' || undefined}>
           <summary>18-day war track</summary>
           <div className="ma-day-buttons" aria-label="Choose a battle day">
-            {reading.warDays.map((item) => <button key={item.day} aria-pressed={state.day === item.day} aria-label={`Battle day ${item.day}`} onClick={() => {
+            {reading.warDays.map((item) => <button key={item.day} disabled={!ready} aria-pressed={state.day === item.day} aria-label={`Battle day ${item.day}`} onClick={() => {
               if (item.scene) selectScene(item.scene, true, item.day);
               else { setPlaying(false); update({ ...state, day: item.day, place: 'kurukshetra' }); }
             }}>{item.day}</button>)}
@@ -249,7 +255,14 @@ export default function MahabharataAtlas({ graphBranches }: {
           <h3>Day {state.day} · {commander(state.day)} commands</h3>
           <p>{battle.event ?? 'Commander verified. The major events and their exact day assignments await a passage-level check.'}</p>
           <p><a href={sourceUrl('01002026a')}>Command lengths in Ādi 1.2.26–28 ↗</a>{battle.line && <> · <a href={sourceUrl(battle.line)}>Day passage {locator(battle.line)} ↗</a></>}</p>
-          <p className="ma-arc-note">Day numbers follow the BORI battle sequence. The night fighting between days 14 and 15 and the raid after day 18 have separate narrative positions.</p>
+          <details>
+            <summary>How the text marks day {state.day}</summary>
+            <p>{battle.boundary}</p>
+            <p><a href={sourceUrl(battle.marker)}>Boundary passage {locator(battle.marker)} ↗</a>
+              {state.day === 14 && <> · <a href={sourceUrl('07135031a')}>Night fighting 7.135.31 ↗</a></>}
+              {state.day === 18 && <> · <a href={sourceUrl('10008001a')}>Camp raid 10.8.1 ↗</a></>}</p>
+          </details>
+          <p className="ma-arc-note">Day numbers follow the BORI narrative. Dawn, withdrawal and changes of command help identify the transitions.</p>
           <details>
             <summary>Compare battle chapter numbering</summary>
             <p>The Bhīṣma translation by Alex Cherniak labels the opening of day five chapter 69. The corresponding day begins with dawn at BORI 6.65.1. Cherniak’s day-nine chapter 99 opens with the same preparation for battle as BORI 6.95.1.</p>

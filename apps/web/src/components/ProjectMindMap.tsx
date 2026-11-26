@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
+import data from '../../../../content/project-graph.json';
 import { foldSearch, mapFor, type GraphEdge, type ReaderGraph } from '../lib/project-graph';
 
+const graph: ReaderGraph = data;
 const firstNode = 'ma-person-draupadi';
 const hub = [50, 49];
 const spokes = [[26, 15], [74, 15], [12, 49], [88, 49], [26, 83], [74, 83]];
@@ -11,15 +13,15 @@ const workNames: Record<string, string> = {
 };
 const edgeKey = (edge: GraphEdge) => `${edge.from}:${edge.relation}:${edge.to}`;
 const peer = (edge: GraphEdge, id: string) => edge.from === id ? edge.to : edge.from;
+const byId = new Map(graph.nodes.map((node) => [node.id, node]));
+const relationNames = [...new Set(graph.edges.map((edge) => edge.relation))].sort();
 
-export default function ProjectMindMap({ graph }: { graph: ReaderGraph }) {
+export default function ProjectMindMap() {
   const [view, setView] = useState(starter);
   const [search, setSearch] = useState('');
   const [ready, setReady] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const heading = useRef<HTMLHeadingElement>(null);
-  const byId = new Map(graph.nodes.map((node) => [node.id, node]));
-  const relationNames = [...new Set(graph.edges.map((edge) => edge.relation))].sort();
   const node = byId.get(view.node) ?? byId.get(firstNode)!;
   const edges = graph.edges.filter((edge) => (edge.from === node.id || edge.to === node.id) &&
     (view.relation === 'all' || edge.relation === view.relation) &&
@@ -49,7 +51,7 @@ export default function ProjectMindMap({ graph }: { graph: ReaderGraph }) {
     setReady(true);
     window.addEventListener('popstate', restore);
     return () => window.removeEventListener('popstate', restore);
-  }, [graph]);
+  }, []);
 
   function update(next: typeof starter, push = false) {
     const url = new URL(mapFor(next.node), window.location.origin);
