@@ -1,0 +1,24 @@
+---
+import Beta from '../../layouts/Beta.astro';
+import { collections, episodes, journey } from '../../lib/library';
+---
+<Beta title="Epics and Purāṇas">
+  <header class="beta-intro">
+    <h1>Epics &amp; Purāṇas</h1>
+    <p class="lede">Read a scene, compare its sources, or follow a character through the stories.</p>
+  </header>
+  <div class="link-grid">
+    {collections.map((collection) => (
+      <article>
+        <h2><a href={`/epics/${collection.id}/`}>{collection.title}</a></h2>
+        <p>{collection.description}</p>
+        <p class="small-note">{episodes.filter((e) => e.collection === collection.id).length} episodes</p>
+      </article>
+    ))}
+  </div>
+  <section class="beta-band reading-width" aria-labelledby="journey">
+    <h2 id="journey">Kṛṣṇa’s journey</h2>
+    <p>Follow five readings from Bhāgavata Purāṇa Canto 10 in narrative order.</p>
+    <ol class="reading-list">{journey.map((episode) => <li><a href={episode.path}>{episode.title}</a></li>)}</ol>
+  </section>
+</Beta>

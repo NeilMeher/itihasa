@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "sources": {
+    "unesco": {"title":"Maratha Military Landscapes of India","locator":"World Heritage property 1739, Raigad component 1739-005","url":"https://whc.unesco.org/en/list/1739/maps/"},
+    "icomos": {"title":"ICOMOS evaluation of the nomination","locator":"2025 evaluation, Raigad component","url":"https://whc.unesco.org/document/221034"},
+    "agra": {"title":"Jaipur records on Shivaji at Agra","locator":"Ballu Sah to Kalyandas, Agra, 18 August 1666, reproduced in Jadunath Sarkar’s House of Shivaji","url":"https://www.rarebooksocietyofindia.org/book_archive/196174216674_10155870412521675.pdf"},
+    "agra-fort": {"title":"Agra Fort","locator":"UNESCO World Heritage property 251, modern geographic reference","url":"https://whc.unesco.org/en/list/251/maps/"},
+    "dem": {"title":"Copernicus DEM GLO-90, 2021 release","locator":"Open-Meteo elevation service, 90 m grid","url":"https://open-meteo.com/en/docs/elevation-api"}
+  },
+  "places": [
+    {"id":"raigad","name":"Raigad","kind":"fort","latitude":18.236111,"longitude":73.444444,"source":"unesco","summary":"The inscribed hill-fort component includes the fortified capital site."},
+    {"id":"rajgad","name":"Rajgad","kind":"fort","latitude":18.246111,"longitude":73.682500,"source":"unesco","summary":"A neighbouring hill fort in the inscribed property."},
+    {"id":"suvarnadurg","name":"Suvarnadurg","kind":"coastal fort","latitude":17.816389,"longitude":73.084444,"source":"unesco","summary":"A coastal component of the fort network."},
+    {"id":"agra","name":"Agra","kind":"city reference","latitude":27.179806,"longitude":78.021528,"source":"agra-fort","summary":"The marker uses Agra Fort as a modern city reference. The marker makes no claim about the exact site of Shivaji’s detention."}
+  ],
+  "events": [
+    {"id":"escape","date":"August 1666","title":"Escape from Agra","place":"agra","source":"agra","status":"Escape documented; route uncertain","summary":"The Jaipur correspondence reports that Shivaji had escaped custody. The letters and later accounts carry different levels of detail about the escape. The map marks Agra and leaves the return itinerary open."},
+    {"id":"capital","date":"1674","title":"Coronation at Raigad","place":"raigad","source":"icomos","status":"Documented site","summary":"Raigad served as an administrative and ceremonial centre. The ICOMOS evaluation describes palace and market facilities, rainwater harvesting and administration at the hill fort."}
+  ],
+  "transect": {
+    "latitude":18.236111,
+    "source":"dem",
+    "requested":"https://api.open-meteo.com/v1/elevation?latitude=18.236111,18.236111,18.236111,18.236111,18.236111,18.236111,18.236111&longitude=73.423,73.426,73.43,73.434,73.44,73.446,73.451",
+    "points":[{"longitude":73.423,"metres":340},{"longitude":73.426,"metres":365},{"longitude":73.43,"metres":433},{"longitude":73.434,"metres":559},{"longitude":73.44,"metres":761},{"longitude":73.446,"metres":852},{"longitude":73.451,"metres":856}]
+  }
+}

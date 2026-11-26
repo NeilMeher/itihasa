@@ -1,0 +1,25 @@
+---
+import Beta from '../layouts/Beta.astro';
+import Calculator from '../components/Calculator';
+---
+<Beta title="My Birth Sky">
+  <div class="reading-width">
+    <header class="beta-intro"><h1>My Birth Sky</h1><p class="lede">Where was the Moon? Try a fictional birth, or use a date and city. Add a local time to see the rising sign.</p></header>
+    <p id="rashi" class="small-note">Gregorian dates 2024–2027 · Indian Standard Time · linear Lahiri approximation. Birth details are used for the local calculation and discarded.</p>
+    <div class="beta-band"><Calculator mode="birth-sky" client:load /></div>
+    <section class="beta-band" aria-labelledby="birth-glossary">
+      <h2 id="birth-glossary">What the wheel shows</h2>
+      <dl class="fact-line">
+        <div><dt>Rāshi</dt><dd>The Moon’s 30° sidereal zodiac sector.</dd></div>
+        <div><dt>Nakshatra</dt><dd>The Moon’s position in a separate division of 27 equal sectors.</dd></div>
+        <div><dt>Lagna</dt><dd>The sidereal zodiac sector on the geometric eastern horizon at the entered city and time.</dd></div>
+      </dl>
+      <p><a href="https://packolkata.imd.gov.in/panchang/en/explanation">IMD calendar definitions</a> · <a href="/panchang/">See the same Moon in today’s calendar</a></p>
+    </section>
+    <details class="source-card">
+      <summary>Fictional example · New Delhi, 1 January 2025 at 08:00 IST</summary>
+      <p>The example gives Makara rāshi, Uttara Āṣāḍhā nakshatra and Dhanu lagna. The reference’s Dhanu rising interval runs from 06:06 to 08:10. Leaving the time blank includes the brief Pūrva Āṣāḍhā and late Śravaṇa portions of the local day.</p>
+      <p><a href="https://www.drikpanchang.com/panchang/day-panchang.html?date=01%2F01%2F2025&amp;lang=en">Published Moon sign and udaya lagna example</a></p>
+    </details>
+  </div>
+</Beta>

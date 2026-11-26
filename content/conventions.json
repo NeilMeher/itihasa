@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "calendar": {
+    "id": "ae-2.1.19-lahiri-linear-v1",
+    "label": "Astronomy Engine 2.1.19 with a linear Lahiri approximation",
+    "ayanamsha": {"jd_tt":2435553.5,"offset_degrees":23.245524743,"rate_arcsec_per_julian_year":50.29,"source":"https://github.com/aloistr/swisseph/blob/master/sweph.h"},
+    "definitions": {"title":"India Meteorological Department · Rashtriya Panchang","url":"https://packolkata.imd.gov.in/panchang/en/explanation"},
+    "status":"benchmarked in New Delhi; beta"
+  },
+  "lessons": {
+    "janmashtami":{"locator":"New Delhi daily calendar, 16 August 2025","date":"2025-08-16","url":"https://www.drikpanchang.com/kannada/panchangam/kannada-day-panchangam.html?date=16%2F08%2F2025&lang=en","status":"source checked"},
+    "rama-navami":{"locator":"New Delhi Śukla Navamī boundary table, April 2025","date":"2025-04-06","url":"https://www.drikpanchang.com/panchang/tithi/daily/shukla-navami-date-time.html?year=2025","status":"source checked"},
+    "mean-sun":{
+      "locator":"Sūrya Siddhānta, Burgess 1860, Chapter I; worked proportion on printed p. 358",
+      "url":"https://www.swaveda.com/texts/surya-siddhanta/1/",
+      "revolutions":4320000,"civil_days":1577917828,"modern_sidereal_year_days":365.25636,
+      "status":"worked proportion checked"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+---
+import Beta from '../../layouts/Beta.astro';
+import data from '../../../../../content/conventions.json';
+const example = data.lessons.janmashtami;
+---
+<Beta title="Janmāṣṭamī">
+  <article class="reading-width">
+    <header class="beta-intro"><a href="/panchang/">Today’s Pañchāṅga</a><h1>Why does Janmāṣṭamī have two month names?</h1>
+      <p class="lede">The festival marks Kṛṣṇa’s birth. The calendar looks for Kṛṣṇa Aṣṭamī, the eighth tithi of the waning half.</p></header>
+    <p><a href="/stories/krishna-birth/">Read the birth story in Bhāgavata Purāṇa 10.3</a>.</p>
+    <section class="beta-band" aria-labelledby="month-compare">
+      <h2 id="month-compare">Compare one day</h2>
+      <p>On the morning of 16 August 2025 in New Delhi, both systems show Kṛṣṇa Aṣṭamī. Open each convention to see how it names that same tithi.</p>
+      <details class="source-card" open><summary>Amānta · Śrāvaṇa</summary>
+        <p>In the new-moon-ending convention, the waning half retains the name Śrāvaṇa until the new moon.</p>
+        <p><a href={example.url}>Amānta worked example</a></p>
+      </details>
+      <details class="source-card"><summary>Pūrṇimānta · Bhādrapada</summary>
+        <p>In the full-moon-ending convention, the same waning half begins the next named month, Bhādrapada.</p>
+        <p><a href="https://www.drikpanchang.com/festivals/lunar-month/festivals-bhadrapada.html?lang=en&amp;year=2025">Pūrṇimānta calendar</a></p>
+      </details>
+    </section>
+    <section class="beta-band">
+      <h2>Which night is observed?</h2>
+      <p>The Smārta example uses Aṣṭamī at the niśītha night window. The published calendar distinguishes it from the ISKCON observance. Its Lucknow example lists 15 August 2025 for Smārta and 16 August for ISKCON. This lesson uses those published choices, without selecting dates for other communities.</p>
+      <p><a href="https://www.drikpanchang.com/hindu-festivals/krishna-janmashtami/krishna-janmashtami.html">Published Janmāṣṭamī rules</a> · <a href={`/panchang/?date=${example.date}`}>Compare both month names in the calculator</a></p>
+    </section>
+  </article>
+</Beta>

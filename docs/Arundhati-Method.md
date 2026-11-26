@@ -1,6 +1,6 @@
 # Arundhatī–Vasiṣṭha research method
 
-The modern mean-transit check passed. The historical method is a proposal for review. The pilot’s six-frame sky remains illustrative and historical dates remain unavailable.
+The modern mean-transit check passed. The historical design below remains subject to independent review. The [beta handoff](Beta-Handoff.md#research-and-release-status) records the prereview run and its limitations. The pilot’s six-frame sky remains illustrative and historical dates remain unavailable.
 
 ## From the verse to the claim
 

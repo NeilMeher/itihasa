@@ -1,104 +1,37 @@
 ---
-import SkyPlayer from '../components/SkyPlayer';
-import rawEvidence from '../../../../content/arundhati-evidence.json';
-import type { EvidenceBundle } from '../../../../packages/contracts/evidence';
-import '../styles/global.css';
-
-// research/check_evidence.py validates this JSON against the canonical models.
-const { sources, passage, clue, sky, historical } = rawEvidence as EvidenceBundle;
-const passageSource = sources.find((source) => source.id === passage.source_id);
-const clueSource = sources.find((source) => source.id === clue.source_id);
-if (!passageSource || !clueSource) throw new Error('Missing investigation source');
-
-// Keep each danda with the preceding word at narrow widths and larger text sizes.
-const verseLines = passage.devanagari.map((line) => line.replace(/ (?=[।॥]$)/u, '\u00a0'));
+import Beta from '../layouts/Beta.astro';
+import { areas, lessons } from '../lib/library';
 ---
-
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Read an omen from the Mahābhārata and explore what it would mean for Arundhatī to cross the meridian first." />
-    <title>Arundhatī &amp; Vasiṣṭha · Itihāsa</title>
-  </head>
-  <body>
-    <a class="skip-link" href="#main">Skip to investigation</a>
-    <header class="masthead">
-      <div class="wrap masthead-inner">
-        <a class="wordmark" href="/" aria-label="Itihāsa home">Itihāsa<span aria-hidden="true">✦</span></a>
-        <nav aria-label="On this page">
-          <a href="#sky">Sky demo</a>
-          <a href="#sources">Sources</a>
-        </nav>
+<Beta title="Explore stories and the sky">
+  <div class="home-hero">
+    <div>
+      <p class="eyebrow">Stories, skies &amp; sources</p>
+      <h1>What did Vyāsa mean by <em>“ahead”?</em></h1>
+      <p class="lede">Two stars. One verse. Read the omen, move the sky, and see what the passage can tell us.</p>
+      <div class="intro-links">
+        <a class="start-link" href="/arundhati/">Explore the two stars <span aria-hidden="true">→</span></a>
+        <a href="/search/">Search the library</a>
       </div>
-    </header>
-
-    <main id="main" class="wrap" tabindex="-1">
-      <div class="opening">
-        <section class="intro" aria-labelledby="title">
-          <p class="eyebrow">Mahābhārata · {passage.locator}</p>
-          <h1 id="title">What did Vyāsa mean by <em>“ahead”?</em></h1>
-          <p class="lede">Before the battle at Kurukṣetra, Vyāsa tells King Dhṛtarāṣṭra that Arundhatī has put Vasiṣṭha behind her. Nilesh Nilkanth Oak reads the omen as a clue about two stars.</p>
-
-          <nav class="intro-links" aria-label="Explore the investigation">
-            <a class="start-link" href="#sky">Explore the two stars
-              <span class="start-arrow-right" aria-hidden="true">→</span>
-              <span class="start-arrow-down" aria-hidden="true">↓</span>
-            </a>
-            <a class="verse-link" href="#verse">Read the Sanskrit</a>
-          </nav>
-
-          <figure id="verse" class="verse" tabindex="-1">
-            <blockquote cite={passageSource.url}>
-              <p class="sanskrit" lang="sa-Deva">{verseLines.map((line) => <span>{line}</span>)}</p>
-              <p>{passage.working_translation}</p>
-            </blockquote>
-            <figcaption>
-              <span>{passage.translation_credit}</span>
-              <a href="#passage-source">BORI {passage.locator}</a>
-            </figcaption>
-          </figure>
-        </section>
-
-        <SkyPlayer client:load fixture={sky} />
-      </div>
-
-      <section id="sources" class="evidence" aria-labelledby="evidence-title" tabindex="-1">
-        <h2 id="evidence-title">Sources &amp; method</h2>
-        <div class="evidence-notes">
-          <details open>
-            <summary id="passage-source">The passage <span>BORI {passage.locator}</span></summary>
-            <div class="detail-content">
-              <p lang="sa-Latn" class="transliteration">{passage.source_transliteration.map((line) => <span>{line}</span>)}</p>
-              <p>{passageSource.edition}. Find lines <strong>{passage.source_locator}</strong> in the e-text.</p>
-              <p><a href={passageSource.url}>Read the Sanskrit e-text</a> <span class="review-note">{passage.review_note}</span></p>
-            </div>
-          </details>
-          <details>
-            <summary>Oak’s interpretation <span>Meridian crossing</span></summary>
-            <div class="detail-content">
-              <p>{clue.interpretation} The local meridian is an imaginary line running from north to south through the point directly overhead.</p>
-              <p>{clue.measure} {clue.uncertainty}</p>
-              <p><a href={clueSource.url}>Read Oak’s original explanation and see his figures</a></p>
-            </div>
-          </details>
-          <details open>
-            <summary>Historical result <span class="result-status">{historical.status === 'unavailable' ? 'Unavailable' : historical.status === 'under_review' ? 'Under review' : 'Reviewed'}</span></summary>
-            <div class="detail-content">
-              {historical.status === 'unavailable' && <p>{historical.reason}</p>}
-              {historical.status === 'under_review' && <p>Run {historical.run.id} is awaiting review.</p>}
-              {historical.status === 'reviewed' && (
-                <>
-                  <p>{historical.finding} {historical.uncertainty}</p>
-                  <p>Reviewed by {historical.review.reviewer} on {historical.review.reviewed_on}.</p>
-                  <p><a href={historical.output.url}>View the reviewed dataset</a></p>
-                </>
-              )}
-            </div>
-          </details>
-        </div>
-      </section>
-    </main>
-  </body>
-</html>
+    </div>
+    <figure class="home-plot" aria-label="Illustrative Alcor and Mizar meridian diagram">
+      <span class="plot-meridian">Meridian</span>
+      <span class="home-star home-alcor">Alcor</span>
+      <span class="home-star home-mizar">Mizar</span>
+      <figcaption>Illustrative sky · Arundhatī and Vasiṣṭha</figcaption>
+    </figure>
+  </div>
+  <section class="beta-band" aria-labelledby="routes">
+    <h2 id="routes">Find a question</h2>
+    <div class="link-grid">
+      {areas.map((area) => (
+        <article><h3><a href={area.url}>{area.title}</a></h3><p>{area.text}</p></article>
+      ))}
+    </div>
+  </section>
+  <section class="beta-band" aria-labelledby="festival-links">
+    <h2 id="festival-links">From story to festival</h2>
+    <div class="link-grid">{lessons.map((lesson) => (
+      <article><h3><a href={lesson.url}>{lesson.title}</a></h3><p>{lesson.text}</p></article>
+    ))}</div>
+  </section>
+</Beta>

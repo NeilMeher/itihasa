@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "first_date": "2024-01-01",
+  "last_date": "2027-12-31",
+  "time_zone": "Asia/Kolkata",
+  "cities": [
+    {"id":"delhi","name":"New Delhi","latitude":28.6139,"longitude":77.2090,"source":"https://www.geonames.org/1261481/new-delhi.html"},
+    {"id":"mumbai","name":"Mumbai","latitude":19.0728,"longitude":72.8826,"source":"https://www.geonames.org/1275339/mumbai.html"},
+    {"id":"pune","name":"Pune","latitude":18.5196,"longitude":73.8554,"source":"https://www.geonames.org/1259229/pune.html"}
+  ]
+}

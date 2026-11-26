@@ -1,0 +1,84 @@
+{
+  "version": 1,
+  "collections": [
+    {"id":"mahabharata","title":"Mahābhārata","description":"Read two scenes around the battle at Kurukṣetra and check how a passage becomes an astronomical claim."},
+    {"id":"ramayana","title":"Vālmīki Rāmāyaṇa","description":"Compare two editions of the birth of Rāma, including the sky details preserved in the Southern Recension."},
+    {"id":"bhagavata","title":"Bhāgavata Purāṇa","description":"Follow Kṛṣṇa through selected episodes from Canto 10 in narrative order."},
+    {"id":"harivamsa","title":"Harivaṃśa","description":"Read an attributed companion account from the critical edition of the Harivaṃśa."}
+  ],
+  "sources": {
+    "bori": {"title":"Mahābhārata","edition":"BORI Critical Edition, Tokunaga–Smith e-text","attribution":"Bhandarkar Oriental Research Institute","url":"https://indology.info/bombay/mahabharata/text/UR/MBh06.txt#:~:text=06002031a"},
+    "ganguli": {"title":"Mahābhārata, Book 7","edition":"Drona Parva, English translation, 1883–1896 series","attribution":"Kisari Mohan Ganguli, translator","url":"https://sacred-texts.com/book/the-mahabharata-book-7-drona-parva/section-cxlv"},
+    "baroda": {"title":"Vālmīki Rāmāyaṇa","edition":"Oriental Institute, Baroda Critical Edition, Bālakāṇḍa main text","attribution":"Oriental Institute, Baroda; electronic text hosted by Indology","url":"https://indology.info/bombay/ramayana/text/UR/Ram01.txt"},
+    "southern": {"title":"Vālmīki Rāmāyaṇa","edition":"Southern Recension, Bālakāṇḍa, IIT Kanpur e-text","attribution":"IIT Kanpur digital edition","url":"https://heritage.iitk.ac.in/VRAM/1.18.8"},
+    "bhagavata": {"title":"Bhāgavata Purāṇa, Canto 10","edition":"VedaBase Sanskrit text and English edition","attribution":"Bhaktivedanta Book Trust edition","url":"https://vedabase.io/en/library/sb/10/"},
+    "vaidya": {"title":"Harivaṃśa","edition":"BORI Critical Edition, 1969, GRETIL constituted text","attribution":"P. L. Vaidya, editor; GRETIL transcription","url":"https://www.gretil.uni-goettingen.de/gretil/corpustei/transformations/html/sa_harivaMza.htm"}
+  },
+  "episodes": [
+    {
+      "id":"arundhati","collection":"mahabharata","path":"/arundhati/","title":"Arundhatī and Vasiṣṭha","question":"What did Vyāsa mean by ‘ahead’?",
+      "summary":"Vyāsa recounts an omen. Try a six-frame illustration of Oak’s meridian reading, then open the verse and its sources.",
+      "people":["Vyāsa","Dhṛtarāṣṭra","Arundhatī","Vasiṣṭha","Nilesh Nilkanth Oak"],"places":["Kurukṣetra"],"aliases":["Alcor","Mizar","Arundhati","Vasistha","महाभारत","अरुन्धती"],
+      "passages":[{"id":"verse","source":"bori","chapter":"6.2","locator":"Bhīṣmaparvan 6.2.31","reading":"Arundhatī has put Vasiṣṭha behind her in Vyāsa’s description of omens."}],"related":["jayadratha"]
+    },
+    {
+      "id":"jayadratha","collection":"mahabharata","path":"/stories/jayadratha/","title":"Jayadratha and the missing Sun","question":"Does darkness in the story establish an eclipse?",
+      "summary":"Jayadratha is shielded from Arjuna. In Ganguli’s translation, Kṛṣṇa causes darkness and the warriors take it for sunset. When Jayadratha looks up, Kṛṣṇa points him out to Arjuna.",
+      "people":["Jayadratha","Arjuna","Kṛṣṇa"],"places":["Kurukṣetra"],"aliases":["eclipse","darkness","Drona Parva","Drona","सूर्यग्रहण"],
+      "passages":[{"id":"narration","source":"ganguli","chapter":"Book 7, CXLV","locator":"Drona Parva, Section CXLV","reading":"Ganguli describes darkness created through yoga and a mistaken impression of sunset. The passage does not name a solar eclipse."}],
+      "related":["arundhati","krishna-kurukshetra"]
+    },
+    {
+      "id":"rama-birth","collection":"ramayana","path":"/stories/rama-birth/","title":"The birth of Rāma","question":"Why do two editions give different sky details?",
+      "summary":"Daśaratha’s household welcomes four sons. Both editions tell of Rāma’s birth to Kauśalyā. One main text is brief, while the Southern Recension gives the lunar day and a longer astronomical description.",
+      "people":["Rāma","Kauśalyā","Daśaratha"],"places":["Ayodhyā"],"aliases":["Rama","Ayodhya","Punarvasu","Chaitra","Navami","राम","अयोध्या","पुनर्वसु"],
+      "passages":[
+        {"id":"baroda","source":"baroda","chapter":"1.17","locator":"Bālakāṇḍa 1.17.6, Baroda main text","url":"https://indology.info/bombay/ramayana/text/UR/Ram01.txt#:~:text=1017006a","excerpt":"kausalyājanayad rāmaṁ divyalakṣaṇasaṁyutam","reading":"Kauśalyā bears Rāma. The corresponding main-text line does not include the lunar day or graha configuration."},
+        {"id":"southern","source":"southern","chapter":"1.18","locator":"Bālakāṇḍa 1.18.8–10, Southern Recension","url":"https://sanskritdocuments.org/sites/valmikiramayan/baala/sarga18/balaroman18.htm","excerpt":"tataḥ ca dvādaśe māse caitre nāvamike tithau","reading":"The account places the birth on Caitra Navamī, names the asterism through its deity Aditi, and describes the rising sign and grahas. Aditi’s nakshatra is Punarvasu."}
+      ],"related":[]
+    },
+    {
+      "id":"krishna-birth","collection":"bhagavata","path":"/stories/krishna-birth/","title":"Kṛṣṇa’s birth and the Yamunā","question":"How does the story connect with Janmāṣṭamī?",
+      "summary":"Kṛṣṇa appears to Devakī and Vasudeva. At night, Vasudeva carries the infant across the Yamunā to Nanda’s household and returns with Yaśodā’s daughter.",
+      "people":["Kṛṣṇa","Devakī","Vasudeva","Yaśodā","Kaṃsa"],"places":["Mathurā","Yamunā","Gokula"],"aliases":["Krishna","Janmashtami","janmāṣṭamī","Gokul","मथुरा","जन्माष्टमी","कृष्ण"],
+      "passages":[
+        {"id":"appearance","source":"bhagavata","chapter":"10.3","locator":"Bhāgavata Purāṇa 10.3.8","url":"https://vedabase.io/en/library/sb/10/3/8/","reading":"Kṛṣṇa appears to Devakī at night. The moon language in the passage is a comparison in the narrative."},
+        {"id":"river","source":"bhagavata","chapter":"10.3","locator":"Bhāgavata Purāṇa 10.3.48–51","url":"https://vedabase.io/en/library/sb/10/3/50/","reading":"The text describes Vasudeva’s crossing and the exchange of the children."}
+      ],"related":["krishna-gokula","krishna-mathura","krishna-dvaraka","krishna-kurukshetra"]
+    },
+    {
+      "id":"krishna-gokula","collection":"bhagavata","path":"/stories/krishna-gokula/","title":"Nanda’s household celebrates","question":"What does the story say happened in Gokula?",
+      "summary":"Nanda rejoices at the arrival of a son and arranges ceremonies. The village joins the celebration before the narrative turns back to the threat posed by Kaṃsa.",
+      "people":["Kṛṣṇa","Nanda","Yaśodā"],"places":["Gokula"],"aliases":["Krishna","Gokul","गोकुल"],
+      "passages":[{"id":"celebration","source":"bhagavata","chapter":"10.5","locator":"Bhāgavata Purāṇa 10.5.1–11","url":"https://vedabase.io/en/library/sb/10/5/","reading":"The chapter describes Nanda’s birth rites and the cowherd community’s celebration."}],"related":["krishna-birth","krishna-mathura"]
+    },
+    {
+      "id":"krishna-mathura","collection":"bhagavata","path":"/stories/krishna-mathura/","title":"The return to Mathurā","question":"What happens when Kṛṣṇa returns to Kaṃsa’s city?",
+      "summary":"Kṛṣṇa and Balarāma enter Mathurā. The confrontation plays out at a wrestling arena. Kṛṣṇa leaps onto Kaṃsa’s platform and kills the king.",
+      "people":["Kṛṣṇa","Balarāma","Kaṃsa"],"places":["Mathurā"],"aliases":["Krishna","Kamsa","Mathura","मथुरा"],
+      "passages":[
+        {"id":"entry","source":"bhagavata","chapter":"10.41","locator":"Bhāgavata Purāṇa 10.41, entry into Mathurā","url":"https://vedabase.io/en/library/sb/10/41/","reading":"The chapter describes their entry into the city."},
+        {"id":"arena","source":"bhagavata","chapter":"10.44","locator":"Bhāgavata Purāṇa 10.44.33–37","url":"https://vedabase.io/en/library/sb/10/44/34/","reading":"The account moves from the king’s orders to the confrontation on the platform."}
+      ],"related":["krishna-gokula","harivamsa-kamsa","krishna-dvaraka"]
+    },
+    {
+      "id":"krishna-dvaraka","collection":"bhagavata","path":"/stories/krishna-dvaraka/","title":"A city in the sea","question":"Why does Kṛṣṇa move his people to Dvārakā?",
+      "summary":"With Mathurā under threat, Kṛṣṇa consults Balarāma. The account describes a fortified city in the sea and the transfer of his people there.",
+      "people":["Kṛṣṇa","Balarāma","Jarāsandha","Kālayavana"],"places":["Mathurā","Dvārakā"],"aliases":["Krishna","Dvaraka","Dwarka","द्वारका"],
+      "passages":[{"id":"fort","source":"bhagavata","chapter":"10.50","locator":"Bhāgavata Purāṇa 10.50.44–57","url":"https://vedabase.io/en/library/sb/10/50/49/","reading":"The narrative describes the threat and construction of a city with a sea fortress. The source here supplies a literary place, without identifying any excavated structure."}],"related":["krishna-mathura","krishna-kurukshetra"]
+    },
+    {
+      "id":"krishna-kurukshetra","collection":"bhagavata","path":"/stories/krishna-kurukshetra/","title":"A reunion at Kurukṣetra","question":"Why do the cowherds and Yādavas meet again?",
+      "summary":"The Bhāgavata describes a solar eclipse and pilgrimage to Samanta-pañcaka. People from different places gather, and Kṛṣṇa’s family meets the community he knew in childhood.",
+      "people":["Kṛṣṇa","Balarāma","Nanda"],"places":["Kurukṣetra","Samanta-pañcaka"],"aliases":["Krishna","Kurukshetra","solar eclipse","कुरुक्षेत्र"],
+      "passages":[{"id":"pilgrimage","source":"bhagavata","chapter":"10.82","locator":"Bhāgavata Purāṇa 10.82.1–2, 12–14 and 31–35","url":"https://vedabase.io/en/library/sb/10/82/","reading":"The eclipse belongs to the pilgrimage episode in this text. Its narrative setting is distinct from Jayadratha’s battle episode."}],"related":["krishna-dvaraka","jayadratha"]
+    },
+    {
+      "id":"harivamsa-kamsa","collection":"harivamsa","path":"/stories/harivamsa-kamsa/","title":"Kaṃsa’s death in the Harivaṃśa","question":"How does a companion text close the arena scene?",
+      "summary":"In the Harivaṃśa, the arena confrontation ends with Kaṃsa’s death and Kṛṣṇa greeting Vasudeva. Read this as an attributed account alongside the Bhāgavata version.",
+      "people":["Kṛṣṇa","Kaṃsa","Vasudeva"],"places":["Mathurā"],"aliases":["Harivamsa","Kamsa","Krishna","हरिवंश"],
+      "passages":[{"id":"arena","source":"vaidya","chapter":"76","locator":"Harivaṃśa 76.40–43, Vaidya Critical Edition","reading":"This version treats the death of Kaṃsa and the reunion with Vasudeva in its own narrative sequence."}],"related":["krishna-mathura"]
+    }
+  ],
+  "journey":["krishna-birth","krishna-gokula","krishna-mathura","krishna-dvaraka","krishna-kurukshetra"]
+}

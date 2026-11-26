@@ -17,7 +17,7 @@ for (const { width, height } of [
       if (response.status() >= 400) errors.push(`${response.status()} ${response.url()}`);
     });
 
-    const response = await page.goto('/');
+    const response = await page.goto('/arundhati/');
     expect(response?.ok()).toBe(true);
     await expect(page.getByRole('heading', { level: 1 })).toContainText('What did Vyāsa mean');
     await expect(page.locator('[lang="sa-Deva"]')).toContainText('वसिष्ठः');
@@ -81,9 +81,9 @@ for (const { width, height } of [
     const oak = page.getByRole('link', { name: /read Oak’s original explanation/i });
     await expect(oak).toBeVisible();
     await expect(oak).toHaveAttribute('href', 'https://nileshoak.wordpress.com/2016/02/08/arundhati-vasistha/');
+    await expect(table).toBeVisible();
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(width);
     if (width === 360) {
-      await expect(table).toBeVisible();
-      expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(width);
       await page.screenshot({ path: testInfo.outputPath('both-disclosures-open.png'), fullPage: true, animations: 'disabled' });
     }
     await interpretation.press('Enter');
@@ -101,7 +101,7 @@ for (const { width, height } of [
 test('reduced motion and explicit playback', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.clock.install();
-  await page.goto('/');
+  await page.goto('/arundhati/');
   const slider = page.getByRole('slider', { name: 'Demo step' });
   await expect(slider).toBeEnabled();
   await expect(page.locator('.star.alcor')).toHaveCSS('transition-duration', '0s');
@@ -124,7 +124,7 @@ test.describe('static fallback', () => {
   test.use({ javaScriptEnabled: false });
 
   test('the verse, source note, and data table are readable without hydration', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/arundhati/');
     await page.getByRole('link', { name: 'Read the Sanskrit', exact: true }).click();
     await expect(page).toHaveURL(/#verse$/);
     await expect(page.locator('[lang="sa-Deva"]')).toBeInViewport();

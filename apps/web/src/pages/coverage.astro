@@ -1,0 +1,23 @@
+---
+import Beta from '../layouts/Beta.astro';
+import { collections, episodes, areas } from '../lib/library';
+---
+<Beta title="Coverage">
+  <header class="beta-intro"><h1>What you can read</h1><p class="lede">{episodes.length} annotated epic and Purāṇic episodes across {collections.length} collections.</p></header>
+  <div class="reading-width">
+    <ul class="search-list">
+      {collections.map((collection) => {
+        const entries = episodes.filter((episode) => episode.collection === collection.id);
+        const chapters = [...new Set(entries.flatMap((episode) => episode.passages.map((passage) => passage.chapter)))];
+        return <li><a href={`/epics/${collection.id}/`}>{collection.title}</a>
+          <p>{entries.length} {entries.length === 1 ? 'episode' : 'episodes'} · {chapters.join(', ')}</p></li>;
+      })}
+    </ul>
+    <p>These are excerpts and paraphrases tied to source locators. Independent editorial review, full-book coverage, and regional retellings are pending.</p>
+    <section class="beta-band">
+      <h2>Beyond the stories</h2>
+      <ul class="reading-list">{areas.slice(1).map((area) => <li><a href={area.url}>{area.title}</a> · {area.text}</li>)}</ul>
+      <p>The modern transit benchmark is recorded separately. A historical result for Arundhatī–Vasiṣṭha remains unavailable pending independent review.</p>
+    </section>
+  </div>
+</Beta>

@@ -1,0 +1,33 @@
+---
+import '../styles/global.css';
+import '../styles/beta.css';
+const { title, summary = 'Explore Indian epics, astronomy, calendars, and history through their sources.' } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={summary} />
+    <title>{title} · Itihāsa</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="masthead">
+      <div class="wrap masthead-inner beta-nav">
+        <a class="wordmark" href="/" aria-label="Itihāsa home">Itihāsa<span aria-hidden="true">✦</span></a>
+        <nav aria-label="Main navigation">
+          <a href="/epics/">Epics</a>
+          <a href="/panchang/">Calendar</a>
+          <a href="/search/">Search</a>
+        </nav>
+      </div>
+    </header>
+    <main id="main" class="wrap" tabindex="-1"><slot /></main>
+    <footer class="wrap beta-footer">
+      <a href="/coverage/">Coverage &amp; evidence status</a>
+      <a href="/research/">Research notebook</a>
+      <a href="/">Home</a>
+    </footer>
+  </body>
+</html>

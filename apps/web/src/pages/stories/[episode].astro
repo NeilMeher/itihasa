@@ -1,0 +1,52 @@
+---
+import Beta from '../../layouts/Beta.astro';
+import EclipseCriteria from '../../components/EclipseCriteria';
+import { collections, episodes, sources } from '../../lib/library';
+export function getStaticPaths() {
+  return episodes.filter((episode) => episode.id !== 'arundhati')
+    .map((episode) => ({ params: { episode: episode.id }, props: { episode } }));
+}
+const { episode } = Astro.props;
+const collection = collections.find(({ id }) => id === episode.collection)!;
+const related = episodes.filter(({ id }) => episode.related.includes(id));
+---
+<Beta title={episode.title} summary={episode.summary}>
+  <article class="reading-width">
+    <header class="beta-intro">
+      <a href={`/epics/${collection.id}/`}>{collection.title}</a>
+      <h1>{episode.question}</h1>
+      <p class="lede">{episode.summary}</p>
+    </header>
+    <dl class="fact-line">
+      <div><dt>People</dt><dd>{episode.people.join(' · ')}</dd></div>
+      <div><dt>Places named in the story</dt><dd>{episode.places.join(' · ')}</dd></div>
+    </dl>
+    <section class="beta-band" aria-labelledby="evidence">
+      <h2 id="evidence">{episode.id === 'rama-birth' ? 'Compare the editions' : 'Open the source'}</h2>
+      {episode.passages.map((passage) => {
+        const source = sources[passage.source];
+        return <details class="source-card" open>
+          <summary id={passage.id}>{passage.locator}</summary>
+          <p class="small-note">{source.edition} · {source.attribution}</p>
+          {passage.excerpt && <blockquote lang="sa-Latn">{passage.excerpt}</blockquote>}
+          <p>{passage.reading}</p>
+          <p><a href={passage.url ?? source.url}>Open the edition at this passage</a></p>
+        </details>;
+      })}
+      {episode.id === 'jayadratha' && <details class="source-card">
+        <summary>What would an eclipse claim need?</summary>
+        <p>A candidate date and place, a solar eclipse above the horizon there, and timing consistent with the account. A model also needs an assumption about ancient Earth rotation. No candidate has been tested in this lesson.</p>
+        <EclipseCriteria client:idle />
+        <p><a href="https://science.nasa.gov/eclipses/geometry/">NASA’s eclipse geometry</a></p>
+      </details>}
+    </section>
+    <section class="beta-band" aria-labelledby="related">
+      <h2 id="related">Keep reading</h2>
+      <ul class="reading-list">
+        {related.map((item) => <li><a href={item.path}>{item.title}</a></li>)}
+        {episode.id === 'rama-birth' && <li><a href="/festivals/rama-navami/">How Rāma Navamī is placed on the calendar</a></li>}
+        {episode.id === 'krishna-birth' && <li><a href="/festivals/janmashtami/">Compare Janmāṣṭamī calendar conventions</a></li>}
+      </ul>
+    </section>
+  </article>
+</Beta>

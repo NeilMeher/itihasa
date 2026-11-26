@@ -1,0 +1,26 @@
+---
+import Beta from '../layouts/Beta.astro';
+import MeanSun from '../components/MeanSun';
+---
+<Beta title="Sūrya Siddhānta workshop">
+  <article class="reading-width">
+    <header class="beta-intro"><h1>How far does the mean Sun move in one day?</h1>
+      <p class="lede">Work through a constant-rate calculation from the Sūrya Siddhānta, then compare a modern mean sidereal rate.</p></header>
+    <section class="beta-band">
+      <h2>The traditional rule</h2>
+      <p>Chapter I gives the Sun 4,320,000 revolutions per mahāyuga and the cycle 1,577,917,828 civil days. Its mean-place rule multiplies the elapsed days by the revolutions, then divides by the civil days. This exercise starts at zero longitude and uses elapsed days from that origin.</p>
+      <p><a href="https://www.swaveda.com/texts/surya-siddhanta/1/">Sūrya Siddhānta I.29–34, I.37 and I.53 · Burgess’s 1860 edition</a></p>
+    </section>
+    <div class="beta-band"><MeanSun client:load /></div>
+    <details class="source-card" open>
+      <summary>Check against Burgess’s worked proportion</summary>
+      <p>For one civil day the calculation gives 0° 59′ 8.17″. In the notes to Chapter II (printed p. 358), Burgess uses 0° 59′ 8″ 10‴ in a worked fraction of the daily solar motion. The 10 thirds are 10/60 arcseconds.</p>
+      <p><a href="https://classicalastrologer.com/wp-content/uploads/2018/04/surya_siddhanta_english.pdf">Burgess and Whitney, printed p. 358</a></p>
+    </details>
+    <details class="source-card">
+      <summary>What the two rates mean</summary>
+      <p>A civil day is one day of elapsed time. Mean longitude advances uniformly. For the comparison, the beta divides 360° by a modern mean sidereal year of 365.25636 days. Both figures are mean rates, while an apparent solar longitude also changes with the geometry of Earth’s orbit.</p>
+      <p><a href="https://ssd.jpl.nasa.gov/astro_par.html">JPL mean sidereal year</a> · <a href="/panchang/">See the Sun and Moon move in the Pañchāṅga</a></p>
+    </details>
+  </article>
+</Beta>

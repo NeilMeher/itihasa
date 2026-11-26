@@ -1,0 +1,45 @@
+---
+import Beta from '../layouts/Beta.astro';
+import SwarajyaMap from '../components/SwarajyaMap';
+import data from '../../../../content/swarajya.json';
+const references: Record<string, { title: string; locator: string; url: string }> = data.sources;
+---
+<Beta title="Maratha Swarajya">
+  <header class="beta-intro">
+    <h1>How did a hill fort become a capital?</h1>
+    <p class="lede">Explore the terrain around Raigad, then see what a different set of records can tell us about the escape from Agra.</p>
+  </header>
+  <section class="reading-width beta-band" aria-labelledby="swarajya-timeline">
+    <h2 id="swarajya-timeline">Timeline &amp; map</h2>
+    <SwarajyaMap client:visible />
+    <div class="beta-band">
+      {data.events.map((event) => <details class="source-card" open>
+        <summary id={event.id}>{event.date} · {event.title}</summary>
+        <p>{event.summary}</p><p><strong>{event.status}</strong></p>
+        <p><a href={references[event.source].url}>{references[event.source].title}</a> · {references[event.source].locator}</p>
+      </details>)}
+      <details class="source-card"><summary>How certain is the basket story?</summary>
+        <p>Ballu Sah’s 18 August letter reports the discovery of the escape. A later report in the Jaipur letter collection and the Jedhe chronology give a basket account. The discovery date, the means of escape, and the route home are separate claims.</p>
+        <p><a href={references.agra.url}>Ballu Sah’s letter in the Jaipur records</a> · <a href="https://rarebooksocietyofindia.org/book_archive/Chhatrapati%20Sambhaji%20%281657-1689%29.pdf">Published source comparison, p. 89 note 41</a></p>
+      </details>
+      <details class="source-card"><summary>Read map locations as text</summary>
+        <ul class="reading-list">{data.places.map((place) => <li>{place.name}, {place.kind} · {place.latitude}° N, {place.longitude}° E. <a href={references[place.source].url}>Coordinate source</a></li>)}</ul>
+      </details>
+    </div>
+  </section>
+  <section class="reading-width beta-band" aria-labelledby="terrain">
+    <h2 id="terrain">Look across Raigad’s slope</h2>
+    <p>Seven east–west samples at latitude {data.transect.latitude}° N show the rise in terrain around the fort. The samples come from a 90 m elevation grid and do not locate a specific historic path or wall.</p>
+    <figure>
+      <div class="terrain-bars" aria-hidden="true">{data.transect.points.map((point) => <div style={`height: ${point.metres / 9}%`} />)}</div>
+      <figcaption>West to east · sampled elevation in metres</figcaption>
+    </figure>
+    <details class="source-card"><summary>Elevation values</summary>
+      <table class="data-table">
+        <thead><tr><th>Longitude (° E)</th><th>Elevation (m)</th></tr></thead>
+        <tbody>{data.transect.points.map((point) => <tr><td>{point.longitude}</td><td>{point.metres}</td></tr>)}</tbody>
+      </table>
+    </details>
+    <p><a href="https://doi.org/10.5270/ESA-c5d3d65">Copernicus DEM GLO-90</a> · <a href={references.dem.url}>Open-Meteo elevation service</a> · <a href={data.transect.requested}>Sample query</a></p>
+  </section>
+</Beta>

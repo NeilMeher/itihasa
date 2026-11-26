@@ -1,0 +1,21 @@
+---
+import Beta from '../../layouts/Beta.astro';
+import data from '../../../../../content/conventions.json';
+const example = data.lessons['rama-navami'];
+---
+<Beta title="Rāma Navamī">
+  <article class="reading-width">
+    <header class="beta-intro"><a href="/panchang/">Today’s Pañchāṅga</a><h1>Why does midday matter for Rāma Navamī?</h1>
+      <p class="lede">The observance marks Rāma’s birth on the ninth tithi of the bright half of Caitra.</p></header>
+    <p><a href="/stories/rama-birth/">Compare the Bālakāṇḍa accounts of Rāma’s birth</a>.</p>
+    <section class="beta-band">
+      <h2>Find Navamī at midday</h2>
+      <p>The Drik Panchang example selects the day when Śukla Navamī covers the madhyāhna observance window. Its New Delhi calendar gives Sunday, 6 April 2025. Both month conventions call the bright half Caitra.</p>
+      <details class="source-card" open><summary>Read the published time window</summary>
+        <p>The reference tithi runs from 19:26 IST on 5 April to 19:22 IST on 6 April. This places the midday window of 6 April inside Navamī.</p>
+        <p><a href={example.url}>Published Navamī boundary times</a></p>
+      </details>
+      <p><a href="https://www.drikpanchang.com/hindu-festivals/rama-navami/rama-navami.html?lang=en">Published festival rule</a> · <a href={`/panchang/?date=${example.date}`}>Open this day in the calculator</a></p>
+    </section>
+  </article>
+</Beta>

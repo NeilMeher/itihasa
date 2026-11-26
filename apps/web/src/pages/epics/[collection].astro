@@ -1,0 +1,18 @@
+---
+import Beta from '../../layouts/Beta.astro';
+import { collections, episodes } from '../../lib/library';
+export function getStaticPaths() {
+  return collections.map((collection) => ({ params: { collection: collection.id }, props: { collection } }));
+}
+const { collection } = Astro.props;
+const entries = episodes.filter((episode) => episode.collection === collection.id);
+---
+<Beta title={collection.title}>
+  <header class="beta-intro"><a href="/epics/">Epics &amp; Purāṇas</a><h1>{collection.title}</h1><p class="lede">{collection.description}</p></header>
+  <div class="link-grid">
+    {entries.map((episode) => (
+      <article><h2><a href={episode.path}>{episode.title}</a></h2><p>{episode.question}</p>
+        <p class="small-note">{episode.passages[0].locator}</p></article>
+    ))}
+  </div>
+</Beta>

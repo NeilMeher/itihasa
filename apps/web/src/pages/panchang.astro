@@ -1,0 +1,23 @@
+---
+import Beta from '../layouts/Beta.astro';
+import Calculator from '../components/Calculator';
+import conventions from '../../../../content/conventions.json';
+---
+<Beta title="Today’s Pañchāṅga">
+  <div class="reading-width">
+    <header class="beta-intro"><h1>Today’s Pañchāṅga</h1><p class="lede">When does a lunar day change? Choose a city and open each limb to see its rule.</p></header>
+    <p class="small-note">Gregorian dates 2024–2027 · Indian Standard Time · {conventions.calendar.label}.</p>
+    <div class="beta-band"><Calculator mode="panchang" client:load /></div>
+    <details class="source-card" open>
+      <summary>Reference example · New Delhi, 1 January 2025</summary>
+      <p>The published calendar lists sunrise at 07:14 IST, Śukla Dvitīyā at sunrise, and the next tithi at 02:24 IST on 2 January.</p>
+      <p><a href="https://www.drikpanchang.com/panchang/day-panchang.html?date=01%2F01%2F2025&amp;lang=en">Drik Panchang daily reference</a></p>
+    </details>
+    <details class="source-card">
+      <summary>How the day is divided</summary>
+      <p>Rāhu Kāla, Yamaganda and Gulika each use a weekday-specific eighth of local daylight. The midday muhūrta here is the eighth fifteenth of daylight. The lunar month names use new moons and sidereal solar ingress.</p>
+      <p><a href="https://packolkata.imd.gov.in/panchang/en/explanation">IMD calendar explanation</a> · <a href="https://github.com/cosinekitty/astronomy/tree/v2.1.19">Astronomy Engine</a></p>
+    </details>
+    <section class="beta-band"><h2>Try a festival rule</h2><p><a href="/festivals/janmashtami/">Janmāṣṭamī</a> · <a href="/festivals/rama-navami/">Rāma Navamī</a> · <a href="/birth-sky/">My Birth Sky</a></p></section>
+  </div>
+</Beta>

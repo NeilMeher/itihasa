@@ -1,0 +1,11 @@
+---
+import Beta from '../layouts/Beta.astro';
+import SearchPanel from '../components/SearchPanel';
+import { searchEntries } from '../lib/library';
+---
+<Beta title="Search">
+  <div class="reading-width">
+    <header class="beta-intro"><h1>Find a source</h1><p class="lede">Search by question, term, person, place, or passage.</p></header>
+    <SearchPanel client:load entries={searchEntries} />
+  </div>
+</Beta>

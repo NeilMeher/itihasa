@@ -1,0 +1,30 @@
+---
+import Beta from '../layouts/Beta.astro';
+import benchmark from '../../../../research/fixtures/arundhati-modern.json';
+---
+<Beta title="Research notebook">
+  <article class="reading-width">
+    <header class="beta-intro"><h1>How do you test an epic sky claim?</h1>
+      <p class="lede">Read the source, choose a measurable claim, and run the same method on a known date before looking back.</p></header>
+    <section class="beta-band">
+      <h2>Arundhatī and Vasiṣṭha</h2>
+      <p>In Bhīṣmaparvan 6.2.31, Vyāsa says Arundhatī has put Vasiṣṭha behind her. Nilesh Nilkanth Oak compares the order in which Alcor and Mizar cross the meridian.</p>
+      <p><a href="/arundhati/#verse">Read the Sanskrit</a> · <a href="/arundhati/#sky">Try the illustrative sky</a> · <a href="https://nileshoak.wordpress.com/2016/02/08/arundhati-vasistha/">Open Oak’s original comparison</a></p>
+      <details class="source-card" open><summary>Modern comparison · 1 January 2025 UT1</summary>
+        <p>The pinned IAU 2006 reference puts Mizar A first by {benchmark.reference.expected.alcor_minus_mizar_ut1_seconds.toFixed(3)} seconds. The beta’s separate precession and timing path agrees within 1.06 milliseconds for each crossing. The acceptance tolerance was 0.10 seconds.</p>
+        <p>Inputs are HIP 65477 and 65378 from van Leeuwen’s reduction, in ICRS at J1991.25. The test projects onto the mean equator and equinox of date and compares upper transits at Greenwich.</p>
+      </details>
+      <details class="source-card" open><summary>Historical result · Unavailable</summary>
+        <p>Independent review of the catalogue sensitivity, long-term precession and historical interpretation is pending. The sky interaction shows invented positions. The modern reference is a calculation check.</p>
+      </details>
+    </section>
+    <section class="beta-band">
+      <h2>Arguments to inspect</h2>
+      <ul class="reading-list">
+        <li><a href="https://nileshoak.wordpress.com/2015/08/16/16-october-5561-bce-julian-or-gregorian/">Oak’s Mahābhārata proposal</a> places the opening day at 16 October 5561 BCE, with a proleptic Julian label.</li>
+        <li><a href="https://nileshoak.wordpress.com/2014/03/06/ramayana-timeline-summary/">Oak’s Rāmāyaṇa timeline</a> proposes 12209 BCE for the war’s opening. A <a href="/stories/rama-birth/">birth passage</a> belongs to a separate investigation.</li>
+        <li><a href="https://www.indica.today/research/research-papers/ancient-updates-to-surya-siddhanta/">Nilesh Nilkanth Oak and Rupa Bhaty</a> propose a much earlier update of astronomical data in the Sūrya Siddhānta. That proposal awaits a separate comparison.</li>
+      </ul>
+    </section>
+  </article>
+</Beta>

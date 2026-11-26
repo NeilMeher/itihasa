@@ -1,0 +1,29 @@
+{
+  "version":1,
+  "location":"New Delhi",
+  "reference":"Drik Panchang daily calendar and Śukla Navamī boundary table; myPanchang for the near-sunrise example",
+  "sunrise_tolerance_seconds":120,
+  "boundary_tolerance_seconds":180,
+  "cases":[
+    {
+      "date":"2025-01-01",
+      "source":"https://www.drikpanchang.com/panchang/day-panchang.html?date=01%2F01%2F2025&lang=en",
+      "sunrise":"2025-01-01T07:14:00+05:30",
+      "sunset":"2025-01-01T17:36:00+05:30",
+      "limbs":{"Tithi":["Dvitīyā","2025-01-02T02:24:00+05:30"],"Nakshatra":["Uttara Āṣāḍhā","2025-01-01T23:46:00+05:30"],"Yoga":["Vyāghāta","2025-01-01T17:07:00+05:30"],"Karaṇa":["Bālava","2025-01-01T14:55:00+05:30"]},
+      "month":{"amanta":"Pauṣa","purnimanta":"Pauṣa"}
+    },
+    {
+      "date":"2025-01-19",
+      "source":"https://www.mypanchang.com/phppanchang.php?cityhead=&cityname=NewDelhi-India&mn=00&monthtype=0&yr=2025",
+      "limbs":{"Tithi":["Pañcamī","2025-01-19T07:31:03+05:30"]},
+      "month":{"amanta":"Pauṣa","purnimanta":"Māgha"}
+    },
+    {
+      "date":"2025-04-06",
+      "source":"https://www.drikpanchang.com/panchang/tithi/daily/shukla-navami-date-time.html?year=2025",
+      "limbs":{"Tithi":["Navamī","2025-04-06T19:22:00+05:30"]},
+      "month":{"amanta":"Caitra","purnimanta":"Caitra"}
+    }
+  ]
+}
