@@ -1,0 +1,39 @@
+---
+import Beta from '../../layouts/Beta.astro';
+import MarathaHistory from '../../components/MarathaHistory';
+import history from '../../../../../content/maratha-history.json';
+import sources from '../../../../../content/maratha-sources.json';
+import '../../styles/epic-route.css';
+---
+<Beta title="Swarajya and Maratha history">
+  <header class="beta-intro route-opening">
+    <h1>Swarajya and Maratha history</h1>
+    <p class="lede">Follow a fort, a treaty or a change of authority from the Deccan sultanates to the Company wars. Open the records behind each change.</p>
+    <nav class="route-links" aria-label="History investigations">
+      <a href="?event=capital&place=raigad">How did Raigad work as a capital? →</a>
+      <a href="?event=kunjpura">Follow the Panipat campaign →</a>
+      <a href="#port-ledger">Read a port account →</a>
+    </nav>
+  </header>
+  <MarathaHistory client:load />
+  <noscript><section class="beta-band"><h2>Dates and documents</h2><ol class="reading-list">{history.events.map((item) =>
+    <li><strong>{item.date} · {item.title}</strong> <p>{item.summary}</p></li>)}</ol></section></noscript>
+  <div class="reading-width">
+    <section class="beta-band" id="port-ledger">
+      <h2>Read an account after the siege</h2>
+      <p>Chimaji Appa’s conquest of Vasai in 1739 changed which authority held the port. The account for Bassein under Shankaraji Keshav, reproduced in Appendix C-2 of Apte’s collection, records the port as a unit of administration. The date on the account dates a fiscal record. It is a different question from the date of surrender.</p>
+      <p class="route-links"><a href={sources['maratha-port-ledger'].url}>Peshwa Daftar port account, Appendix C-2 ↗</a><a href="?event=vasai&place=vasai">Vasai on the timeline →</a></p>
+    </section>
+    <section class="beta-band">
+      <h2>Track who could collect a payment</h2>
+      <p>The 1719 grants use the terms <i>chauth</i> and <i>sardeshmukhi</i>, conventionally a quarter and an additional tenth. The grant made a fiscal claim. Actual collections varied with negotiations, authority over particular villages, and access to local intermediaries. A colored area on a map would need separate evidence about its extent and the period it represents.</p>
+      <p class="route-links"><a href={sources['maratha-sanads'].url}>Satara State, section on the 1719 grants ↗</a>
+        <a href={sources['maratha-bism'].url}>Bharat Itihas Sanshodhak Mandal catalogue ↗</a><a href="?event=sanads">Find the grant on the timeline →</a></p>
+    </section>
+    <section class="beta-band">
+      <h2>Compare accounts of Panipat</h2>
+      <p>The district summary supports the campaign sequence and reports expanding pressure on the camp’s supplies. Kāśī Rāj Paṇḍit’s Persian account has a different vantage because he observed events from Shujāʿ al-Dawla’s side. The 1926 English edition reproduces a translation made in 1791. Passage-level collation and estimates for numbers in the camp remain open.</p>
+      <p class="route-links"><a href={sources['maratha-panipat'].url}>District campaign summary ↗</a><a href={sources['maratha-panipat-witness'].url}>Archive entry for Kāśī Rāj’s account ↗</a><a href="?event=panipat-supply">See the supply stage →</a></p>
+    </section>
+  </div>
+</Beta>

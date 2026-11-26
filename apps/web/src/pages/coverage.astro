@@ -22,6 +22,10 @@ const totalSources = Object.values(mahabharata.evidence).reduce((sum, count) => 
         {registry.works.ramayana.annotated} have a chapter annotation, and {registry.works.ramayana.indexOnly} provide a locator and primary source.</p>
       <a href="/ramayana/">Open the Rāmāyaṇa atlas</a>
     </section>
+    <section class="beta-band"><h2>Swarajya and Maratha history</h2>
+      <p>{registry.maratha.datedRecords} dated records across {registry.maratha.periods} historical periods, {registry.maratha.historyPlaces} location entries and {registry.maratha.logisticsDossiers} fort or port investigations. The Raigad terrain lesson still has {registry.maratha.terrainSamples} elevation samples.</p>
+      <a href="/swarajya/history/">Open the documented changes</a>
+    </section>
     <ul class="search-list">
       {collections.map((collection) => {
         const entries = episodes.filter((episode) => episode.collection === collection.id);

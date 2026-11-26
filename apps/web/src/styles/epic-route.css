@@ -37,4 +37,8 @@
 .pole-distance { height: .6rem; background: #e2d3b7; border-radius: 1rem; position: relative; margin-block: 1rem; }
 .pole-distance span, .pole-distance b { position: absolute; top: -.28rem; width: .15rem; height: 1.15rem; background: #6b5133; }
 .pole-distance b { background: #224d42; width: .8rem; height: .8rem; top: -.1rem; border-radius: 100%; }
+.maratha-event-buttons button { padding: .4rem .55rem; background: #f9f0df; border: 1px solid #b69f7c; min-height: 2.35rem; font: inherit; }
+.maratha-event-buttons button[aria-pressed="true"] { background: #e8d19c; border-color: #85592c; }
+.maratha-dossier { border-top: 1px solid var(--rule); margin-top: .5rem; padding-top: .45rem; }
+.route-event-link { background: transparent; border: 0; padding: .15rem 0; color: var(--accent); text-decoration: underline; text-align: left; }
 @media (max-width: 760px) { .route-stage { grid-template-columns: minmax(0,1fr); } }

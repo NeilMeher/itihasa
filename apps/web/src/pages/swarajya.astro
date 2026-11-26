@@ -8,6 +8,7 @@ const references: Record<string, { title: string; locator: string; url: string }
   <header class="beta-intro">
     <h1>How did a hill fort become a capital?</h1>
     <p class="lede">Explore the terrain around Raigad, then see what a different set of records can tell us about the escape from Agra.</p>
+    <p><a href="/swarajya/history/">Explore the Deccan, Panipat and the Company wars →</a></p>
   </header>
   <section class="reading-width beta-band" aria-labelledby="swarajya-timeline">
     <h2 id="swarajya-timeline">Timeline &amp; map</h2>
@@ -30,6 +31,7 @@ const references: Record<string, { title: string; locator: string; url: string }
   <section class="reading-width beta-band" aria-labelledby="terrain">
     <h2 id="terrain">Look across Raigad’s slope</h2>
     <p>Seven east–west samples at latitude {data.transect.latitude}° N show the rise in terrain around the fort. The samples come from a 90 m elevation grid and do not locate a specific historic path or wall.</p>
+    <p>Rainwater storage, controlled approaches and space for markets mattered to the capital. Open the evaluated component record for site features and the wider fort network. <a href="https://whc.unesco.org/document/222061">ICOMOS evaluation, Raigad component ↗</a> · <a href="/swarajya/history/?event=capital&place=raigad">Follow Raigad’s records →</a></p>
     <figure>
       <div class="terrain-bars" aria-hidden="true">{data.transect.points.map((point) => <div style={`height: ${point.metres / 9}%`} />)}</div>
       <figcaption>West to east · sampled elevation in metres</figcaption>

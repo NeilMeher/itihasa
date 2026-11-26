@@ -118,6 +118,7 @@ test('workshop responds to keyboard and map keeps the Agra route uncertain', asy
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/swarajya/');
   const agra = page.getByRole('button', { name: /1666.*escape from Agra/i });
+  await agra.scrollIntoViewIfNeeded();
   await agra.click();
   await expect(agra).toHaveAttribute('aria-pressed', 'true');
   await expect(page.getByText(/route uncertain/i)).toBeVisible();

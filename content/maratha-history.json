@@ -1,0 +1,482 @@
+{
+  "periods": [
+    {
+      "id": "deccan",
+      "start": 1600,
+      "end": 1639,
+      "title": "The Deccan before Swarajya",
+      "summary": "The Adil Shahi and Nizam Shahi courts and the Mughal advance shaped opportunities for landed families, military service and negotiations."
+    },
+    {
+      "id": "shivaji",
+      "start": 1640,
+      "end": 1679,
+      "title": "The formation of Swarajya",
+      "summary": "Fort acquisition, diplomacy and the assertion of royal authority gave Shivaji Maharaj a base against competing powers."
+    },
+    {
+      "id": "resistance",
+      "start": 1680,
+      "end": 1706,
+      "title": "Succession and resistance",
+      "summary": "Sambhaji, Rajaram and Tarabai faced an expanding Mughal military presence. Leadership moved when a capital or fort could no longer serve."
+    },
+    {
+      "id": "satara",
+      "start": 1707,
+      "end": 1739,
+      "title": "Rival courts and revenue rights",
+      "summary": "Shahu’s release opened a fight over succession. His court made agreements about tribute and revenue while the Kolhapur line retained authority."
+    },
+    {
+      "id": "administration",
+      "start": 1740,
+      "end": 1759,
+      "title": "Expansion and administration",
+      "summary": "Maratha chiefs and revenue agents operated across different regions. Peshwa authority interacted with local elites and other ruling houses."
+    },
+    {
+      "id": "panipat",
+      "start": 1760,
+      "end": 1772,
+      "title": "The north, Panipat and the return",
+      "summary": "The campaign depended on other rulers, supply, money and movement. Defeat interrupted the northern push, which was later renewed."
+    },
+    {
+      "id": "houses",
+      "start": 1773,
+      "end": 1801,
+      "title": "Regional powers and Company rivalry",
+      "summary": "Shinde, Holkar, Gaikwad and Bhonsle interests diverged. The Peshwa and the East India Company became entangled in competing agreements."
+    },
+    {
+      "id": "company",
+      "start": 1802,
+      "end": 1818,
+      "title": "Company treaties and war",
+      "summary": "Successive agreements increased Company leverage. War in 1817–18 ended the Peshwa’s political authority."
+    },
+    {
+      "id": "continuities",
+      "start": 1819,
+      "end": 1848,
+      "title": "Authority continues in other forms",
+      "summary": "Satara retained a ruling house under Company paramountcy until annexation. The end of the Peshwa’s government did not end Maratha political and social institutions."
+    }
+  ],
+  "places": [
+    {
+      "id": "deccan",
+      "name": "Deccan sultanate country",
+      "lon": null,
+      "lat": null,
+      "precision": "Regional context",
+      "summary": "No fixed frontier drawn. Offices, forts and estates had different holders at different dates.",
+      "source": "maratha-gordon"
+    },
+    {
+      "id": "pratapgad",
+      "name": "Pratapgad",
+      "lon": 73.58,
+      "lat": 17.94,
+      "precision": "Modern fort reference",
+      "summary": "A hill-forest fort in the UNESCO property. The marker orients the reader to the site.",
+      "source": "unesco-forts"
+    },
+    {
+      "id": "agra",
+      "name": "Agra",
+      "lon": 78.02,
+      "lat": 27.18,
+      "precision": "Modern city reference",
+      "summary": "The point does not identify the building in which Shivaji was detained.",
+      "source": "sarkar-agra"
+    },
+    {
+      "id": "raigad",
+      "name": "Raigad",
+      "lon": 73.444,
+      "lat": 18.236,
+      "precision": "Documented hill fort",
+      "summary": "A capital site with fortified approaches, palace and market areas and provision for water.",
+      "source": "maratha-raigad"
+    },
+    {
+      "id": "rajgad",
+      "name": "Rajgad",
+      "lon": 73.6825,
+      "lat": 18.246,
+      "precision": "Modern fort reference",
+      "summary": "A separate hill-fort component near Raigad. The point shows geography and terrain context.",
+      "source": "unesco-forts"
+    },
+    {
+      "id": "suvarnadurg",
+      "name": "Suvarnadurg",
+      "lon": 73.0844,
+      "lat": 17.8164,
+      "precision": "Modern maritime fort reference",
+      "summary": "A fortified coastal position in the same modern heritage collection.",
+      "source": "unesco-forts"
+    },
+    {
+      "id": "gingee",
+      "name": "Gingee",
+      "lon": 79.4,
+      "lat": 12.25,
+      "precision": "Modern fort reference",
+      "summary": "The Tamil Nadu component of the inscribed property. Used here to orient the reader to Rajaram’s southern base.",
+      "source": "unesco-forts"
+    },
+    {
+      "id": "satara",
+      "name": "Satara",
+      "lon": 74,
+      "lat": 17.69,
+      "precision": "Modern city reference",
+      "summary": "Orientation point for Shahu’s court and the later princely state.",
+      "source": "maratha-sanads"
+    },
+    {
+      "id": "vasai",
+      "name": "Vasai (Bassein)",
+      "lon": 72.81,
+      "lat": 19.33,
+      "precision": "Modern fort and port reference",
+      "summary": "The names Vasai and Bassein refer to the same place in different records. It has distinct episodes of military seizure, revenue and diplomacy.",
+      "source": "maratha-vasai"
+    },
+    {
+      "id": "pune",
+      "name": "Pune",
+      "lon": 73.86,
+      "lat": 18.52,
+      "precision": "Modern city reference",
+      "summary": "Orientation point for the Peshwa’s government and the 1817 treaty.",
+      "source": "maratha-treaties"
+    },
+    {
+      "id": "delhi",
+      "name": "Delhi",
+      "lon": 77.22,
+      "lat": 28.65,
+      "precision": "Modern city reference",
+      "summary": "The point orients the northern campaign and the 1719 documentary context. It does not trace the route of the armies.",
+      "source": "maratha-panipat"
+    },
+    {
+      "id": "panipat",
+      "name": "Panipat",
+      "lon": 76.97,
+      "lat": 29.39,
+      "precision": "Modern city reference",
+      "summary": "The city is a reference for the campaign and battle. Camp extent and precise movements are unresolved in this map.",
+      "source": "maratha-panipat"
+    },
+    {
+      "id": "kunjpura",
+      "name": "Kunjpura",
+      "lon": 77.07,
+      "lat": 29.72,
+      "precision": "Approximate modern locality",
+      "summary": "The district gazetteer names the locality in the October 1760 campaign. No battle footprint is drawn.",
+      "source": "maratha-panipat-letters"
+    }
+  ],
+  "events": [
+    {
+      "period": "deccan",
+      "id": "deccan-rivalry",
+      "year": 1636,
+      "date": "1630s",
+      "precision": "Decades",
+      "title": "Service and power in the Deccan",
+      "place": "deccan",
+      "authority": "Deccan sultanates and Mughal expansion",
+      "summary": "The royal houses of Bijapur and Ahmadnagar, Mughal officers and local military families negotiated overlapping rights and service. Shahaji’s career belongs to this context.",
+      "consequence": "How service, landholding and family networks created room for a new polity.",
+      "source": "maratha-gordon"
+    },
+    {
+      "period": "shivaji",
+      "id": "pratapgad",
+      "year": 1659,
+      "date": "1659",
+      "precision": "Year",
+      "title": "Confrontation at Pratapgad",
+      "place": "pratapgad",
+      "authority": "Shivaji Maharaj and Bijapur",
+      "summary": "Bijapur sent Afzal Khan against Shivaji. Their confrontation at Pratapgad became a turning point in the contest over forts and authority.",
+      "consequence": "The site is a named fort. Accounts of the encounter and its details require their own witnesses.",
+      "source": "maratha-gordon"
+    },
+    {
+      "period": "shivaji",
+      "id": "escape",
+      "year": 1666,
+      "date": "August 1666",
+      "precision": "Month",
+      "title": "Agra and the escape",
+      "place": "agra",
+      "authority": "Mughal custody and a Maratha ruler",
+      "summary": "Letters from Jaipur’s representatives record Shivaji’s escape. Accounts give different amounts of detail on how it occurred.",
+      "consequence": "The evidence trail separates knowledge of the escape, the basket story and the missing itinerary.",
+      "source": "sarkar-agra"
+    },
+    {
+      "period": "shivaji",
+      "id": "capital",
+      "year": 1674,
+      "date": "1674",
+      "precision": "Year",
+      "title": "Coronation at Raigad",
+      "place": "raigad",
+      "authority": "Shivaji Maharaj’s court",
+      "summary": "The coronation made Raigad a ceremonial and administrative centre. The hilltop also needed a way to receive people, store water and sustain a working market.",
+      "consequence": "The Raigad lesson connects those needs to modern terrain and documented structures.",
+      "source": "maratha-raigad"
+    },
+    {
+      "period": "resistance",
+      "id": "sambhaji",
+      "year": 1680,
+      "date": "1680–1689",
+      "precision": "Reign span in years",
+      "title": "Sambhaji and Mughal pressure",
+      "place": "raigad",
+      "authority": "Sambhaji and the imperial campaign",
+      "summary": "Sambhaji succeeded Shivaji and faced Aurangzeb’s southward campaigns. His capture and execution in 1689 brought another crisis for the court.",
+      "consequence": "Authority had to endure when a ruler and a capital could be lost. Raigad is a court reference for this period.",
+      "source": "maratha-gordon"
+    },
+    {
+      "period": "resistance",
+      "id": "rajaram",
+      "year": 1689,
+      "date": "From 1689",
+      "precision": "Year of change",
+      "title": "Rajaram’s southern base",
+      "place": "gingee",
+      "authority": "Rajaram’s court in the south",
+      "summary": "Rajaram reached the fortified base at Gingee under Mughal pressure in the Deccan. The southern stronghold let leadership continue while operations elsewhere remained contested.",
+      "consequence": "The change of base is supported. The explorer leaves the intermediate escape route open.",
+      "source": "maratha-gordon"
+    },
+    {
+      "period": "resistance",
+      "id": "tarabai",
+      "year": 1700,
+      "date": "1700–1707",
+      "precision": "Years",
+      "title": "Tarabai organizes resistance",
+      "place": "deccan",
+      "authority": "Tarabai and the claim of her son",
+      "summary": "After Rajaram’s death, Tarabai acted for her young son and maintained a competing claim to rule during the struggle with the Mughals.",
+      "consequence": "Her decisions and the loyalties of military commanders remained consequential after Aurangzeb died.",
+      "source": "maratha-satara"
+    },
+    {
+      "period": "satara",
+      "id": "shahu",
+      "year": 1707,
+      "date": "1707–1708",
+      "precision": "Years",
+      "title": "Shahu returns and claims the throne",
+      "place": "satara",
+      "authority": "Shahu and Tarabai’s rival line",
+      "summary": "Released after Aurangzeb’s death, Sambhaji’s son Shahu claimed the throne. Some commanders supported him, while Tarabai held to the claim of her own son.",
+      "consequence": "Satara and Kolhapur developed distinct courts. A claimant’s allies and a fort’s garrison can tell different stories.",
+      "source": "maratha-buldhana"
+    },
+    {
+      "period": "satara",
+      "id": "sanads",
+      "year": 1719,
+      "date": "1719",
+      "precision": "Year",
+      "title": "A right to collect revenue",
+      "place": "delhi",
+      "authority": "Shahu’s court and Mughal grants",
+      "summary": "Grants secured through Balaji Vishwanath’s mission recognized claims to chauth and sardeshmukhi from six Deccan provinces. These were revenue claims that had to be collected in practice.",
+      "consequence": "The document’s claim does not give a boundary for daily control or say who paid each assessment.",
+      "source": "maratha-sanads"
+    },
+    {
+      "period": "satara",
+      "id": "vasai",
+      "year": 1739,
+      "date": "1739",
+      "precision": "Year",
+      "title": "Vasai changes hands",
+      "place": "vasai",
+      "authority": "Chimaji Appa’s force and Portuguese Bassein",
+      "summary": "After a siege led by Chimaji Appa, the Portuguese lost Vasai. The change concerned a fort and a port with commercial and administrative needs.",
+      "consequence": "A surviving port account from the same year opens a different question from who won the siege.",
+      "source": "maratha-vasai"
+    },
+    {
+      "period": "administration",
+      "id": "balaji",
+      "year": 1740,
+      "date": "1740",
+      "precision": "Year",
+      "title": "Shahu chooses Balaji Baji Rao",
+      "place": "pune",
+      "authority": "Shahu and the Peshwa’s office",
+      "summary": "After Baji Rao died, Shahu appointed his son Balaji Baji Rao. The Peshwa’s office became increasingly influential as operations extended into northern and eastern regions.",
+      "consequence": "Different regions were administered through chiefs, allied elites and revenue agents. Influence varied by place and arrangement.",
+      "source": "maratha-gordon"
+    },
+    {
+      "period": "panipat",
+      "id": "kunjpura",
+      "year": 1760,
+      "date": "October 1760",
+      "precision": "Month",
+      "title": "The move from Delhi to Kunjpura",
+      "place": "kunjpura",
+      "authority": "Sadāśivrāo Bhāu and Durrani’s coalition",
+      "summary": "Bhāu’s force moved from Delhi towards Kunjpura. Blocking sources of money and provisions was a concern for both sides along the Yamunā.",
+      "consequence": "A success at Kunjpura did not settle the river crossings and the routes supplies would have to take afterward.",
+      "source": "maratha-panipat-letters"
+    },
+    {
+      "period": "panipat",
+      "id": "panipat-supply",
+      "year": 1760,
+      "date": "Late 1760",
+      "precision": "Approximate",
+      "title": "The camp loses supply access",
+      "place": "panipat",
+      "authority": "Maratha camp and Durrani’s coalition",
+      "summary": "Interdiction made food and fodder harder to bring into the Maratha camp. The burden extended to non-combatant followers and to animals needed for transport.",
+      "consequence": "The district account supports the direction of the change. Exact population and loss estimates are disputed.",
+      "source": "maratha-panipat"
+    },
+    {
+      "period": "panipat",
+      "id": "panipat-battle",
+      "year": 1761,
+      "date": "14 January 1761",
+      "precision": "Gregorian day in source",
+      "title": "The Third Battle of Panipat",
+      "place": "panipat",
+      "authority": "Maratha expedition and Durrani’s coalition",
+      "summary": "Ahmad Shah Durrani’s coalition defeated the Maratha expedition. The Rohilla leaders and Shujāʿ al-Dawla had their own political interests in joining the coalition.",
+      "consequence": "The defeat brought losses far beyond the battlefield and interrupted the northern expedition.",
+      "source": "maratha-panipat"
+    },
+    {
+      "period": "panipat",
+      "id": "panipat-after",
+      "year": 1771,
+      "date": "1771",
+      "precision": "Year",
+      "title": "A renewed northern campaign",
+      "place": "delhi",
+      "authority": "Forces sent under Peshwa Madhavrao",
+      "summary": "Later Maratha intervention in the north restored influence around Delhi. It depended on leadership, funding and new negotiations.",
+      "consequence": "The political consequences of Panipat involved years of recovery and shifting agreements.",
+      "source": "maratha-panipat"
+    },
+    {
+      "period": "houses",
+      "id": "regional-houses",
+      "year": 1780,
+      "date": "1770s–1801",
+      "precision": "Broad period",
+      "title": "Regional houses take different paths",
+      "place": "deccan",
+      "authority": "Shinde, Holkar, Gaikwad and Bhonsle",
+      "summary": "Military leaders and family houses built power bases with different ties to the Peshwa’s court. They negotiated with local rulers and increasingly with the Company.",
+      "consequence": "The atlas leaves territorial boundaries open. A treaty or tribute relation can coexist with another authority in the same area.",
+      "source": "maratha-gordon"
+    },
+    {
+      "period": "company",
+      "id": "bassein-treaty",
+      "year": 1802,
+      "date": "31 December 1802",
+      "precision": "Gregorian day in catalogue",
+      "title": "Treaty of Bassein",
+      "place": "vasai",
+      "authority": "Baji Rao II and the East India Company",
+      "summary": "Baji Rao II sought Company support after defeat near Pune. The treaty provided for a subsidiary force and limited independent dealings with European rivals.",
+      "consequence": "Other Maratha houses made their own choices about an agreement that constrained the Peshwa.",
+      "source": "maratha-bassein"
+    },
+    {
+      "period": "company",
+      "id": "poona-treaty",
+      "year": 1817,
+      "date": "13 June 1817",
+      "precision": "Gregorian day in catalogue",
+      "title": "The Poona Treaty narrows the Peshwa’s options",
+      "place": "pune",
+      "authority": "Baji Rao II and Company Resident Elphinstone",
+      "summary": "The archive lists a contemporary comparison of the Poona Treaty with Bassein. The agreement came before renewed fighting in 1817–18.",
+      "consequence": "The paired documents let a reader distinguish formal restrictions from the subsequent outcome of the war.",
+      "source": "maratha-treaties"
+    },
+    {
+      "period": "company",
+      "id": "end-peshwa",
+      "year": 1818,
+      "date": "1818",
+      "precision": "Year",
+      "title": "The Peshwa’s government ends",
+      "place": "pune",
+      "authority": "Company rule after the third war",
+      "summary": "The Company defeated and displaced Baji Rao II. The change ended the Peshwa’s government and rearranged relations with other authorities.",
+      "consequence": "Satara continued under a different arrangement, so the political change has more than one endpoint.",
+      "source": "maratha-sanads"
+    },
+    {
+      "period": "continuities",
+      "id": "later-satara",
+      "year": 1848,
+      "date": "1818–1848",
+      "precision": "Period of continuity",
+      "title": "Satara under Company paramountcy",
+      "place": "satara",
+      "authority": "Satara ruling house and Company authority",
+      "summary": "Satara’s ruling house held a princely state under Company paramountcy after the Peshwa’s government ended. Annexation followed in 1848.",
+      "consequence": "The political period ends in 1818 in the main track. Satara’s history shows which institutions continued and under what terms.",
+      "source": "maratha-sanads"
+    }
+  ],
+  "dossiers": [
+    {
+      "id": "water",
+      "title": "How much could the fort supply itself?",
+      "place": "raigad",
+      "summary": "The ICOMOS evaluation identifies water harvesting and features used by a working capital. A high protected platform still needs reliable water storage, food deliveries and market space. Compare these needs with the seven modern elevation samples.",
+      "source": "maratha-raigad",
+      "href": "/swarajya/#terrain"
+    },
+    {
+      "id": "hill-forts",
+      "title": "Hill forts in the network",
+      "place": "rajgad",
+      "summary": "Compare the site types for Raigad and Rajgad with the very different terrain of a fort guarding a coastal approach. This geographic comparison does not assert a dated supply road between them.",
+      "source": "unesco-forts",
+      "href": "/swarajya/#swarajya-timeline"
+    },
+    {
+      "id": "maritime",
+      "title": "What can a fortified coastal site protect?",
+      "place": "suvarnadurg",
+      "summary": "Suvarnadurg is a maritime component of the UNESCO property. Its position shaped access by sea. For the accounting side of coastal control, compare the separate Vasai port record.",
+      "source": "unesco-forts",
+      "href": "/swarajya/history/#port-ledger"
+    },
+    {
+      "id": "port-ledger",
+      "title": "What changes when a port changes hands?",
+      "place": "vasai",
+      "summary": "Appendix C-2 reproduces an account for the Bassein port under Shankaraji Keshav in 1739. A siege changes possession. Accounts illuminate the administrative task that follows, including how receipts and expenditures are recorded.",
+      "source": "maratha-port-ledger",
+      "href": "/swarajya/history/?event=vasai"
+    }
+  ]
+}

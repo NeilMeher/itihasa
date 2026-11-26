@@ -1,6 +1,7 @@
 import raw from '../../../../content/library.json';
 import chapterNotes from '../../../../content/mahabharata-annotations.json';
 import ramNotes from '../../../../content/ramayana-annotations.json';
+import marathaHistory from '../../../../content/maratha-history.json';
 
 type Source = { title: string; edition: string; attribution: string; url: string };
 type Passage = { id: string; source: string; chapter: string; locator: string; reading: string; url?: string; excerpt?: string };
@@ -42,5 +43,8 @@ export const searchEntries = [
   ...ramNotes.map((chapter) => ({
     url: `/ramayana/${String(chapter.book).padStart(2, '0')}/#sarga-${chapter.chapter}`,
     title: chapter.title, text: chapter.summary, aliases: `Rāmāyaṇa ${chapter.book}.${chapter.chapter} ${chapter.aliases.join(' ')}`,
+  })),
+  ...marathaHistory.events.map((event) => ({
+    url: `/swarajya/history/?event=${event.id}`, title: event.title, text: event.summary, aliases: `${event.date} ${event.authority}`,
   })),
 ];

@@ -47,6 +47,7 @@ def build():
     ram_index = read("ramayana-chapters", {"books": []})
     ram_atlas = read("ramayana-atlas", {"episodes": []})
     series = read("swarajya")
+    maratha = read("maratha-history", {"periods": [], "events": [], "places": [], "dossiers": []})
     legacy = read("library")
     return {
         "version": 1,
@@ -65,7 +66,8 @@ def build():
         "legacy": dict(sorted(Counter(entry["collection"] for entry in legacy["episodes"]).items())),
         "maratha": {"events": len(series["events"]), "places": len(series["places"]),
                     "terrainSamples": len(series["transect"]["points"]),
-                    "periods": len(read("maratha-history", {"periods": []})["periods"])},
+                    "periods": len(maratha["periods"]), "datedRecords": len(maratha["events"]),
+                    "historyPlaces": len(maratha["places"]), "logisticsDossiers": len(maratha["dossiers"])},
     }
 
 

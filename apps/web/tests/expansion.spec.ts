@@ -93,3 +93,36 @@ test('Rāmāyaṇa pole test distinguishes an attributed claim from a geometry c
   await page.getByRole('link', { name: /calendar lesson/ }).click();
   await expect(page).toHaveURL(/festivals\/rama-navami\//);
 });
+
+test('Raigad connects a capital, a terrain case, a later ruler and documentary evidence', async ({ page }, info) => {
+  await page.setViewportSize({ width: 360, height: 640 });
+  await page.goto('/swarajya/history/?event=capital&place=raigad');
+  await expect(page.getByRole('heading', { name: 'Coronation at Raigad', exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'How much could the fort supply itself?' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Explore the case →' })).toHaveAttribute('href', '/swarajya/#terrain');
+  await page.getByText('Dated records at this location', { exact: true }).click();
+  await page.getByRole('button', { name: /Sambhaji and Mughal pressure/ }).click();
+  await expect(page.getByRole('heading', { name: 'Sambhaji and Mughal pressure', exact: true })).toBeVisible();
+  await page.getByText('Read the evidence for this change', { exact: true }).click();
+  await expect(page.getByText(/Public chapter summaries checked/)).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(360);
+  await page.screenshot({ path: info.outputPath('raigad-history-360.png'), fullPage: true });
+  await page.getByRole('link', { name: 'Follow connected people, places and records →' }).click();
+  await expect(page.getByRole('heading', { name: 'Sambhaji and Mughal pressure', exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Inspect connection with Sambhaji', exact: true }).click();
+  await expect(page.getByRole('article', { name: 'Relationship evidence' })).toContainText('1680–1689');
+});
+
+test('Panipat supply and aftermath are separate stages on the documented timeline', async ({ page }, info) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto('/swarajya/history/?event=kunjpura');
+  await expect(page.getByRole('heading', { name: 'The move from Delhi to Kunjpura' })).toBeVisible();
+  await page.getByRole('slider').press('ArrowRight');
+  await expect(page.getByRole('heading', { name: 'The camp loses supply access' })).toBeVisible();
+  await expect(page.getByText(/Exact population and loss estimates are disputed/)).toBeVisible();
+  await page.getByRole('button', { name: 'The Third Battle of Panipat', exact: true }).click();
+  await expect(page).toHaveURL(/event=panipat-battle/);
+  await page.getByRole('button', { name: 'A renewed northern campaign', exact: true }).click();
+  await expect(page.getByRole('heading', { name: 'A renewed northern campaign', exact: true })).toBeVisible();
+  await page.screenshot({ path: info.outputPath('panipat-history-1280.png') });
+});

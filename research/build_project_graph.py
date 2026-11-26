@@ -15,7 +15,7 @@ def read(name, fallback=None):
 
 
 def build():
-    sources = read("source-register")
+    sources = read("source-register") | read("maratha-sources", {})
     atlas, reading = read("mahabharata-atlas"), read("mahabharata-reading")
     editorial = read("graph-editorial")
     nodes = list(editorial["nodes"])
@@ -113,6 +113,48 @@ def build():
         edge("ra-place-setu", "source-setu-study", "is measured by", "Modern bathymetry", "ICESat-2 returns give information about modern depth, not an epoch for the construction in the text.", "setu-study")
         edge("ra-episode-rama-birth", "story-rama-birth", "has edition comparison", "Baroda 1.17.6 and Southern 1.18.8–10", "The birth chapter has a separate reading that shows the additional detail in the Southern Recension.", "southern-ramayana")
         edge("ra-person-janaka", "ra-person-sita", "raises", "Baroda 1.65.14", "Janaka recounts finding Sītā while ploughing the ground.", "baroda", f'{ram_index["books"][0]["url"]}#:~:text=1065014a')
+
+    maratha = read("maratha-history", {})
+    if maratha:
+        dated = {item["id"]: item for item in maratha["events"]}
+        for period in maratha["periods"]:
+            first = next(item for item in dated.values() if item["period"] == period["id"])
+            id_ = f'maratha-period-{period["id"]}'
+            add(id_, "period", "maratha", period["title"], period["summary"], f'/swarajya/history/?event={first["id"]}')
+            edge("work-maratha", id_, "includes", f'{period["start"]}–{period["end"]} CE',
+                 "A period groups several documented political changes.", first["source"])
+        for place in maratha["places"]:
+            id_ = place["id"]
+            if id_ != "raigad":
+                add(f"maratha-place-{id_}", "place", "maratha", place["name"], f'{place["precision"]}. {place["summary"]}',
+                    f"/swarajya/history/?place={id_}")
+            edge(f"maratha-place-{id_}", f'source-{place["source"]}', "is documented by", "Geographic reference and source of identification",
+                 place["summary"], place["source"])
+        for id_, event in dated.items():
+            if id_ != "capital":
+                add(f"maratha-event-{id_}", "episode", "maratha", event["title"], event["summary"], f"/swarajya/history/?event={id_}")
+                edge(f"maratha-event-{id_}", f'maratha-place-{event["place"]}', "is placed at", event["date"],
+                     event["summary"], event["source"])
+            edge(f"maratha-event-{id_}", f'maratha-period-{event["period"]}', "is placed in", event["date"],
+                 event["consequence"], event["source"])
+            edge(f"maratha-event-{id_}", f'source-{event["source"]}', "is documented by", event["date"],
+                 event["summary"], event["source"])
+        actors = [
+            ("shivaji", "Shivaji Maharaj", "Founded Swarajya and made Raigad his capital.", "capital", "is crowned at"),
+            ("sambhaji", "Sambhaji", "Succeeded Shivaji while Mughal pressure intensified.", "sambhaji", "rules during"),
+            ("rajaram", "Rajaram", "Took leadership to a fortified base in the south.", "rajaram", "moves court during"),
+            ("tarabai", "Tarabai", "Led resistance and acted for her son after Rajaram’s death.", "tarabai", "leads"),
+            ("shahu", "Shahu", "Claimed the throne on release and built a court at Satara.", "shahu", "claims authority in"),
+            ("bhau", "Sadāśivrāo Bhāu", "Commanded the Maratha expedition that reached Panipat.", "kunjpura", "leads"),
+        ]
+        for id_, name, summary, event, relation in actors:
+            entry = dated[event]
+            add(f"maratha-person-{id_}", "person", "maratha", name, summary, f"/swarajya/history/?event={event}")
+            edge(f"maratha-person-{id_}", f"maratha-event-{event}", relation, entry["date"], summary, entry["source"])
+        edge("maratha-place-raigad", "maratha-place-rajgad", "shares a heritage listing with", "World Heritage property 1739",
+             "The inscribed components give two hill-fort comparisons. Their inclusion alone supplies no itinerary.", "unesco-forts")
+        edge("maratha-place-vasai", "source-maratha-port-ledger", "has a fiscal record", "1739, Appendix C-2",
+             "The account documents a port under administration after the change of possession.", "maratha-port-ledger")
 
     ids = {node["id"] for node in nodes}
     if len(ids) != len(nodes) or any(not re.fullmatch(r"[a-z\d-]+", id_) for id_ in ids):

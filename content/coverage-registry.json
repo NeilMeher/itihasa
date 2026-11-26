@@ -214,6 +214,9 @@
     "events": 2,
     "places": 4,
     "terrainSamples": 7,
-    "periods": 0
+    "periods": 9,
+    "datedRecords": 20,
+    "historyPlaces": 13,
+    "logisticsDossiers": 4
   }
 }
