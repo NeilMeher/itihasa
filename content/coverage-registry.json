@@ -1,0 +1,169 @@
+{
+  "version": 1,
+  "works": {
+    "mahabharata": {
+      "books": [
+        {
+          "book": 1,
+          "indexed": 225,
+          "sceneLinkedOnly": 9,
+          "annotated": 0,
+          "indexOnly": 216
+        },
+        {
+          "book": 2,
+          "indexed": 72,
+          "sceneLinkedOnly": 9,
+          "annotated": 0,
+          "indexOnly": 63
+        },
+        {
+          "book": 3,
+          "indexed": 299,
+          "sceneLinkedOnly": 4,
+          "annotated": 0,
+          "indexOnly": 295
+        },
+        {
+          "book": 4,
+          "indexed": 67,
+          "sceneLinkedOnly": 4,
+          "annotated": 0,
+          "indexOnly": 63
+        },
+        {
+          "book": 5,
+          "indexed": 197,
+          "sceneLinkedOnly": 3,
+          "annotated": 0,
+          "indexOnly": 194
+        },
+        {
+          "book": 6,
+          "indexed": 117,
+          "sceneLinkedOnly": 7,
+          "annotated": 0,
+          "indexOnly": 110
+        },
+        {
+          "book": 7,
+          "indexed": 173,
+          "sceneLinkedOnly": 9,
+          "annotated": 0,
+          "indexOnly": 164
+        },
+        {
+          "book": 8,
+          "indexed": 69,
+          "sceneLinkedOnly": 4,
+          "annotated": 0,
+          "indexOnly": 65
+        },
+        {
+          "book": 9,
+          "indexed": 64,
+          "sceneLinkedOnly": 2,
+          "annotated": 0,
+          "indexOnly": 62
+        },
+        {
+          "book": 10,
+          "indexed": 18,
+          "sceneLinkedOnly": 1,
+          "annotated": 0,
+          "indexOnly": 17
+        },
+        {
+          "book": 11,
+          "indexed": 27,
+          "sceneLinkedOnly": 2,
+          "annotated": 0,
+          "indexOnly": 25
+        },
+        {
+          "book": 12,
+          "indexed": 353,
+          "sceneLinkedOnly": 6,
+          "annotated": 0,
+          "indexOnly": 347
+        },
+        {
+          "book": 13,
+          "indexed": 154,
+          "sceneLinkedOnly": 3,
+          "annotated": 0,
+          "indexOnly": 151
+        },
+        {
+          "book": 14,
+          "indexed": 96,
+          "sceneLinkedOnly": 1,
+          "annotated": 0,
+          "indexOnly": 95
+        },
+        {
+          "book": 15,
+          "indexed": 47,
+          "sceneLinkedOnly": 1,
+          "annotated": 0,
+          "indexOnly": 46
+        },
+        {
+          "book": 16,
+          "indexed": 9,
+          "sceneLinkedOnly": 2,
+          "annotated": 0,
+          "indexOnly": 7
+        },
+        {
+          "book": 17,
+          "indexed": 3,
+          "sceneLinkedOnly": 3,
+          "annotated": 0,
+          "indexOnly": 0
+        },
+        {
+          "book": 18,
+          "indexed": 5,
+          "sceneLinkedOnly": 2,
+          "annotated": 0,
+          "indexOnly": 3
+        }
+      ],
+      "indexed": 1995,
+      "indexOnly": 1923,
+      "sceneLinkedOnly": 72,
+      "annotated": 0,
+      "scenes": 34,
+      "battleDays": 18,
+      "evidence": {
+        "Archaeology": 2,
+        "Calendar": 2,
+        "DNA": 2,
+        "Landscape": 1,
+        "Proposal": 1,
+        "Sky": 3
+      }
+    },
+    "ramayana": {
+      "books": [],
+      "indexed": 0,
+      "indexOnly": 0,
+      "sceneLinkedOnly": 0,
+      "annotated": 0,
+      "scenes": 0
+    }
+  },
+  "legacy": {
+    "bhagavata": 5,
+    "harivamsa": 1,
+    "mahabharata": 2,
+    "ramayana": 1
+  },
+  "maratha": {
+    "events": 2,
+    "places": 4,
+    "terrainSamples": 7,
+    "periods": 0
+  }
+}

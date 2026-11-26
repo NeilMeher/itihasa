@@ -63,10 +63,11 @@ class BetaHandler(SimpleHTTPRequestHandler):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--port", type=int, default=4321)
+    parser.add_argument("--dist", type=Path, default=DIST, help="Directory containing the production Astro build")
     args = parser.parse_args()
-    if not (DIST / "index.html").is_file():
+    if not (args.dist / "index.html").is_file():
         parser.error("Build the site first with npm run build.")
-    handler = partial(BetaHandler, directory=str(DIST))
+    handler = partial(BetaHandler, directory=str(args.dist.resolve()))
     with BetaServer(("127.0.0.1", args.port), handler) as server:
         print(f"Itihasa beta is available at http://127.0.0.1:{server.server_port}/", flush=True)
         try:
