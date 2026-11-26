@@ -54,3 +54,42 @@ test('mind map connects the omen to interpretation and calculation', async ({ pa
   await expect(page.getByRole('heading', { name: 'Oak’s meridian reading', exact: true })).toBeVisible();
   await expect(page.getByRole('article', { name: 'Relationship evidence' })).toBeVisible();
 });
+
+test('Sītā’s route keeps literary locations and source links distinct', async ({ page }, info) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/ramayana/?scene=sita-exile&person=sita');
+  await expect(page.getByRole('heading', { name: 'Sītā chooses to go' })).toBeVisible();
+  await expect(page.getByLabel('Follow a person')).toHaveValue('sita');
+  await page.locator('.route-person').getByRole('button', { name: 'Sītā recognizes the ring' }).click();
+  await expect(page).toHaveURL(/scene=ring&person=sita/);
+  await expect(page.locator('.route-place-detail')).toContainText('Literary location');
+  await page.locator('.route-scene').getByRole('link', { name: 'Open in the mind map →' }).click();
+  await expect(page.getByRole('heading', { name: 'Sītā recognizes the ring', exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Inspect connection with Laṅkā and the Aśoka grove', exact: true }).click();
+  await expect(page.getByRole('article', { name: 'Relationship evidence' })).toContainText('Baroda Critical Edition 5.34');
+  await page.goBack();
+  await expect(page.locator('.route-scene').getByRole('heading', { name: 'Sītā recognizes the ring' })).toBeVisible();
+  await page.screenshot({ path: info.outputPath('sita-route-390.png'), fullPage: true });
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(390);
+  await page.locator('.route-scene').getByRole('link', { name: /annotated sarga/ }).click();
+  await expect(page.locator('.ram-sargas > li')).toHaveCount(66);
+  await expect(page.locator('#sarga-34')).toContainText('Sītā recognizes the ring');
+});
+
+test('Rāmāyaṇa pole test distinguishes an attributed claim from a geometry calculation', async ({ page }, info) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto('/ramayana/?scene=march-sky');
+  await page.getByRole('link', { name: /Open related investigation/ }).click();
+  await expect(page.getByText(/Historical date · Unavailable/)).toBeVisible();
+  await expect(page.getByRole('status')).toContainText('3.61°');
+  await page.getByLabel('Distance threshold').selectOption('2');
+  await expect(page.getByRole('status')).toContainText('outside');
+  await page.getByRole('slider').press('End');
+  await expect(page.getByRole('status')).toContainText('51.19°');
+  await page.getByLabel('Tested identity').selectOption('unknown');
+  await expect(page.getByRole('status')).toContainText('supplies no Vega constraint');
+  await page.getByText('Catalogue, frame and model check').click();
+  await page.screenshot({ path: info.outputPath('vega-research-1280.png'), fullPage: true });
+  await page.getByRole('link', { name: /calendar lesson/ }).click();
+  await expect(page).toHaveURL(/festivals\/rama-navami\//);
+});

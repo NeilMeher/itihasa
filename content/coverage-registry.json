@@ -146,12 +146,62 @@
       }
     },
     "ramayana": {
-      "books": [],
-      "indexed": 0,
-      "indexOnly": 0,
+      "books": [
+        {
+          "book": 1,
+          "indexed": 76,
+          "sceneLinkedOnly": 0,
+          "annotated": 4,
+          "indexOnly": 72
+        },
+        {
+          "book": 2,
+          "indexed": 111,
+          "sceneLinkedOnly": 0,
+          "annotated": 5,
+          "indexOnly": 106
+        },
+        {
+          "book": 3,
+          "indexed": 71,
+          "sceneLinkedOnly": 0,
+          "annotated": 3,
+          "indexOnly": 68
+        },
+        {
+          "book": 4,
+          "indexed": 66,
+          "sceneLinkedOnly": 0,
+          "annotated": 4,
+          "indexOnly": 62
+        },
+        {
+          "book": 5,
+          "indexed": 66,
+          "sceneLinkedOnly": 0,
+          "annotated": 3,
+          "indexOnly": 63
+        },
+        {
+          "book": 6,
+          "indexed": 116,
+          "sceneLinkedOnly": 0,
+          "annotated": 7,
+          "indexOnly": 109
+        },
+        {
+          "book": 7,
+          "indexed": 100,
+          "sceneLinkedOnly": 0,
+          "annotated": 3,
+          "indexOnly": 97
+        }
+      ],
+      "indexed": 606,
+      "indexOnly": 577,
       "sceneLinkedOnly": 0,
-      "annotated": 0,
-      "scenes": 0
+      "annotated": 29,
+      "scenes": 29
     }
   },
   "legacy": {

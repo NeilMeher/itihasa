@@ -31,7 +31,7 @@ def build():
     for id_, source in sources.items():
         add(f"source-{id_}", "source", "sources", source["work"], f'{source["creator"]} · {source["edition"]}', source["url"])
     add("work-mahabharata", "work", "mahabharata", "Mahābhārata", "A Sanskrit epic told across 18 parvas.", "/mahabharata/", ["महाभारत"])
-    add("work-ramayana", "work", "ramayana", "Vālmīki Rāmāyaṇa", "The atlas uses the Baroda Critical Edition as its reference spine.", "/epics/ramayana/", ["रामायण"])
+    add("work-ramayana", "work", "ramayana", "Vālmīki Rāmāyaṇa", "The atlas uses the Baroda Critical Edition as its reference spine.", "/ramayana/", ["रामायण"])
     add("work-maratha", "work", "maratha", "Swarajya and Maratha history", "History through records, sites and dated developments.", "/swarajya/", ["स्वराज्य"])
     edge("work-mahabharata", "source-bori", "is indexed from", "Eighteen parvas", "The chapter locators use the constituted main text.")
     edge("work-ramayana", "source-baroda", "uses edition", "Constituted main text", "The Baroda numbering and the Southern Recension comparison are recorded separately.", "baroda")
@@ -82,6 +82,37 @@ def build():
     edge("ma-episode-exile-start", "ma-episode-hidden-year", "precedes", "BORI 2.66.18–19 and 4.1", "The thirteenth year tests whether the brothers can remain unrecognized.", locator_url="https://indology.info/bombay/mahabharata/text/UR/MBh04.txt#:~:text=04001020c")
     edge("ma-episode-hidden-year", "ma-episode-peace", "precedes", "Narrative sequence, Virāṭa to Udyoga", "The completed term lets the exiles seek a settlement before the battle.", locator_url="https://indology.info/bombay/mahabharata/text/UR/MBh05.txt#:~:text=05070016a")
     edge("ma-episode-peace", "ma-episode-gita", "precedes", "Udyoga to Bhīṣma", "The court’s refusal precedes the armies assembling at Kurukṣetra.", locator_url="https://indology.info/bombay/mahabharata/text/UR/MBh05.txt#:~:text=05125026a")
+
+    rama = read("ramayana-atlas", {})
+    if rama:
+        ram_index = read("ramayana-chapters")
+        notes = {note["scene"]: note for note in read("ramayana-annotations")}
+        for person in rama["people"]:
+            add(f'ra-person-{person["id"]}', "person", "ramayana", person["name"], person["summary"],
+                f'/ramayana/?person={person["id"]}', [person["devanagari"]])
+        for place in rama["places"]:
+            add(f'ra-place-{place["id"]}', "place", "ramayana", place["name"], f'{place["status"]}. {place["summary"]}',
+                f'/ramayana/?place={place["id"]}')
+        for scene in rama["episodes"]:
+            id_, book, chapter = scene["id"], scene["book"], scene["chapter"]
+            note = notes[id_]
+            source_url = f'{ram_index["books"][book - 1]["url"]}#:~:text={note["anchors"][0]}'
+            scope = f"Baroda Critical Edition {book}.{chapter}"
+            add(f"ra-episode-{id_}", "episode", "ramayana", scene["title"], note["summary"], f"/ramayana/?scene={id_}", note["aliases"])
+            add(f"ra-chapter-{book}-{chapter}", "chapter", "ramayana", f"{book}.{chapter} · {scene['title']}",
+                note["voice"], f"/ramayana/{book:02}/#sarga-{chapter}", note["aliases"])
+            edge(f"ra-chapter-{book}-{chapter}", f"ra-episode-{id_}", "supports", scope, "Read the source-checked sarga annotation and passage in its place in the edition.", "baroda", source_url)
+            for person in scene["people"]:
+                edge(f"ra-person-{person}", f"ra-episode-{id_}", "appears in", scope, note["summary"], "baroda", source_url)
+            if scene["place"]:
+                edge(f"ra-episode-{id_}", f'ra-place-{scene["place"]}', "takes place in", scope,
+                     "This literary stop links to its geographic reference and uncertainty.", "baroda", source_url)
+        add("claim-oak-vega", "claim", "ramayana", "Oak’s identification of Brahmarāśi", "Oak identifies this marker as Abhijit and tests Vega’s distance from the pole.", "/ramayana/research/", ["Vega", "Brahmarashi"])
+        edge("ra-chapter-6-4", "claim-oak-vega", "is interpreted by", "Baroda 6.4.43", "The passage names the marker. Oak proposes a specific stellar identification.", "oak-vega")
+        edge("claim-oak-vega", "source-itihasa-vega", "is tested by", "Prereview geometric test", "Compare Vega’s mean-pole angular distance at different model epochs and thresholds.", "itihasa-vega")
+        edge("ra-place-setu", "source-setu-study", "is measured by", "Modern bathymetry", "ICESat-2 returns give information about modern depth, not an epoch for the construction in the text.", "setu-study")
+        edge("ra-episode-rama-birth", "story-rama-birth", "has edition comparison", "Baroda 1.17.6 and Southern 1.18.8–10", "The birth chapter has a separate reading that shows the additional detail in the Southern Recension.", "southern-ramayana")
+        edge("ra-person-janaka", "ra-person-sita", "raises", "Baroda 1.65.14", "Janaka recounts finding Sītā while ploughing the ground.", "baroda", f'{ram_index["books"][0]["url"]}#:~:text=1065014a')
 
     ids = {node["id"] for node in nodes}
     if len(ids) != len(nodes) or any(not re.fullmatch(r"[a-z\d-]+", id_) for id_ in ids):

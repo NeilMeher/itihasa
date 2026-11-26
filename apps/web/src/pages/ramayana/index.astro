@@ -1,0 +1,28 @@
+---
+import Beta from '../../layouts/Beta.astro';
+import RamayanaRoute from '../../components/RamayanaRoute';
+import { ramayana, kandaUrl } from '../../lib/ramayana';
+import registry from '../../../../../content/coverage-registry.json';
+import '../../styles/epic-route.css';
+const coverage = registry.works.ramayana;
+---
+<Beta title="Rāmāyaṇa atlas" summary="Read the seven kāṇḍas and follow Sītā, Rāma and Hanumān through sourced narrative stops.">
+  <header class="beta-intro route-opening">
+    <h1>Rāmāyaṇa</h1>
+    <p class="lede">How does a planned coronation become a journey into the forest? Follow the choices and find them in the seven kāṇḍas, or books.</p>
+    <nav class="route-links" aria-label="Rāmāyaṇa investigations">
+      <a href="/ramayana/?scene=sita-exile&person=sita">Follow Sītā’s journey →</a>
+      <a href="/ramayana/research/">Investigate the campaign sky →</a>
+    </nav>
+  </header>
+  <RamayanaRoute client:load />
+  <section class="beta-band" aria-labelledby="rama-books">
+    <h2 id="rama-books">All seven kāṇḍas</h2>
+    <p>{coverage.indexed} Baroda sargas indexed · {coverage.annotated} chapter annotations.</p>
+    <ol class="reading-list">{ramayana.books.map((book) => <li>
+      <a href={kandaUrl(book.number)}>{book.name} · {book.title}</a>
+      <p>{book.summary} {coverage.books[book.number - 1].annotated} annotated.</p>
+    </li>)}</ol>
+    <p>The modern locator markers are orientation points. The journey follows literary stops. <a href="https://indology.info/bombay/ramayana/welcome.html">Baroda e-text and edition information ↗</a></p>
+  </section>
+</Beta>

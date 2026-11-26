@@ -1,0 +1,40 @@
+.route-opening { margin-bottom: 1.1rem; }
+.route-links { display: flex; align-items: baseline; flex-wrap: wrap; gap: .38rem .9rem; margin-block: .55rem; }
+.route-reader { margin-block: .7rem 1.4rem; }
+.route-controls { display: flex; flex-wrap: wrap; align-items: end; gap: .5rem; }
+.route-controls label { min-width: 0; flex: 1 1 9rem; }
+.route-controls label, .route-map label, .route-scrub { display: grid; grid-template-columns: minmax(0, 1fr); gap: .25rem; font-size: .86rem; }
+.route-controls select, .route-map select, .route-step button, .route-person button, .route-place-detail li button {
+  padding: .34rem .5rem; color: #30271e; border: 1px solid var(--rule); background: #fffaf0; font: inherit; min-height: 2.4rem;
+}
+.route-controls select, .route-map select { width: 100%; min-width: 0; max-width: 100%; }
+.route-step { display: flex; gap: .3rem; }
+.route-scrub { display: grid; margin-top: .55rem; background: #f0e3c7; padding: .35rem .65rem; }
+.route-scrub input { width: 100%; min-height: 1.7rem; accent-color: #8b5e30; }
+.route-stage { display: grid; grid-template-columns: minmax(0,1.1fr) minmax(0,.9fr); gap: .85rem; align-items: start; margin-top: .7rem; }
+.route-scene, .route-map, .route-person { padding: .8rem; background: #fffaf0; border: 1px solid var(--rule); }
+.route-scene h2, .route-map h3 { margin-block: .2rem; }
+.route-scene p + p { margin-top: .55rem; }
+.route-locator, .route-map-credit { color: #625444; font-size: .8rem; }
+.route-map-frame { position: relative; aspect-ratio: 1.64; background: #244547; isolation: isolate; overflow: hidden; }
+.route-map-frame > span:not(.route-north) { position: absolute; inset: 0; background: #72866b; pointer-events: none; }
+.route-north { position: absolute; right: .45rem; top: .35rem; font-size: .8rem; color: #f4ecce; }
+.route-map-frame button {
+  position: absolute; z-index: 1; transform: translate(-50%,-50%); min-width: 2.25rem; min-height: 2.25rem;
+  border: 1px solid #f7f1d3; color: #fff8e4; background: #243e32; border-radius: 2rem; font: 600 .72rem/1.1 system-ui; padding: .3rem;
+}
+.route-map-frame button[aria-pressed="true"] { background: #e9c977; color: #24321f; z-index: 2; }
+.route-map-credit { margin: .28rem 0 .55rem; }
+.route-place-detail ul { margin-block: .4rem 0; padding-left: 1.15rem; }
+.route-place-detail li + li { margin-top: .2rem; }
+.route-person { margin-top: .75rem; }
+.route-person li { margin-block: .3rem; }
+.route-person button[aria-current="step"] { border-color: #8b5e30; background: #f0dfb4; }
+.ram-sargas { list-style: none; padding: 0; }
+.ram-sargas > li { border-top: 1px solid var(--rule); padding: .4rem 0; }
+.ram-sargas > li:target { background: #f0e4c8; padding-inline: .55rem; }
+.ram-sargas > li h3 { margin: 0; }
+.pole-distance { height: .6rem; background: #e2d3b7; border-radius: 1rem; position: relative; margin-block: 1rem; }
+.pole-distance span, .pole-distance b { position: absolute; top: -.28rem; width: .15rem; height: 1.15rem; background: #6b5133; }
+.pole-distance b { background: #224d42; width: .8rem; height: .8rem; top: -.1rem; border-radius: 100%; }
+@media (max-width: 760px) { .route-stage { grid-template-columns: minmax(0,1fr); } }

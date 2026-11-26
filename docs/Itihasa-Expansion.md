@@ -51,3 +51,18 @@ For a manual expansion preview, use `./research/.venv/Scripts/python.exe researc
 | --- | --- | --- |
 | Baseline and shared registry | Captured mobile and desktop visits. Added mutually exclusive index-only, scene-linked-only and chapter-annotation counts. The legacy episode counts remain a separate measure. Added separate build and port options for QA. | Write chapter batches and implement sourced graph traversal. |
 | Mahābhārata reader and mind map | Added 42 dedicated chapter readings across all 18 parvas, with 40 chapters that still have scene links only and 1,913 index-only chapters. Verified 140 passage anchors locally. The graph has 126 nodes and 174 directed, sourced relationships. Readers can traverse Draupadī’s story or test Oak’s interpretation from the verse. The 44-page build and 21 browser tests passed. | Add the Baroda Rāmāyaṇa index, reading batch and journey map. Expand chapter commentary and day-level edition checks in later editorial batches. |
+| Rāmāyaṇa atlas | Checked all 606 Baroda sarga starts against seven source files. Added 29 chapter annotations and 65 checked passage locators, literary journeys with modern reference points and source links, the birth comparison path, and a separate campaign research view. The 53-page build and 23 browser tests passed. | Develop the Maratha period, fort and documentary investigations. The Rāmāyaṇa still has 577 index-only sargas. Kampaṉ and Tulsīdās need edition-specific passage collation, and Oak’s full book pages and observation tables remain unavailable. |
+
+### Baroda annotation batch and pole calculation
+
+| Kāṇḍa | Sargas indexed | Annotated |
+| --- | ---: | ---: |
+| Bāla | 76 | 4 |
+| Ayodhyā | 111 | 5 |
+| Araṇya | 71 | 3 |
+| Kiṣkindhā | 66 | 4 |
+| Sundara | 66 | 3 |
+| Yuddha | 116 | 7 |
+| Uttara | 100 | 3 |
+
+The Vega prereview geometry uses HIP 91262, ICRS at J1991.25, zero radial velocity, ERFA proper motion and the Vondrák long-term precession rotation. It samples 12 Julian epochs in TT from J−14000 to J2025. At J−12208 the angle to the mean north pole is 3.610069°. The J2025 angle is 51.191730° from each model to six decimals, within 0.001° of the IAU 2006 control. An angle under a named assumption provides no event date. The identity of Brahmarāśi, the ancient model error and the relationship to a date in the narrative await independent review. [Baroda 6.4.43](https://indology.info/bombay/ramayana/text/UR/Ram06.txt#:~:text=6004043a) · [Oak’s identification](https://nileshoak.wordpress.com/2016/10/07/on-the-identification-of-brahmarashi-with-nakshatra-abhijit/)

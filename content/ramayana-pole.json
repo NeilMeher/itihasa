@@ -1,0 +1,68 @@
+{
+  "catalogue": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=I%2F311%2Fhip2&-out=HIP,RArad,DErad,Plx,pmRA,pmDE&HIP=11767,54061,53910,91262,69673,24608,32349,27989,24436,65474",
+  "hip": 91262,
+  "catalogueFrame": "ICRS",
+  "catalogueEpoch": 1991.25,
+  "radialVelocityKmPerSecond": 0,
+  "model": "ERFA 2.0.1 ltpb and pmsafe, PyERFA 2.0.1.5",
+  "modelSource": "https://doi.org/10.1051/0004-6361/201117274",
+  "frame": "Mean north equatorial pole of date, derived from ICRS directions",
+  "scale": "Julian epochs in TT using astronomical year numbering",
+  "review": "prereview",
+  "modernReference": {
+    "model": "ERFA pmat06 (IAU 2006)",
+    "epoch": 2025,
+    "expectedDegrees": 51.19173,
+    "toleranceDegrees": 0.001
+  },
+  "samples": [
+    {
+      "epoch": -14000,
+      "offsetDegrees": 12.306535
+    },
+    {
+      "epoch": -13000,
+      "offsetDegrees": 6.765921
+    },
+    {
+      "epoch": -12500,
+      "offsetDegrees": 4.443205
+    },
+    {
+      "epoch": -12208,
+      "offsetDegrees": 3.610069
+    },
+    {
+      "epoch": -12000,
+      "offsetDegrees": 3.478516
+    },
+    {
+      "epoch": -11000,
+      "offsetDegrees": 7.225723
+    },
+    {
+      "epoch": -10000,
+      "offsetDegrees": 12.817027
+    },
+    {
+      "epoch": -9000,
+      "offsetDegrees": 18.517128
+    },
+    {
+      "epoch": -8000,
+      "offsetDegrees": 24.065633
+    },
+    {
+      "epoch": 0,
+      "offsetDegrees": 51.513885
+    },
+    {
+      "epoch": 2000,
+      "offsetDegrees": 51.21631
+    },
+    {
+      "epoch": 2025,
+      "offsetDegrees": 51.19173
+    }
+  ]
+}

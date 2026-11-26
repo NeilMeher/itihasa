@@ -1,0 +1,37 @@
+---
+import Beta from '../../layouts/Beta.astro';
+import RamayanaPole from '../../components/RamayanaPole';
+import { ramaPassageUrl } from '../../lib/ramayana';
+import '../../styles/epic-route.css';
+---
+<Beta title="Rāmāyaṇa campaign sky">
+  <header class="beta-intro route-opening">
+    <a href="/ramayana/?scene=march-sky">← Return to the march</a>
+    <h1>Can a star constrain the campaign’s date?</h1>
+    <p class="lede">Baroda Yuddhakāṇḍa 6.4.43 names Brahmarāśi. Oak identifies it with Abhijit, which he takes to be Vega. The astronomical calculation and the identification are separate parts of the claim.</p>
+  </header>
+  <div class="reading-width">
+    <section class="beta-band">
+      <h2>What Oak proposes</h2>
+      <p>In item 40 of his public 2014 timeline Oak gives 24 December 12209 BCE to 7 January 12208 BCE for the war. That entry leaves the calendar convention unstated. His public discussion links Brahmarāśi to Abhijit. The displayed pole comparison applies only to that identification.</p>
+      <p><strong>Historical date · Unavailable.</strong> A checked edition and the complete observation tables and page references from <cite>The Historic Rama</cite> are still needed. Season and month claims need exact passage and convention checks before they can become numerical filters.</p>
+      <p class="route-links"><a href={ramaPassageUrl(6, '6004043a')}>Baroda 6.4.43 ↗</a>
+        <a href="https://nileshoak.wordpress.com/2014/03/06/ramayana-timeline-summary/">Oak’s public timeline, item 40 ↗</a>
+        <a href="https://nileshoak.wordpress.com/2016/10/07/on-the-identification-of-brahmarashi-with-nakshatra-abhijit/">Oak’s identification ↗</a>
+        <a href="/mind-map/?node=ra-chapter-6-4">See connected readings →</a></p>
+    </section>
+    <RamayanaPole client:load />
+    <section class="beta-band" id="setu">
+      <h2>What does a satellite measure at the shoals?</h2>
+      <p>In Baroda 6.15, the narrative describes Nala making a crossing for the army. The modern feature often called Rāma Setu or Adam’s Bridge has its own evidence. Dandabathula and colleagues used water-penetrating ICESat-2 returns to map its shallow seabed and describe channels and the ridge. Their modern elevation model describes form and depth. It supplies no date for the construction in the story.</p>
+      <p class="route-links"><a href={ramaPassageUrl(6, '6015020c')}>Baroda 6.15.20 ↗</a>
+        <a href="https://www.nature.com/articles/s41598-024-65908-2">Dandabathula et al., measurements and results ↗</a>
+        <a href="/ramayana/?scene=bridge&place=setu">Open the crossing on the route →</a></p>
+    </section>
+    <section class="beta-band">
+      <h2>Compare the birth passages</h2>
+      <p>Keep this question separate from the war. The Southern Recension gives lunar timing details in Bāla 1.18.8–10. The Baroda main text at 1.17.6 has a shorter reading.</p>
+      <p class="route-links"><a href="/stories/rama-birth/">Open the passage comparison →</a><a href="/festivals/rama-navami/">Try the Rāma Navamī calendar lesson →</a></p>
+    </section>
+  </div>
+</Beta>

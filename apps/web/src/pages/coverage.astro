@@ -17,6 +17,11 @@ const totalSources = Object.values(mahabharata.evidence).reduce((sum, count) => 
       </ul>
       <p>{mahabharata.scenes} scenes, {mahabharata.battleDays} battle days and {totalSources} dating and context records. Three author-reported bounds can be combined. The observer sky uses modern samples. The historical transit comparison remains prereview.</p><p><a href="/mahabharata/">Open the atlas</a></p>
     </section>
+    <section class="beta-band"><h2>Rāmāyaṇa Atlas</h2>
+      <p>{registry.works.ramayana.books.length} kāṇḍas and {registry.works.ramayana.indexed} indexed Baroda sargas.
+        {registry.works.ramayana.annotated} have a chapter annotation, and {registry.works.ramayana.indexOnly} provide a locator and primary source.</p>
+      <a href="/ramayana/">Open the Rāmāyaṇa atlas</a>
+    </section>
     <ul class="search-list">
       {collections.map((collection) => {
         const entries = episodes.filter((episode) => episode.collection === collection.id);

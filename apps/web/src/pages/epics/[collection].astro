@@ -10,6 +10,7 @@ const entries = episodes.filter((episode) => episode.collection === collection.i
 <Beta title={collection.title}>
   <header class="beta-intro"><a href="/epics/">Epics &amp; Purāṇas</a><h1>{collection.title}</h1><p class="lede">{collection.description}</p></header>
   {collection.id === "mahabharata" && <p class="intro-links"><a class="start-link" href="/mahabharata/">Open the Mahābhārata atlas →</a></p>}
+  {collection.id === "ramayana" && <p class="intro-links"><a class="start-link" href="/ramayana/">Read and map all seven kāṇḍas →</a></p>}
   <div class="link-grid">
     {entries.map((episode) => (
       <article><h2><a href={episode.path}>{episode.title}</a></h2><p>{episode.question}</p>

@@ -1,0 +1,549 @@
+{
+  "books": [
+    {
+      "number": 1,
+      "name": "Bāla",
+      "devanagari": "बालकाण्ड",
+      "title": "The introductions and marriages",
+      "summary": "Vālmīki asks what makes a worthy person. The book introduces the princes, Viśvāmitra’s journey and Sītā’s marriage."
+    },
+    {
+      "number": 2,
+      "name": "Ayodhyā",
+      "devanagari": "अयोध्याकाण्ड",
+      "title": "A succession overturned",
+      "summary": "The intended coronation becomes exile. Sītā, Lakṣmaṇa and Bharata each decide how to respond."
+    },
+    {
+      "number": 3,
+      "name": "Araṇya",
+      "devanagari": "अरण्यकाण्ड",
+      "title": "Life in the forest",
+      "summary": "The exiles settle in Pañcavaṭī. Rāvaṇa abducts Sītā, and Jaṭāyu challenges him."
+    },
+    {
+      "number": 4,
+      "name": "Kiṣkindhā",
+      "devanagari": "किष्किन्धाकाण्ड",
+      "title": "The alliance and the search",
+      "summary": "Hanumān brings Rāma to Sugrīva. The brothers’ struggle for Kiṣkindhā and the search for Sītā follow."
+    },
+    {
+      "number": 5,
+      "name": "Sundara",
+      "devanagari": "सुन्दरकाण्ड",
+      "title": "Hanumān crosses to Laṅkā",
+      "summary": "Hanumān finds Sītā and carries information across the sea. Sītā’s own decisions shape the encounter."
+    },
+    {
+      "number": 6,
+      "name": "Yuddha",
+      "devanagari": "युद्धकाण्ड",
+      "title": "The war and return",
+      "summary": "The allied force crosses the sea. The war ends, and reunion raises questions of trust before the return to Ayodhyā."
+    },
+    {
+      "number": 7,
+      "name": "Uttara",
+      "devanagari": "उत्तरकाण्ड",
+      "title": "The costs of being king",
+      "summary": "The later book looks backward to Laṅkā and forward to Sītā’s renewed exile, her sons, and the final gathering."
+    }
+  ],
+  "episodes": [
+    {
+      "id": "valmiki",
+      "book": 1,
+      "chapter": 1,
+      "title": "Vālmīki’s question",
+      "people": [
+        "valmiki"
+      ],
+      "place": "",
+      "related": ""
+    },
+    {
+      "id": "rama-birth",
+      "book": 1,
+      "chapter": 17,
+      "title": "The birth of the princes",
+      "people": [
+        "rama"
+      ],
+      "place": "ayodhya",
+      "related": "/stories/rama-birth/"
+    },
+    {
+      "id": "sita-origin",
+      "book": 1,
+      "chapter": 65,
+      "title": "Janaka tells where Sītā came from",
+      "people": [
+        "sita",
+        "janaka"
+      ],
+      "place": "mithila",
+      "related": ""
+    },
+    {
+      "id": "marriage",
+      "book": 1,
+      "chapter": 72,
+      "title": "Janaka joins the households",
+      "people": [
+        "sita",
+        "janaka",
+        "rama",
+        "lakshmana"
+      ],
+      "place": "mithila",
+      "related": ""
+    },
+    {
+      "id": "kaikeyi-boons",
+      "book": 2,
+      "chapter": 16,
+      "title": "The coronation becomes exile",
+      "people": [
+        "rama",
+        "bharata",
+        "kaikeyi"
+      ],
+      "place": "ayodhya",
+      "related": ""
+    },
+    {
+      "id": "sita-exile",
+      "book": 2,
+      "chapter": 24,
+      "title": "Sītā chooses to go",
+      "people": [
+        "sita",
+        "rama"
+      ],
+      "place": "ayodhya",
+      "related": ""
+    },
+    {
+      "id": "forest-risks",
+      "book": 2,
+      "chapter": 25,
+      "title": "Rāma lists the risks of the forest",
+      "people": [
+        "sita",
+        "rama"
+      ],
+      "place": "ayodhya",
+      "related": ""
+    },
+    {
+      "id": "crossing-ganga",
+      "book": 2,
+      "chapter": 46,
+      "title": "Crossing the Gaṅgā",
+      "people": [
+        "sita",
+        "rama",
+        "lakshmana"
+      ],
+      "place": "ganga",
+      "related": ""
+    },
+    {
+      "id": "bharata-sandals",
+      "book": 2,
+      "chapter": 104,
+      "title": "Bharata takes the sandals",
+      "people": [
+        "rama",
+        "bharata"
+      ],
+      "place": "chitrakuta",
+      "related": ""
+    },
+    {
+      "id": "panchavati",
+      "book": 3,
+      "chapter": 14,
+      "title": "Making a home in Pañcavaṭī",
+      "people": [
+        "sita",
+        "rama",
+        "lakshmana"
+      ],
+      "place": "panchavati",
+      "related": ""
+    },
+    {
+      "id": "abduction",
+      "book": 3,
+      "chapter": 47,
+      "title": "Rāvaṇa reveals his disguise",
+      "people": [
+        "sita",
+        "ravana"
+      ],
+      "place": "panchavati",
+      "related": ""
+    },
+    {
+      "id": "jatayu",
+      "book": 3,
+      "chapter": 48,
+      "title": "Jaṭāyu confronts Rāvaṇa",
+      "people": [
+        "sita",
+        "jatayu",
+        "ravana"
+      ],
+      "place": "panchavati",
+      "related": ""
+    },
+    {
+      "id": "hanuman-meeting",
+      "book": 4,
+      "chapter": 3,
+      "title": "Hanumān speaks to the strangers",
+      "people": [
+        "hanuman",
+        "rama",
+        "lakshmana",
+        "sugriva"
+      ],
+      "place": "kishkindha",
+      "related": ""
+    },
+    {
+      "id": "alliance",
+      "book": 4,
+      "chapter": 5,
+      "title": "Rāma and Sugrīva make an alliance",
+      "people": [
+        "rama",
+        "sugriva",
+        "hanuman"
+      ],
+      "place": "kishkindha",
+      "related": ""
+    },
+    {
+      "id": "vali-question",
+      "book": 4,
+      "chapter": 17,
+      "title": "Vāli asks who can punish him",
+      "people": [
+        "vali",
+        "rama",
+        "sugriva"
+      ],
+      "place": "kishkindha",
+      "related": ""
+    },
+    {
+      "id": "vali-answer",
+      "book": 4,
+      "chapter": 18,
+      "title": "Rāma answers Vāli",
+      "people": [
+        "vali",
+        "rama",
+        "sugriva"
+      ],
+      "place": "kishkindha",
+      "related": ""
+    },
+    {
+      "id": "leap",
+      "book": 5,
+      "chapter": 1,
+      "title": "Hanumān takes the sea crossing",
+      "people": [
+        "hanuman"
+      ],
+      "place": "",
+      "related": ""
+    },
+    {
+      "id": "grove",
+      "book": 5,
+      "chapter": 12,
+      "title": "Hanumān enters the Aśoka grove",
+      "people": [
+        "sita",
+        "hanuman"
+      ],
+      "place": "lanka",
+      "related": ""
+    },
+    {
+      "id": "ring",
+      "book": 5,
+      "chapter": 34,
+      "title": "Sītā recognizes the ring",
+      "people": [
+        "sita",
+        "hanuman",
+        "rama"
+      ],
+      "place": "lanka",
+      "related": ""
+    },
+    {
+      "id": "march-sky",
+      "book": 6,
+      "chapter": 4,
+      "title": "The sky described during the march",
+      "people": [
+        "rama",
+        "lakshmana"
+      ],
+      "place": "",
+      "related": "/ramayana/research/"
+    },
+    {
+      "id": "vibhishana",
+      "book": 6,
+      "chapter": 12,
+      "title": "Rāma decides whether to grant shelter",
+      "people": [
+        "rama",
+        "ravana",
+        "vibhishana"
+      ],
+      "place": "",
+      "related": ""
+    },
+    {
+      "id": "bridge",
+      "book": 6,
+      "chapter": 15,
+      "title": "Nala leads the crossing work",
+      "people": [
+        "rama",
+        "hanuman",
+        "nala-builder"
+      ],
+      "place": "setu",
+      "related": "/ramayana/research/#setu"
+    },
+    {"id":"mandodari","book":6,"chapter":99,"title":"Mandodarī mourns Rāvaṇa","people":["mandodari","ravana","rama","vibhishana"],"place":"lanka","related":""},
+    {
+      "id": "fire",
+      "book": 6,
+      "chapter": 104,
+      "title": "Sītā answers after the battle",
+      "people": [
+        "sita",
+        "rama",
+        "lakshmana"
+      ],
+      "place": "lanka",
+      "related": ""
+    },
+    {
+      "id": "return",
+      "book": 6,
+      "chapter": 111,
+      "title": "The return looks back across the sea",
+      "people": [
+        "sita",
+        "rama",
+        "vibhishana"
+      ],
+      "place": "setu",
+      "related": ""
+    },
+    {"id":"restoration","book":6,"chapter":116,"title":"Bharata returns authority","people":["bharata","rama"],"place":"ayodhya","related":""},
+    {
+      "id": "second-exile",
+      "book": 7,
+      "chapter": 44,
+      "title": "Rāma orders a second exile",
+      "people": [
+        "sita",
+        "rama",
+        "lakshmana",
+        "valmiki"
+      ],
+      "place": "ganga",
+      "related": ""
+    },
+    {"id":"twins","book":7,"chapter":58,"title":"Vālmīki names Sītā’s twins","people":["sita","valmiki","kusha","lava"],"place":"","related":""},
+    {
+      "id": "earth",
+      "book": 7,
+      "chapter": 88,
+      "title": "Sītā calls on the earth",
+      "people": [
+        "sita",
+        "rama",
+        "valmiki"
+      ],
+      "place": "",
+      "related": ""
+    }
+  ],
+  "people": [
+    {"id":"mandodari","name":"Mandodarī","devanagari":"मन्दोदरी","summary":"Rāvaṇa’s wife. Her lament shows the war’s effect on the defeated household."},
+    {"id":"kusha","name":"Kuśa","devanagari":"कुश","summary":"One of Sītā’s twin sons. Vālmīki names him in the forest."},
+    {"id":"lava","name":"Lava","devanagari":"लव","summary":"One of Sītā’s twin sons. He is raised with Kuśa at the hermitage."},
+    {
+      "id": "sita",
+      "name": "Sītā",
+      "devanagari": "सीता",
+      "summary": "Janaka’s daughter. She chooses exile, questions Hanumān about the rescue, and speaks for herself at the final gathering."
+    },
+    {
+      "id": "rama",
+      "name": "Rāma",
+      "devanagari": "राम",
+      "summary": "Daśaratha’s son. His response to the promises of the court drives the exile and later tests of kingship."
+    },
+    {
+      "id": "lakshmana",
+      "name": "Lakṣmaṇa",
+      "devanagari": "लक्ष्मण",
+      "summary": "Rāma’s brother and companion in the forest. He carries out the second exile order in Uttara."
+    },
+    {
+      "id": "bharata",
+      "name": "Bharata",
+      "devanagari": "भरत",
+      "summary": "Kaikeyī’s son. He seeks Rāma’s return and takes the sandals as a sign of the elder brother’s authority."
+    },
+    {
+      "id": "hanuman",
+      "name": "Hanumān",
+      "devanagari": "हनुमान",
+      "summary": "Sugrīva’s messenger and the envoy who finds Sītā in Laṅkā."
+    },
+    {
+      "id": "sugriva",
+      "name": "Sugrīva",
+      "devanagari": "सुग्रीव",
+      "summary": "Vāli’s brother. His alliance with Rāma helps him recover Kiṣkindhā."
+    },
+    {
+      "id": "vali",
+      "name": "Vāli",
+      "devanagari": "वालि",
+      "summary": "The ruler who challenges Rāma’s reasons for intervening in his fight with Sugrīva."
+    },
+    {
+      "id": "kaikeyi",
+      "name": "Kaikeyī",
+      "devanagari": "कैकेयी",
+      "summary": "Daśaratha’s wife and Bharata’s mother. She invokes the promises he made to her."
+    },
+    {
+      "id": "ravana",
+      "name": "Rāvaṇa",
+      "devanagari": "रावण",
+      "summary": "Ruler of Laṅkā and Vibhīṣaṇa’s brother. He abducts Sītā from the forest."
+    },
+    {
+      "id": "vibhishana",
+      "name": "Vibhīṣaṇa",
+      "devanagari": "विभीषण",
+      "summary": "Rāvaṇa’s brother. He seeks refuge with Rāma and joins the coalition."
+    },
+    {
+      "id": "janaka",
+      "name": "Janaka",
+      "devanagari": "जनक",
+      "summary": "King of Mithilā and Sītā’s father. He tells of finding her during the ploughing."
+    },
+    {
+      "id": "valmiki",
+      "name": "Vālmīki",
+      "devanagari": "वाल्मीकि",
+      "summary": "The poet who opens the work with a question. His hermitage provides a new setting in Uttara."
+    },
+    {
+      "id": "jatayu",
+      "name": "Jaṭāyu",
+      "devanagari": "जटायु",
+      "summary": "An ally of the exiles who confronts Rāvaṇa during Sītā’s abduction."
+    },
+    {
+      "id": "nala-builder",
+      "name": "Nala the builder",
+      "devanagari": "नल",
+      "summary": "The figure commissioned to build the sea crossing in Yuddhakāṇḍa."
+    }
+  ],
+  "places": [
+    {
+      "id": "ayodhya",
+      "name": "Ayodhyā",
+      "lon": 82.2,
+      "lat": 26.8,
+      "status": "Modern city reference",
+      "summary": "The modern city gives an orientation point for the literary capital in Kosala.",
+      "source": "https://ayodhya.nic.in/tourist-place/"
+    },
+    {
+      "id": "mithila",
+      "name": "Mithilā",
+      "lon": 85.92,
+      "lat": 26.73,
+      "status": "Traditional regional reference",
+      "summary": "Janakpur is used as a reference for the Mithilā tradition. The geography of a narrated royal household is unresolved.",
+      "source": "https://ntb.gov.np/janakpur"
+    },
+    {
+      "id": "ganga",
+      "name": "Gaṅgā crossing",
+      "lon": null,
+      "lat": null,
+      "status": "Textual route stage",
+      "summary": "The river is named in the narrative. The atlas leaves the exact crossing point open.",
+      "source": "https://indology.info/bombay/ramayana/text/UR/Ram02.txt#:~:text=2046061c"
+    },
+    {
+      "id": "chitrakuta",
+      "name": "Citrakūṭa",
+      "lon": 80.88,
+      "lat": 25.17,
+      "status": "Traditional pilgrimage area",
+      "summary": "The marker is an approximate modern regional reference for Chitrakoot rather than a hermitage location.",
+      "source": "https://chitrakoot.nic.in/tourist-places/"
+    },
+    {
+      "id": "panchavati",
+      "name": "Pañcavaṭī",
+      "lon": 73.8,
+      "lat": 20.01,
+      "status": "Traditional association",
+      "summary": "Panchavati in present-day Nashik is a pilgrimage association. The story’s house and abduction site are not independently located.",
+      "source": "https://nashik.gov.in/tourist-place/panchvati/"
+    },
+    {
+      "id": "kishkindha",
+      "name": "Kiṣkindhā",
+      "lon": 76.46,
+      "lat": 15.34,
+      "status": "Traditional regional association",
+      "summary": "The Hampi area is an orientation point for the Kiṣkindhā tradition. UNESCO documents the later historic monuments at Hampi.",
+      "source": "https://whc.unesco.org/en/list/241/"
+    },
+    {
+      "id": "lanka",
+      "name": "Laṅkā and the Aśoka grove",
+      "lon": null,
+      "lat": null,
+      "status": "Literary location",
+      "summary": "The route follows the names in the text. The location of the palace and grove remains open.",
+      "source": "https://indology.info/bombay/ramayana/text/UR/Ram05.txt#:~:text=5012042a"
+    },
+    {
+      "id": "setu",
+      "name": "Palk Strait shoals",
+      "lon": 79.46,
+      "lat": 9.1,
+      "status": "Modern study region",
+      "summary": "The point represents the ridge between Dhanushkodi and Talaimannar. The remote-sensing study measured present-day bathymetry.",
+      "source": "https://www.nature.com/articles/s41598-024-65908-2"
+    }
+  ]
+}
