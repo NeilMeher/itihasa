@@ -2,6 +2,8 @@
 
 Itihāsa connects epic readings, Maratha history, and astronomy through their passages and records. The homepage Mind Map unfolds in place. Open a branch or search for a person, place, passage, or source. The attached reading keeps the same selection in Timeline, Geography, and Sources. **All Itihāsa** returns to the complete map. Direct map, reading, Library, and tool links also work as standalone routes.
 
+Open the [public Itihāsa site](https://itihasa-phi.vercel.app/) or the [protected staging preview](https://itihasa-2sj1l6gp7-punters-projects-20d6c57c.vercel.app/). Both were built from [`6423dca`](https://github.com/NeilMeher/itihasa/commit/6423dca688ba73b6a4b8249c30e08d38d05d8c50) on Vercel Hobby.
+
 ![The six Itihāsa branches on the mobile homepage](docs/images/unfold-overview-360.png)
 
 [Expanded branch and attached reading on desktop](docs/images/unfold-reading-1280.png)
@@ -55,6 +57,8 @@ The [CI workflow](.github/workflows/foundation.yml) contains the reproducibility
 The site uses `POST /api/v1/panchang` and `POST /api/v1/birth-sky` with JSON bodies. Local and hosted handlers share the same validation and Astronomy Engine calculation. Calculator responses use `Cache-Control: no-store`. Birth input is submitted in the request body and kept out of the URL and resume state.
 
 The [Vercel configuration](vercel.json) builds from the repository root with `npm ci` and `npm run build --workspace @itihasa/web`, serves `apps/web/dist`, and bundles the two Python 3.14 handlers. Use the [release handoff](docs/Unfolding-Map-Release.md) for protected preview verification, production promotion, and rollback.
+
+From the Git checkout for a release, use `vercel deploy` in the linked project for Preview. After preview verification, use `vercel deploy --prod --skip-domain` to build a production candidate. Verify that candidate before assigning the public domain with `vercel promote <candidate-url>`. Repeat `node research/verify_release.mjs https://itihasa-phi.vercel.app` after promotion.
 
 ## Where changes belong
 
