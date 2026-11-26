@@ -7,7 +7,7 @@
   "functions": {
     "api/v1/*.py": {
       "includeFiles": "{research/calendar_engine.py,research/calendar_http.py,content/cities.json,content/conventions.json}",
-      "excludeFiles": "{apps/**,docs/**,packages/**,.github/**,node_modules/**,research/{fixtures/**,runs/**,audit_*,build_*,check_*,profile_*,run_*,test_*,serve_beta.py,verify_release.mjs,pyproject.toml,uv.lock,.python-version},content/{arundhati*,coverage*,explorer*,graph*,library*,mahabharata*,maratha*,project-graph*,ramayana*,source-register*,swarajya*}}"
+      "excludeFiles": "{apps/**,docs/**,packages/**,.github/**,node_modules/**,research/{[a-b]*,check*,evidence*,fixtures/**,profile*,run*,serve*,test*,uv.lock,verify*,pyproject.toml,.python-version},content/{[a-b]*,[d-z]*,coverage*}}"
     }
   }
 }

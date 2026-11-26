@@ -7,6 +7,7 @@ const fixture = JSON.parse(await readFile(new URL('./fixtures/calendar-benchmark
 const reference = fixture.cases.find((entry) => entry.date === '2025-01-01');
 const bypass = process.env.VERCEL_AUTOMATION_BYPASS_SECRET;
 const access = bypass && new URL(origin).hostname.endsWith('.vercel.app') ? { 'x-vercel-protection-bypass': bypass } : {};
+const previewAccess = process.env.ITIHASA_PREVIEW_ACCESS_URL;
 const browser = await chromium.launch();
 const context = await browser.newContext({ baseURL: origin, viewport: { width: 360, height: 640 }, hasTouch: true });
 if (Object.keys(access).length) await context.route(`${origin}/**`, (route) => route.continue({ headers: { ...route.request().headers(), ...access } }));
@@ -18,6 +19,12 @@ page.on('response', (reply) => {
 });
 
 try {
+  if (previewAccess) {
+    const share = new URL(previewAccess);
+    assert.equal(share.origin, origin);
+    assert.ok(share.searchParams.has('_vercel_share'));
+    assert.ok((await context.request.get(share.href)).ok(), 'Vercel preview access failed');
+  }
   await page.goto('/');
   const branch = page.getByRole('navigation', { name: 'Whole-project Mind Map' }).getByRole('link', { name: /^Mahābhārata/ });
   await expect(branch).toHaveAttribute('aria-expanded', 'false');
@@ -42,6 +49,11 @@ try {
     await expect(story.getByRole('heading', { name: title, exact: true })).toBeVisible();
   }
   await expect(story).toContainText('Historical result · Unavailable');
+
+  await page.goto('/');
+  await page.getByRole('searchbox', { name: 'Search the map' }).fill('BORI 2.57');
+  await page.getByRole('link', { name: /^BORI chapter 2.57/ }).click();
+  await expect(page.getByRole('link', { name: /Open the exact Library entry/ })).toHaveAttribute('href', '/mahabharata/parva/02/#chapter-57');
 
   await page.goto('/panchang/?date=2025-01-01');
   const dailyReply = page.waitForResponse((reply) => reply.url() === `${origin}/api/v1/panchang`);
@@ -79,9 +91,21 @@ try {
   }
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto('/');
-  await expect(page.getByRole('navigation', { name: 'Whole-project Mind Map' }).getByRole('link')).toHaveCount(6);
+  const branches = page.getByRole('navigation', { name: 'Whole-project Mind Map' });
+  const branchLinks = branches.getByRole('link');
+  await expect(branchLinks).toHaveCount(6);
+  const routes = await branchLinks.evaluateAll((links) => links.map((link) => link.getAttribute('href')));
+  for (const path of ['/explorer/', ...routes]) {
+    const reply = await context.request.get(`${origin}${path}`, { headers: access });
+    assert.ok(reply.ok(), `${path} returned ${reply.status()}`);
+  }
+  const edges = await context.request.get(`${origin}/map/edges/mahabharata.json`, { headers: access });
+  assert.ok(edges.ok() && (await edges.json()));
+  await branches.getByRole('link', { name: /^Mahābhārata/ }).click();
+  await page.locator('#home-branch').getByRole('link', { name: 'The dice match', exact: true }).click();
+  await expect(story.getByRole('heading', { name: 'The dice match' })).toBeVisible();
   assert.deepEqual(failures, []);
-  console.log(`Verified map, chapter return, three direct readings, two calculator fixtures and malformed/unsupported requests at ${origin}.`);
+  console.log(`Verified mobile and desktop map, six branch routes, Explorer, relationship JSON, search, chapter return, three direct readings, both calculator fixtures and error handling at ${origin}.`);
 } finally {
   await browser.close();
 }
