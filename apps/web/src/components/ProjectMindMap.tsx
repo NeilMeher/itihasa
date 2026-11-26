@@ -1,10 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import catalog from '../../../../content/explorer-catalog.json';
-import edges from '../../../../content/explorer-edges.json';
-import { foldSearch, mapFor, type GraphEdge, type GraphNode, type ReaderGraph } from '../lib/project-graph';
+import { foldSearch, mapFor, type GraphEdge, type GraphNode, type GraphSource } from '../lib/project-graph';
 import { withQuery } from '../lib/selection';
 
-const graph: ReaderGraph = { nodes: catalog.nodes, sources: catalog.sources, edges };
 const firstNode = 'ma-person-draupadi';
 const hub = [50, 49];
 const spokes = [[26, 15], [74, 15], [12, 49], [88, 49], [26, 83], [74, 83]];
@@ -12,7 +10,8 @@ const starter = { node: firstNode, work: 'all', relation: 'all', edge: '', depth
 type GraphSelection = Pick<typeof starter, 'node' | 'work' | 'relation' | 'edge'>;
 type ConnectedMap = {
   selection: GraphSelection;
-  change: (selection: GraphSelection, push: boolean) => void;
+  previous?: string;
+  change: (selection: GraphSelection, push: boolean, trigger?: HTMLElement) => void;
   back: () => void;
   reading: (node: GraphNode) => string;
   trail: (node: GraphNode) => void;
@@ -23,9 +22,22 @@ const workNames: Record<string, string> = {
 };
 const edgeKey = (edge: GraphEdge) => `${edge.from}:${edge.relation}:${edge.to}`;
 const peer = (edge: GraphEdge, id: string) => edge.from === id ? edge.to : edge.from;
-const byId = new Map(graph.nodes.map((node) => [node.id, node]));
-const relationNames = [...new Set(graph.edges.map((edge) => edge.relation))].sort();
+const byId = new Map<string, GraphNode>(catalog.nodes.map((node) => [node.id, node]));
+const sources: Record<string, GraphSource> = catalog.sources;
+const relationNames = catalog.relations;
 const readingRelationships = new Set(['leads to', 'precedes', 'frames', 'is interpreted by', 'takes place in', 'is placed at']);
+const edgeCache = new Map<string, Promise<GraphEdge[]>>();
+
+function loadEdges(work: string) {
+  const cached = edgeCache.get(work);
+  if (cached) return cached;
+  const request = fetch(`/map/edges/${work}.json`).then((response) => {
+    if (!response.ok) throw new Error('Unavailable relationship data');
+    return response.json() as Promise<GraphEdge[]>;
+  }).catch((error) => { edgeCache.delete(work); throw error; });
+  edgeCache.set(work, request);
+  return request;
+}
 
 export default function ProjectMindMap({ connected }: { connected?: ConnectedMap }) {
   const [view, setView] = useState(starter);
@@ -34,21 +46,28 @@ export default function ProjectMindMap({ connected }: { connected?: ConnectedMap
   const [expanded, setExpanded] = useState(false);
   const [person, setPerson] = useState('');
   const [missing, setMissing] = useState('');
+  const [edgeData, setEdgeData] = useState<{ work: string; items: GraphEdge[] | null }>();
   const heading = useRef<HTMLHeadingElement>(null);
+  const controlled = Boolean(connected);
   const active = connected?.selection ?? view;
   const node = byId.get(active.node) ?? byId.get(firstNode)!;
-  const edges = graph.edges.filter((edge) => (edge.from === node.id || edge.to === node.id) &&
+  const currentEdges = edgeData?.work === node.work ? edgeData.items : undefined;
+  const edges = (currentEdges ?? []).filter((edge) => (edge.from === node.id || edge.to === node.id) &&
     (active.relation === 'all' || edge.relation === active.relation) &&
     (active.work === 'all' || byId.get(peer(edge, node.id))?.work === active.work));
-  if (connected) edges.sort((left, right) => Number(readingRelationships.has(right.relation)) - Number(readingRelationships.has(left.relation)));
+  if (connected) {
+    const priority = (edge: GraphEdge) => peer(edge, node.id) === connected.previous ? 2 : Number(readingRelationships.has(edge.relation));
+    edges.sort((left, right) => priority(right) - priority(left));
+  }
   const visual = [...new Set(edges.map((edge) => peer(edge, node.id)))].slice(0, spokes.length);
   const selectedEdge = edges.find((edge) => edgeKey(edge) === active.edge);
-  const selectedSource = selectedEdge && graph.sources[selectedEdge.source];
-  const appearances = node.kind === 'person' ? graph.edges.filter((edge) => edge.from === node.id && edge.relation === 'appears in') : [];
-  const results = search.trim() ? graph.nodes.filter((item) => foldSearch([item.title, ...item.aliases].join(' '))
+  const selectedSource = selectedEdge && sources[selectedEdge.source];
+  const appearances = node.kind === 'person' ? (currentEdges ?? []).filter((edge) => edge.from === node.id && edge.relation === 'appears in') : [];
+  const results = search.trim() ? catalog.nodes.filter((item) => foldSearch([item.title, ...item.aliases].join(' '))
     .includes(foldSearch(search.trim()))).slice(0, 12) : [];
 
   useEffect(() => {
+    if (controlled) { setReady(true); return; }
     function restore() {
       const params = new URLSearchParams(window.location.search);
       const id = params.get('node') ?? firstNode;
@@ -57,9 +76,9 @@ export default function ProjectMindMap({ connected }: { connected?: ConnectedMap
       setPerson(params.get('person') ?? '');
       setMissing(byId.has(id) ? '' : id);
       setView({
-        node: graph.nodes.some((candidate) => candidate.id === id) ? id : firstNode,
+        node: byId.has(id) ? id : firstNode,
         work: workNames[work] ? work : 'all',
-        relation: graph.edges.some((edge) => edge.relation === relation) ? relation : 'all',
+        relation: relationNames.includes(relation) ? relation : 'all',
         edge: params.get('edge') ?? '',
         depth: window.history.state?.mapDepth ?? 0,
       });
@@ -69,11 +88,20 @@ export default function ProjectMindMap({ connected }: { connected?: ConnectedMap
     setReady(true);
     window.addEventListener('popstate', restore);
     return () => window.removeEventListener('popstate', restore);
-  }, []);
+  }, [controlled]);
 
-  function update(next: GraphSelection, push = false) {
+  useEffect(() => {
+    let active = true;
+    loadEdges(node.work).then(
+      (items) => { if (active) setEdgeData({ work: node.work, items }); },
+      () => { if (active) setEdgeData({ work: node.work, items: null }); },
+    );
+    return () => { active = false; };
+  }, [node.work]);
+
+  function update(next: GraphSelection, push = false, trigger?: HTMLElement) {
     if (connected) {
-      connected.change(next, push);
+      connected.change(next, push, trigger);
       return;
     }
     const url = new URL(mapFor(next.node), window.location.origin);
@@ -88,12 +116,12 @@ export default function ProjectMindMap({ connected }: { connected?: ConnectedMap
     setMissing('');
   }
 
-  function open(id: string) {
+  function open(id: string, trigger?: HTMLElement) {
     if (id === active.node) return;
-    update({ ...active, node: id, edge: '' }, true);
+    update({ ...active, node: id, edge: '' }, true, trigger);
     setExpanded(false);
     setSearch('');
-    requestAnimationFrame(() => heading.current?.focus({ preventScroll: true }));
+    if (!connected) requestAnimationFrame(() => heading.current?.focus({ preventScroll: true }));
   }
 
   return (
@@ -111,12 +139,12 @@ export default function ProjectMindMap({ connected }: { connected?: ConnectedMap
       </div>
       {!connected && missing && <p role="status">That item is unavailable. Start with Draupadī or search for a person, place, or passage.</p>}
       {search.trim() && <ul className="map-results" aria-label="Matching nodes">
-        {results.map((item) => <li key={item.id}><button onClick={() => open(item.id)}>{item.title} <small>{item.kind}</small></button></li>)}
+        {results.map((item) => <li key={item.id}><button onClick={(event) => open(item.id, event.currentTarget)}>{item.title} <small>{item.kind} · {workNames[item.work]}</small></button></li>)}
         {!results.length && <li>No matching nodes. Try a shorter spelling or another name.</li>}
       </ul>}
       <div className="map-reading">
         <section className="map-diagram" aria-label="Selected node and nearby connections">
-          <div className="map-hub" style={{ left: `${hub[0]}%`, top: `${hub[1]}%` }}>
+          <div key={node.id} className="map-hub" tabIndex={-1} style={{ left: `${hub[0]}%`, top: `${hub[1]}%` }}>
             <small>{node.kind}</small><strong>{node.title}</strong>
           </div>
           {visual.map((id, i) => {
@@ -124,12 +152,12 @@ export default function ProjectMindMap({ connected }: { connected?: ConnectedMap
             const left = Math.min(x, hub[0]), width = Math.abs(x - hub[0]);
             const target = byId.get(id)!;
             return <div key={id}>
-              <span className="map-connector" aria-hidden="true" style={{
+              <span className={`map-connector${id === connected?.previous ? ' map-connector-traversed' : ''}`} aria-hidden="true" style={{
                 left: `${left}%`, top: `${Math.min(y, hub[1])}%`, width: `${width}%`, height: `${Math.abs(y - hub[1]) + 1}%`,
                 clipPath: ((x < hub[0]) === (y < hub[1])) ? 'polygon(0 0,100% 97%,100% 100%,0 3%)' : 'polygon(0 97%,100% 0,100% 3%,0 100%)',
               }} />
               <button className={`map-spoke${i === 2 || i === 3 ? ' map-spoke-side' : ''}`} style={{ left: `${x}%`, top: `${y}%` }} disabled={!ready}
-                aria-label={`Follow ${target.title}`} onClick={() => open(id)}>{target.title}</button>
+                aria-label={`Follow ${target.title}`} onClick={(event) => open(id, event.currentTarget)}>{target.title}</button>
             </div>;
           })}
         </section>
@@ -143,22 +171,24 @@ export default function ProjectMindMap({ connected }: { connected?: ConnectedMap
             <summary>{node.title}’s story trail</summary>
             <ol className="reading-list">{appearances.map((edge) => {
               const story = byId.get(edge.to)!;
-              return <li key={edge.to}>{connected ? <button onClick={() => open(story.id)}>{story.title}</button> : <a href={story.href}>{story.title}</a>}<p>{edge.why} · {edge.scope}</p></li>;
+              return <li key={edge.to}>{connected ? <button onClick={(event) => open(story.id, event.currentTarget)}>{story.title}</button> : <a href={story.href}>{story.title}</a>}<p>{edge.why} · {edge.scope}</p></li>;
             })}</ol>
           </details>}
           <h3>Connected readings</h3>
+          {currentEdges === undefined && <p role="status">Loading relationships…</p>}
+          {currentEdges === null && <p role="status">Relationships are unavailable. Use the reading or Timeline links to continue.</p>}
           <ul aria-label="Sourced connections">
             {edges.slice(0, expanded ? undefined : spokes.length).map((edge) => {
               const target = byId.get(peer(edge, node.id))!;
               const key = edgeKey(edge);
               return <li key={key}>
                 <span>{edge.from === node.id ? `→ ${edge.relation}` : `← ${edge.relation}`}</span>
-                <button className="map-node-button" disabled={!ready} onClick={() => open(target.id)}>{target.title}</button>
+                <button className="map-node-button" disabled={!ready} onClick={(event) => open(target.id, event.currentTarget)}>{target.title}</button>
                 <button className="map-inspect" disabled={!ready} aria-pressed={active.edge === key} onClick={() =>
-                  update({ ...active, edge: active.edge === key ? '' : key })}>Inspect <span className="map-sr-only">connection with {target.title}</span></button>
+                  update({ ...active, edge: active.edge === key ? '' : key }, controlled)}>Inspect <span className="map-sr-only">connection with {target.title}</span></button>
               </li>;
             })}
-            {edges.length === 0 && <li>There are no connections under these filters.</li>}
+            {currentEdges && edges.length === 0 && <li>There are no connections under these filters.</li>}
           </ul>
           {edges.length > spokes.length && <button disabled={!ready} onClick={() => setExpanded(!expanded)}>
             {expanded ? 'Show fewer connections' : `Show all ${edges.length} connections`}

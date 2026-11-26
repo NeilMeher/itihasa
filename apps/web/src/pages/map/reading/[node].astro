@@ -1,0 +1,22 @@
+---
+import Beta from '../../../layouts/Beta.astro';
+import Explorer from '../../../components/Explorer';
+import { items, nodes } from '../../../lib/explorer-content';
+import { previewNodes } from '../../../lib/map-previews';
+import '../../../styles/mind-map.css';
+import '../../../styles/mahabharata.css';
+import '../../../styles/explorer.css';
+
+export function getStaticPaths() {
+  return [...previewNodes].map((id) => {
+    const node = nodes.get(id);
+    if (!node) throw new Error('Unknown item on the project map: ' + id);
+    return { params: { node: id }, props: { node, summary: items.get(id)?.summary ?? node.summary } };
+  });
+}
+const { node, summary } = Astro.props;
+---
+<Beta title={node.title} summary={summary}>
+  <h1 class="map-sr-only">Itihāsa Explorer</h1>
+  <Explorer client:load start={node.id} />
+</Beta>

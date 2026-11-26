@@ -19,6 +19,8 @@
     {"from":"tradition-southern","to":"story-rama-birth","relation":"retells","scope":"IIT Kanpur Southern Recension 1.18.8–10","why":"This recension preserves the fuller astronomical description of the birth.","source":"southern-ramayana"},
     {"from":"concept-nakshatra","to":"tool-panchang","relation":"is calculated in","scope":"Modern calendar, sunrise at selected city","why":"The calculator assigns the Moon’s sidereal longitude to one of the 27 sectors and gives the next change.","source":"panchang-method"},
     {"from":"maratha-event-capital","to":"maratha-place-raigad","relation":"takes place in","scope":"1674 coronation","why":"The fort is the documented capital and coronation location in the heritage record.","source":"unesco-forts"},
-    {"from":"institution-world-heritage","to":"maratha-place-raigad","relation":"documents","scope":"Modern heritage listing, 2025","why":"Raigad is one of twelve components in the inscribed military landscapes.","source":"unesco-forts"}
+    {"from":"institution-world-heritage","to":"maratha-place-raigad","relation":"documents","scope":"Modern heritage listing, 2025","why":"Raigad is one of twelve components in the inscribed military landscapes.","source":"unesco-forts"},
+    {"from":"claim-oak-ahead","to":"source-oak-meridian","relation":"is explained in","scope":"Author’s public figures, 8 February 2016","why":"The article illustrates Oak’s transit-order reading on his proposed date and in a modern comparison. Both figures express the author’s interpretation.","source":"oak-meridian"},
+    {"from":"maratha-event-capital","to":"maratha-event-panipat-supply","relation":"offers a thematic comparison with","scope":"Raigad capital, 1674 · Panipat campaign, late 1760","why":"Raigad’s site record describes rainwater storage. The district history describes how loss of access to food affected a campaign camp at Panipat. Both help a reader ask how a place was provisioned.","source":"maratha-panipat"}
   ]
 }

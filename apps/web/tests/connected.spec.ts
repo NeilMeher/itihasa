@@ -154,7 +154,7 @@ test('calendar, transient birth input, exact chapter search and invalid selectio
   await page.goto('/explorer/?view=map&node=does-not-exist');
   await expect(page.getByText('That Explorer item is unavailable.', { exact: false })).toBeVisible();
   await page.getByRole('searchbox').fill('द्रौपदी');
-  await page.getByRole('button', { name: 'Draupadī person', exact: true }).click();
+  await page.getByRole('button', { name: 'Draupadī person · Mahābhārata', exact: true }).click();
   await expect(page.locator('.map-neighbors').getByRole('heading', { name: 'Draupadī', exact: true })).toBeVisible();
 });
 

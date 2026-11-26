@@ -5,8 +5,9 @@ import raNotes from '../../../../content/ramayana-annotations.json';
 import catalog from '../../../../content/explorer-catalog.json';
 import { searchEntries } from './library';
 import { explorerHref } from './explorer';
+import { foldSearch } from './project-graph';
 
-export type SearchEntry = { url: string; title: string; text: string; aliases: string; context: string };
+export type SearchEntry = { url: string; title: string; text: string; aliases: string; context: string; node?: string };
 
 const workLabels: Record<string, string> = {
   mahabharata: 'Mahābhārata', ramayana: 'Rāmāyaṇa', maratha: 'Maratha history',
@@ -33,7 +34,7 @@ export const entries: SearchEntry[] = [
   ...searchEntries.map((entry) => ({ ...entry, context: legacyContext(entry.url) })),
   ...catalog.nodes.map((node) => ({
     url: explorerHref({ node: node.id, view: 'map' }), title: node.title, text: node.summary,
-    aliases: node.aliases.join(' '), context: workLabels[node.work] + ' · ' + kinds[node.kind],
+    aliases: node.aliases.join(' '), context: workLabels[node.work] + ' · ' + kinds[node.kind], node: node.id,
   })),
 ];
 const exact = new Map<number, Set<number>>();
@@ -64,4 +65,18 @@ export function indexedMatches(query: string): SearchEntry[] {
       url: '/ramayana/' + padded + '/#sarga-' + chapter });
   }
   return entries;
+}
+
+export function findEntries(query: string, collection = entries) {
+  const normalized = foldSearch(query).trim();
+  const terms = normalized.split(/\s+/).filter(Boolean);
+  if (!terms.length) return collection.slice(0, 6);
+  const matched = collection.flatMap((entry) => {
+    const title = foldSearch(entry.title);
+    const names = title + ' ' + foldSearch(entry.aliases);
+    const full = names + ' ' + foldSearch(entry.text + ' ' + entry.context);
+    if (terms.some((part) => !full.includes(part))) return [];
+    return [{ entry, rank: title === normalized ? 0 : title.startsWith(normalized) ? 1 : names.includes(normalized) ? 2 : 3 }];
+  }).sort((left, right) => left.rank - right.rank).map(({ entry }) => entry);
+  return [...new Map([...indexedMatches(normalized), ...matched].map((entry) => [entry.url, entry])).values()];
 }

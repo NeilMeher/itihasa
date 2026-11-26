@@ -55,6 +55,18 @@ def probe(url):
         return {"url": url, "status": "unverified", "reason": str(error)}
 
 
+def audit_map_relationships(dist, graph):
+    work_of = {node["id"]: node["work"] for node in graph["nodes"]}
+    violations = []
+    for work in sorted(set(work_of.values())):
+        expected = [edge for edge in graph["edges"] if work_of[edge["from"]] == work or work_of[edge["to"]] == work]
+        path = f"map/edges/{work}.json"
+        file = dist / path
+        if not file.is_file() or json.loads(file.read_bytes()) != expected:
+            violations.append({"url": "/" + path, "issue": "missing or incomplete published relationships"})
+    return violations
+
+
 def audit(dist, external):
     pages = {file.relative_to(dist).as_posix(): Page(file.read_text(encoding="utf-8"))
              for file in sorted(dist.rglob("*.html"))}
@@ -66,11 +78,13 @@ def audit(dist, external):
 
     routes = {page_route(file): page for file, page in pages.items()}
     links = {urljoin(ORIGIN + page_route(file), href) for file, page in pages.items() for href in page.links}
+    violations = []
     for name in DYNAMIC_RECORDS:
         records = json.loads((ROOT / "content" / f"{name}.json").read_bytes())
         links.update(urljoin(ORIGIN + "/", href) for href in json_links(records))
+        if name == "project-graph" and "/map/mahabharata/" in routes:
+            violations.extend(audit_map_relationships(dist, records))
 
-    violations = []
     internal_count = 0
     destinations = set()
     for link in sorted(links):

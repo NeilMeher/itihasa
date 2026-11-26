@@ -1,17 +1,13 @@
 import { lanes, type Lane, type WorkspaceState } from './explorer';
 import { appearances, items, laneFor, nodes, placeById, relations, timeline, type ExplorerItem } from './explorer-content';
 import { withQuery } from './selection';
+import { journeyFor } from './map-journeys';
 
 export const initial: WorkspaceState = {
   lane: 'mahabharata', node: 'ma-episode-frame', view: 'timeline', scope: 'all', person: '', place: '', query: '',
-  work: 'all', relation: 'all', edge: '', context: '', bounds: '', ahead: '', panel: 'story',
+  work: 'all', relation: 'all', edge: '', context: '', bounds: '', ahead: '', panel: 'story', trail: '', journey: '', step: '',
 };
-export const groups = [
-  ['Mahābhārata', 'work-mahabharata'], ['Rāmāyaṇa', 'work-ramayana'], ['Swarajya and Maratha history', 'work-maratha'],
-  ['Kṛṣṇa and related texts', 'purana-person-krishna'], ['Sky and Calendar', 'concept-nakshatra'], ['Sources', 'source-bori'],
-];
-
-export function resolve(params: URLSearchParams): { state: WorkspaceState; invalid: string } {
+export function resolve(params: URLSearchParams, start?: string): { state: WorkspaceState; invalid: string } {
   const laneKey = params.get('lane');
   const requestedLane = laneKey && Object.hasOwn(lanes, laneKey) ? laneKey as Lane : initial.lane;
   const scope = params.get('scope') ?? 'all';
@@ -30,6 +26,7 @@ export function resolve(params: URLSearchParams): { state: WorkspaceState; inval
     ?? (legacyPlace || null)
     ?? (legacyDay ? timeline.mahabharata.find((entry) => entry.day === legacyDay)?.id ?? 'unknown-day' : null)
     ?? (legacyContext || null)
+    ?? start
     ?? defaultNode;
   const invalid = !nodes.has(requested) ? 'item' : laneKey && !Object.hasOwn(lanes, laneKey) ? 'lane' : '';
   const node = invalid === 'item' ? defaultNode : requested;
@@ -42,11 +39,13 @@ export function resolve(params: URLSearchParams): { state: WorkspaceState; inval
   const relation = params.get('relation') ?? 'all';
   const work = params.get('work') ?? 'all';
   const panel = params.get('panel');
+  const journey = journeyFor(params.get('journey') ?? '');
+  const step = Number(params.get('step'));
   return {
     invalid,
     state: {
       ...initial, node, lane, person, place,
-      view: params.get('view') === 'map' ? 'map' : 'timeline',
+      view: params.get('view') === 'map' || (start && !params.has('view')) ? 'map' : 'timeline',
       scope: (scope === 'war' && lane === 'mahabharata') || timeline[lane].some((item) => item.scope === scope) ? scope : 'all',
       query: params.get('query')?.slice(0, 120) ?? '',
       relation: relations.includes(relation) ? relation : 'all',
@@ -55,6 +54,8 @@ export function resolve(params: URLSearchParams): { state: WorkspaceState; inval
       bounds: (params.get('bounds') ?? '').split(',').filter((entry) => ['stars', 'season', 'moon'].includes(entry)).join(','),
       ahead: params.get('ahead') === 'relative' ? 'relative' : '',
       panel: panel === 'sources' || panel === 'geography' || panel === 'investigation' ? panel : nodes.get(node)?.kind === 'place' ? 'geography' : 'story',
+      trail: (params.get('trail') ?? '').split(',').filter((id) => nodes.has(id)).slice(-5).join(','),
+      journey: journey?.id ?? '', step: journey && Number.isInteger(step) && step >= 1 && step <= journey.steps.length ? String(step) : '',
     },
   };
 }

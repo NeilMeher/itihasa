@@ -1,23 +1,7 @@
 ---
 import Beta from '../layouts/Beta.astro';
-import '../styles/explorer.css';
+import MapPortal from '../components/MapPortal.astro';
 ---
-<Beta title="Itihāsa">
-  <header class="explorer-home">
-    <h1>Follow the story.<br />Read the sources.</h1>
-    <p class="lede">Explore Indian epics and history through the people, places, and passages that connect them.</p>
-    <a class="start-link" href="/explorer/">Open the Explorer <span aria-hidden="true">→</span></a>
-  </header>
-  <section class="link-grid explorer-home-cards" aria-label="Start with a story">
-    <article><h2><a href="/explorer/?lane=mahabharata&amp;node=ma-episode-dice">Mahābhārata</a></h2><p>Draupadī asks whether Yudhiṣṭhira had the right to stake her. Follow what the court says and what the second game changes.</p></article>
-    <article><h2><a href="/explorer/?lane=ramayana&amp;node=ra-episode-sita-exile">Rāmāyaṇa</a></h2><p>Sītā decides to go with Rāma. Follow the places and people she encounters from Ayodhyā to Laṅkā.</p></article>
-    <article><h2><a href="/explorer/?lane=maratha&amp;node=maratha-event-capital">Swarajya and Maratha history</a></h2><p>Start with Raigad’s coronation, then trace the forts, documents, and supply routes behind later changes.</p></article>
-  </section>
-  <section class="beta-band" aria-labelledby="home-research">
-    <h2 id="home-research">Look up at the sky</h2>
-    <p>Try a modern calendar calculation or inspect the verse behind the two-star investigation.</p>
-    <nav class="link-grid" aria-label="Other areas of Itihāsa">
-      <a href="/sky-calendar/">Sky and Calendar</a><a href="/research/">Research notebook</a><a href="/library/">Library</a>
-    </nav>
-  </section>
+<Beta title="Explore">
+  <MapPortal />
 </Beta>

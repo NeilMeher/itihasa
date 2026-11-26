@@ -1,15 +1,18 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { explorerHref, lanes, type Lane, type WorkspaceState } from '../lib/explorer';
 import { items, laneFor, nodes, placeById, timeline } from '../lib/explorer-content';
-import { groups, includesPerson, initial, readingHref, resolve } from '../lib/explorer-state';
+import { includesPerson, initial, readingHref, resolve } from '../lib/explorer-state';
 import { foldSearch, type GraphNode } from '../lib/project-graph';
 import { commitSelection } from '../lib/selection';
 import ExplorerReader from './ExplorerReader';
+import { branchFor, branchHref } from '../lib/map-branches';
+import { journeyFor, journeyHref, journeySelection } from '../lib/map-journeys';
+import { rememberSelection } from '../lib/explorer-resume';
 
 const ProjectMindMap = lazy(() => import('./ProjectMindMap'));
 
-export default function Explorer() {
-  const [state, setState] = useState(initial);
+export default function Explorer({ start }: { start?: string }) {
+  const [state, setState] = useState(() => start ? resolve(new URLSearchParams(), start).state : initial);
   const [invalid, setInvalid] = useState('');
   const [ready, setReady] = useState(false);
   const [closed, setClosed] = useState(false);
@@ -17,13 +20,15 @@ export default function Explorer() {
   const scrubbing = useRef(false);
   const heading = useRef<HTMLHeadingElement>(null);
   const opener = useRef<HTMLElement | null>(null);
+  const graphOpener = useRef(false);
   const eventList = useRef<HTMLOListElement>(null);
 
   useEffect(() => {
     function restore() {
-      const result = resolve(new URLSearchParams(location.search));
+      const result = resolve(new URLSearchParams(location.search), location.pathname.startsWith('/map/reading/') ? start : undefined);
       setState(result.state);
       setInvalid(result.invalid);
+      if (!result.invalid && (location.search || start)) rememberSelection(result.state);
       setClosed(false);
       setDraft(undefined);
       scrubbing.current = false;
@@ -32,7 +37,7 @@ export default function Explorer() {
     setReady(true);
     window.addEventListener('popstate', restore);
     return () => window.removeEventListener('popstate', restore);
-  }, []);
+  }, [start]);
 
   useEffect(() => {
     const list = eventList.current;
@@ -55,22 +60,32 @@ export default function Explorer() {
   const currentAt = matching.findIndex((item) => item.id === state.node);
   const scrubAt = draft ?? Math.max(0, currentAt);
   const outside = Boolean(selected?.lane === state.lane && currentAt < 0 && draft === undefined);
+  const branch = branchFor(state.lane);
+  const trail = state.trail.split(',').filter(Boolean);
+  const journey = journeyFor(state.journey);
+  const stepIndex = Number(state.step) - 1;
+  const step = journey?.steps[stepIndex];
 
   function update(next: WorkspaceState, mode: 'push' | 'replace' = 'push') {
     setState(next);
     setInvalid('');
     commitSelection(explorerHref(next), mode);
+    if (mode === 'push') rememberSelection(next);
   }
 
-  function select(id: string, trigger?: HTMLElement) {
+  function select(id: string, trigger?: HTMLElement, earlierTrail?: string) {
     const target = nodes.get(id);
     const to = items.get(id)?.lane ?? laneFor(target) ?? state.lane;
-    if (trigger) opener.current = trigger;
+    if (trigger) {
+      opener.current = trigger;
+      graphOpener.current = Boolean(trigger.closest('.map-workspace'));
+    }
     setDraft(undefined);
     setClosed(false);
     update({
       ...state, node: id, lane: to, edge: '', context: target?.kind === 'place' ? selected?.id ?? state.context : '',
       scope: to === state.lane ? state.scope : 'all', panel: target?.kind === 'place' ? 'geography' : 'story',
+      trail: earlierTrail ?? (id === state.node ? state.trail : [...trail, state.node].slice(-5).join(',')),
     });
     if (trigger) requestAnimationFrame(() => heading.current?.focus());
   }
@@ -95,29 +110,60 @@ export default function Explorer() {
 
   function close() {
     setClosed(true);
-    requestAnimationFrame(() => (opener.current?.isConnected ? opener.current : document.getElementById('explorer-open-reading'))?.focus());
+    requestAnimationFrame(() => {
+      const focus = opener.current?.isConnected ? opener.current :
+        graphOpener.current ? document.querySelector<HTMLElement>('.map-hub') : null;
+      (focus ?? document.getElementById('explorer-open-reading'))?.focus();
+    });
   }
 
+  function goToStep(index: number) {
+    const fields = journeySelection(journey!, index);
+    const lane = items.get(fields.node!)?.lane ?? laneFor(nodes.get(fields.node!)) ?? state.lane;
+    setClosed(false);
+    setDraft(undefined);
+    update({ ...state, ...fields, lane, scope: 'all', ahead: '', edge: '', context: '', place: '', query: '',
+      trail: fields.node === state.node ? state.trail : [...trail, state.node].slice(-5).join(',') });
+  }
+
+  const reader = !closed && <ExplorerReader state={state} selected={selected} ready={ready} heading={heading} onSelect={select} onFollow={follow} onClose={close}
+    update={update} />;
+
   return <div className="explorer-shell">
+    <nav className="explorer-breadcrumb" aria-label="Map category">
+      <a href="/">← All Itihāsa</a>{branch && <a href={branchHref(branch.id)}>{branch.label} branch</a>}
+    </nav>
     <nav className="explorer-views" aria-label="Explorer views">
       <button disabled={!ready} aria-pressed={state.view === 'timeline'} onClick={() => changeView('timeline')}>Timeline</button>
       <button disabled={!ready} aria-pressed={state.view === 'map'} onClick={() => changeView('map')}>Mind Map</button>
       {closed && <button id="explorer-open-reading" onClick={() => { setClosed(false); requestAnimationFrame(() => heading.current?.focus()); }}>Open selected reading</button>}
     </nav>
+    {trail.length > 0 && <nav className="explorer-trail" aria-label="Your trail"><span>Your trail</span><ol>
+      {trail.map((id, index) => <li key={`${id}-${index}`}><button disabled={!ready} onClick={(event) => select(id, event.currentTarget, trail.slice(0, index).join(','))}>{nodes.get(id)?.title}</button></li>)}
+      <li aria-current="location">{nodes.get(state.node)?.title}</li>
+    </ol></nav>}
+    {journey && step && <section className="explorer-journey" aria-label="Guided journey">
+      <h2>{journey.title}</h2>
+      <p>{step.action}</p>
+      <nav aria-label="Journey steps">
+        {journey.steps.map((entry, index) => <a key={entry.node} href={journeyHref(journey, index)}
+          aria-current={stepIndex === index ? 'step' : undefined}
+          onClick={(event) => { if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return; event.preventDefault(); goToStep(index); }}>{index + 1}. {entry.title}</a>)}
+        <button onClick={() => update({ ...state, journey: '', step: '' })}>Leave journey</button>
+      </nav>
+    </section>}
     {invalid && <p className="explorer-notice" role="status">That Explorer {invalid} is unavailable. Choose a lane or search the available readings.</p>}
     {state.view === 'timeline' ? <nav className="explorer-lanes" aria-label="Timeline lanes">
       {(Object.keys(lanes) as Lane[]).map((lane) => <button key={lane} disabled={!ready}
         aria-pressed={state.lane === lane} onClick={() => chooseLane(lane)}>{lanes[lane].name}</button>)}
-    </nav> : <>
-      <nav className="explorer-lanes" aria-label="Mind Map groups">
-        {groups.map(([label, id]) => <button key={id} disabled={!ready} aria-pressed={id === state.node}
-          onClick={() => select(id)}>{label}</button>)}
-      </nav>
+    </nav> : <div className="explorer-map-stage">
+      {reader}
       <Suspense fallback={<p role="status">Opening the Mind Map…</p>}>
         <ProjectMindMap connected={{
           selection: state,
-          change: (next, push) => {
-            if (next.node !== state.node) select(next.node);
+          previous: trail.at(-1),
+          change: (next, push, trigger) => {
+            if (next.node !== state.node) select(next.node, trigger);
             else update({ ...state, ...next }, push ? 'push' : 'replace');
           },
           back: () => changeView('timeline'),
@@ -125,11 +171,17 @@ export default function Explorer() {
           trail: follow,
         }} />
       </Suspense>
-    </>}
-    <div className={state.view === 'timeline' ? 'explorer-stage' : 'explorer-map-details'}>
-      {state.view === 'timeline' && <section className="explorer-track" aria-label="Timeline">
+    </div>}
+    {state.view === 'timeline' && <div className="explorer-stage">
+      <section className="explorer-track" aria-label="Timeline">
         <header className="explorer-track-intro"><p>{lanes[state.lane].time}</p><h2>{lanes[state.lane].name}</h2>
           <p>{lanes[state.lane].description}</p></header>
+        {selected && <button className="explorer-mobile-event" aria-label="Go to selected reading" onClick={(event) => {
+          opener.current = event.currentTarget;
+          graphOpener.current = false;
+          setClosed(false);
+          requestAnimationFrame(() => heading.current?.focus());
+        }} disabled={!ready}><small>{selected.label}</small>{selected.title} <span aria-hidden="true">↓</span></button>}
         <div className="explorer-filters">
           <label>Scope<select disabled={!ready} value={state.scope} onChange={(event) => update({ ...state, scope: event.target.value })}>
             <option value="all">Whole lane</option>
@@ -164,9 +216,8 @@ export default function Explorer() {
           </li>)}
         </ol>
         {matching.length === 0 && <p>No events match this selection. <button onClick={() => update({ ...state, scope: 'all', query: '', person: '', place: '' })}>Show the whole lane</button></p>}
-      </section>}
-      {!closed && <ExplorerReader state={state} selected={selected} ready={ready} heading={heading} onSelect={select} onFollow={follow} onClose={close}
-        update={update} />}
-    </div>
+      </section>
+      {reader}
+    </div>}
   </div>;
 }

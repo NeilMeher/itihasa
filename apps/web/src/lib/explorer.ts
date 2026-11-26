@@ -27,6 +27,9 @@ export type WorkspaceState = {
   bounds: string;
   ahead: string;
   panel: ReadingPanel;
+  trail: string;
+  journey: string;
+  step: string;
 };
 
 export function explorerHref(fields: Partial<WorkspaceState> = {}) {

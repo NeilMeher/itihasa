@@ -2,15 +2,17 @@ import { expect, test } from '@playwright/test';
 
 test('home opens each major product area', async ({ page }, testInfo) => {
   const routes = [
-    ['Mahābhārata', '/explorer/?lane=mahabharata&node=ma-episode-dice'],
-    ['Rāmāyaṇa', '/explorer/?lane=ramayana&node=ra-episode-sita-exile'],
-    ['Swarajya and Maratha history', '/explorer/?lane=maratha&node=maratha-event-capital'],
-    ['Sky and Calendar', '/sky-calendar/'], ['Research notebook', '/research/'], ['Library', '/library/'],
+    ['Mahābhārata', '/map/mahabharata/'],
+    ['Rāmāyaṇa', '/map/ramayana/'],
+    ['Swarajya and Maratha history', '/map/maratha/'],
+    ['Kṛṣṇa and related texts', '/map/purana/'],
+    ['Sky & Calendar', '/map/sky/'], ['Research and Sources', '/map/research/'],
   ];
   await page.setViewportSize({ width: 360, height: 640 });
   await page.goto('/');
   const hero = page.getByRole('link', { name: /Open the Explorer/ });
-  await expect(hero).toBeInViewport({ ratio: 1 });
+  const map = page.getByRole('navigation', { name: 'Whole-project Mind Map' });
+  await expect(map).toBeInViewport({ ratio: 1 });
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(360);
   await page.screenshot({ path: testInfo.outputPath('home-360.png'), fullPage: true });
   await hero.press('Enter');
@@ -18,7 +20,7 @@ test('home opens each major product area', async ({ page }, testInfo) => {
   await expect(page.getByRole('heading', { name: 'Who tells the Mahābhārata?' })).toBeVisible();
   for (const [name, path] of routes) {
     await page.goto('/');
-    await page.locator('.link-grid').getByRole('link', { name, exact: true }).click();
+    await map.getByRole('link', { name: new RegExp(name) }).click();
     expect(new URL(page.url()).pathname + new URL(page.url()).search).toBe(path);
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(360);

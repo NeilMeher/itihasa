@@ -1,0 +1,13 @@
+---
+import Beta from '../../layouts/Beta.astro';
+import MapPortal from '../../components/MapPortal.astro';
+import { branches } from '../../lib/map-branches';
+
+export function getStaticPaths() {
+  return branches.map((branch) => ({ params: { branch: branch.id }, props: { branch } }));
+}
+const { branch } = Astro.props;
+---
+<Beta title={branch.label} summary={branch.intro}>
+  <MapPortal selected={branch} />
+</Beta>
