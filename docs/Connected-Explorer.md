@@ -76,11 +76,11 @@ One cold load and one warm reload were measured in local Chromium with reduced m
 
 | View | Mobile cold / warm | Desktop cold / warm | Cold bytes transferred |
 | --- | ---: | ---: | ---: |
-| Home | 790 / 151 ms | 134 / 40 ms | 22,639 |
-| Timeline | 4,208 / 1,437 ms | 240 / 95 ms | 610,467 |
-| Mind Map | 5,740 / 1,957 ms | 1,043 / 892 ms | 767,753 |
+| Home | 726 / 160 ms | 79 / 39 ms | 22,797 |
+| Timeline | 4,249 / 1,427 ms | 168 / 104 ms | 610,625 |
+| Mind Map | 5,812 / 1,911 ms | 979 / 876 ms | 767,911 |
 
-Sharing the catalogue reduced the Mind Map’s cold transfer from 874,199 to 767,753 bytes. Its cold mobile time dropped from 6,117 to 5,740 ms in the single-run comparison. The warm sample took longer than the first run. The cold mobile map and Timeline still have a measurable load delay.
+Sharing the catalogue reduced the Mind Map’s cold transfer from 874,199 to 767,911 bytes. Its cold mobile time dropped from 6,117 to 5,812 ms in the single-run comparison. The warm sample took longer than the first run. The cold mobile map and Timeline still have a measurable load delay.
 
 ## Remaining work
 

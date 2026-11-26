@@ -23,6 +23,7 @@
 .explorer-track-intro p:last-child { color: var(--muted); max-width: 48ch; }
 .explorer-filters { display: grid; grid-template-columns: minmax(0,.85fr) minmax(0,1.15fr); gap: .5rem; margin-top: .85rem; }
 .explorer-filters label, .explorer-reading > label { display: grid; gap: .2rem; min-width: 0; font-size: .88rem; }
+.explorer-filters :is(input, select) { box-sizing: border-box; width: 100%; min-width: 0; }
 .explorer-filters input { margin: 0; }
 .explorer-scrub { display: flex; flex-wrap: wrap; align-items: center; gap: .45rem; margin: .75rem 0; }
 .explorer-scrub > div { display: flex; gap: .2rem; }
@@ -73,6 +74,9 @@
   .explorer-reading { scroll-margin-top: .7rem; }
   .explorer-intro { padding: 1.4rem 0 .85rem; }
   .explorer-intro .lede { font-size: 1rem; }
+}
+@media (max-width: 420px) {
+  .explorer-filters { grid-template-columns: minmax(0, 1fr); }
 }
 @media (prefers-reduced-motion: no-preference) {
   .explorer-events button[aria-current] { transition: background-color .16s ease; }

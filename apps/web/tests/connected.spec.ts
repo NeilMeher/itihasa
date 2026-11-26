@@ -4,8 +4,12 @@ test('home to war days preserves the story, source and map position at 360px', a
   await page.setViewportSize({ width: 360, height: 640 });
   await page.goto('/');
   await page.getByRole('link', { name: 'Open the Explorer' }).click();
-  await page.getByRole('combobox', { name: 'Scope', exact: true }).selectOption('war');
   const timeline = page.getByRole('region', { name: 'Timeline', exact: true });
+  const scope = timeline.getByRole('combobox', { name: 'Scope', exact: true });
+  await scope.selectOption('war');
+  const scopeBox = await scope.boundingBox();
+  const searchBox = await timeline.getByRole('searchbox').boundingBox();
+  expect(scopeBox!.y + scopeBox!.height).toBeLessThan(searchBox!.y);
   const story = page.getByRole('article', { name: 'Selected reading' });
   const day12 = timeline.getByRole('button', { name: /War day 12/ });
   await day12.press('Enter');
