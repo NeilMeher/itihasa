@@ -45,6 +45,19 @@ class CalendarTests(unittest.TestCase):
         got = calendar({"city": "delhi", "date": "2025-08-16"})
         self.assertEqual(got["month"], {"amanta": "Śrāvaṇa", "purnimanta": "Bhādrapada"})
 
+    def test_sunrise_anchors_the_weekday_and_all_angular_inputs(self):
+        got = calendar({"city": "delhi", "date": "2025-01-01"})
+        rise = datetime.fromisoformat(got["sunrise"])
+        weekday = got["limbs"][0]
+        next_rise = datetime.fromisoformat(weekday["until"])
+        self.assertEqual(rise.utcoffset(), timedelta(hours=5, minutes=30))
+        self.assertEqual((got["weekday_index"], weekday["value"], next_rise.date().isoformat()),
+                         (2, "Wednesday", "2025-01-02"))
+        self.assertLess(abs((next_rise - rise).total_seconds() - 86400), 120)
+        sun, moon, phase = signs(at(rise))
+        for key, expected in (("sun", sun), ("moon", moon), ("phase", phase)):
+            self.assertAlmostEqual(expected, got["angles_degrees"][key], places=3)
+
     def test_birth_instant_and_civil_day(self):
         request = {"city": "delhi", "date": "2025-01-01"}
         instant = birth_sky({**request, "time": "08:00"})
@@ -59,6 +72,15 @@ class CalendarTests(unittest.TestCase):
             self.assertEqual(previous["end"], following["start"])
         self.assertIn("2025-01-02T00:00:00", day["nakshatra"][-1]["end"])
 
+    def test_birth_frames_and_ascendant_boundary(self):
+        request = {"city": "delhi", "date": "2025-01-01"}
+        early = birth_sky({**request, "time": "08:00"})
+        later = birth_sky({**request, "time": "08:20"})
+        self.assertEqual((early["sun_rashi"], early["tropical_sun_sign"]), ("Dhanu", "Capricorn"))
+        offset = (early["tropical_sun_longitude"] - early["sun_longitude"]) % 360
+        self.assertAlmostEqual(offset, early["ayanamsha_degrees"], places=1)
+        self.assertEqual((early["lagna"], later["lagna"]), ("Dhanu", "Makara"))
+        self.assertEqual(early["rashi"], later["rashi"])
     def test_missing_invalid_and_unsupported_inputs(self):
         for request in ({}, {"city": "unknown", "date": "2025-01-01"},
                         {"city": "pune", "date": "2023-01-01"},

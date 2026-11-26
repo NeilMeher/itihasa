@@ -126,3 +126,64 @@ test('Panipat supply and aftermath are separate stages on the documented timelin
   await expect(page.getByRole('heading', { name: 'A renewed northern campaign', exact: true })).toBeVisible();
   await page.screenshot({ path: info.outputPath('panipat-history-1280.png') });
 });
+
+test('nakshatra leads from the graph to five exercises with real sunrise inputs', async ({ page }, info) => {
+  await page.setViewportSize({ width: 360, height: 640 });
+  await page.goto('/mind-map/?node=concept-nakshatra');
+  await page.getByRole('button', { name: 'Follow Calculate the daily calendar', exact: true }).click();
+  await page.getByRole('link', { name: 'Open reading →', exact: true }).click();
+  await page.getByRole('button', { name: 'Try an example' }).click();
+  await page.getByText('Try the five calculation rules', { exact: true }).click();
+  const practice = page.locator('#limb-exercise');
+  const output = practice.getByLabel('Practice result');
+  await expect(output).toContainText('Wednesday');
+  await practice.getByRole('slider').press('ArrowRight');
+  await expect(output).toContainText('Thursday');
+  for (const [limb, sectorCount] of [['Tithi', 30], ['Nakshatra', 27], ['Yoga', 27], ['Karaṇa', 60]] as const) {
+    await practice.getByRole('combobox', { name: 'Limb', exact: true }).selectOption({ label: limb });
+    await practice.getByRole('slider').press('End');
+    await expect(output).toContainText(new RegExp(`\\+30°.*of ${sectorCount}\\.`));
+    await expect(practice).toContainText('New Delhi at sunrise on 2025-01-01');
+  }
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(360);
+  await practice.scrollIntoViewIfNeeded();
+  await page.screenshot({ path: info.outputPath('panchang-five-limbs-360.png'), fullPage: true });
+});
+
+test('birth sky compares frames and the workshop carries the longitude past 360 degrees', async ({ page }, info) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/birth-sky/');
+  await page.getByRole('button', { name: 'Try an example' }).click();
+  const comparison = page.getByText('Compare Moon rāshi, Sun sign and rising sign', { exact: true });
+  await comparison.click();
+  const readings = page.getByRole('region', { name: 'Birth sky result' });
+  await expect(readings.getByText(/Capricorn ·/)).toBeVisible();
+  await expect(readings.getByText(/Sidereal ascendant/)).toBeVisible();
+  await page.getByLabel('Local birth time (optional)').fill('08:20');
+  await page.getByRole('button', { name: 'Calculate birth sky' }).click();
+  await expect(comparison).toBeVisible();
+  await comparison.click();
+  await expect(readings.getByText('Sidereal ascendant', { exact: true }).locator('..')).toContainText('Makara');
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(390);
+  await page.screenshot({ path: info.outputPath('birth-frames-390.png'), fullPage: true });
+  await page.goto('/workshop/');
+  await page.getByRole('slider').press('ArrowRight');
+  await page.getByText('Carry the longitude through a full turn').click();
+  await expect(page.getByText('0.971205°', { exact: true })).toBeVisible();
+  await page.getByLabel('Starting longitude (degrees)').fill('10');
+  await expect(page.getByText('Traditional longitude', { exact: true }).locator('..')).toContainText('11.971205°');
+});
+
+test('Kṛṣṇa companion traces the arena comparison and the festival calculation', async ({ page }, info) => {
+  await page.goto('/search/');
+  await page.getByRole('searchbox').fill('कृष्ण');
+  await page.getByRole('link', { name: 'Kṛṣṇa across three texts', exact: true }).click();
+  await page.getByRole('link', { name: 'Mathurā arena' }).click();
+  await expect(page.getByRole('link', { name: /Vaidya Critical Edition/ })).toHaveAttribute('href', /HV_76.40$/);
+  await expect(page.locator('#city')).toContainText('BORI Critical Edition');
+  await page.screenshot({ path: info.outputPath('krishna-sources-1280.png'), fullPage: true });
+  await page.getByRole('link', { name: 'Calculate the example day' }).click();
+  await expect(page.getByLabel('Date', { exact: true })).toHaveValue('2025-08-16');
+  await page.getByRole('button', { name: 'Calculate day' }).click();
+  await expect(page.getByRole('region', { name: 'Pañchāṅga result' })).toContainText('Kṛṣṇa paksha');
+});

@@ -3,13 +3,16 @@ import places from '../../../../content/cities.json';
 
 type Calendar = {
   city: string; date: string; sunrise: string; sunset: string; phase_degrees: number; illuminated: number;
+  weekday_index: number; angles_degrees: { sun: number; moon: number; phase: number };
   paksha: string; month: { amanta: string; purnimanta: string };
   limbs: { label: string; value: string; rule: string; until: string | null }[];
   windows: { label: string; start: string; end: string; part: string }[];
 };
 type Span = { value: string; start: string; end: string };
 type Birth = { city: string; date: string } & (
-  { kind: 'instant'; time: string; rashi: string; nakshatra: string; lagna: string; moon_longitude: number; lagna_longitude: number }
+  { kind: 'instant'; time: string; rashi: string; nakshatra: string; lagna: string; moon_longitude: number; lagna_longitude: number;
+    sun_rashi: string; sun_longitude: number; tropical_sun_sign: string; tropical_sun_longitude: number;
+    ayanamsha_degrees: number; boundary_distances: { moon_rashi: number; lagna: number } }
   | { kind: 'civil-day'; rashi: Span[]; nakshatra: Span[] }
 );
 
@@ -35,6 +38,47 @@ function Wheel({ markers, label }: { markers: { name: string; angle: number }[];
   </figure>;
 }
 
+const weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+function LimbExercise({ result }: { result: Calendar }) {
+  const [limbIndex, setLimbIndex] = useState(0);
+  const [offset, setOffset] = useState(0);
+  const { sun, moon, phase } = result.angles_degrees;
+  const limb = result.limbs[limbIndex];
+  const angularRules = [
+    { angle: phase, sectors: 30, operation: 'Moon − Sun' },
+    { angle: moon, sectors: 27, operation: 'Sidereal Moon' },
+    { angle: sun + moon, sectors: 27, operation: 'Sidereal Moon + sidereal Sun' },
+    { angle: phase, sectors: 60, operation: 'Moon − Sun' },
+  ];
+  const angular = angularRules[limbIndex - 1];
+  const normalize = (angle: number) => (angle % 360 + 360) % 360;
+  const startingAngle = angular ? normalize(angular.angle) : 0;
+  const position = angular ? normalize(startingAngle + offset) : 0;
+  const sectorWidth = angular ? 360 / angular.sectors : 0;
+  const nextWeekday = weekdays[(result.weekday_index + offset) % 7];
+  return <details className="source-card" id="limb-exercise">
+    <summary>Try the five calculation rules</summary>
+    <div className="beta-form">
+      <label>Limb<select value={limbIndex} onChange={(event) => {
+        setLimbIndex(Number(event.currentTarget.value));
+        setOffset(0);
+      }}>{result.limbs.map(({ label }, index) => <option value={index} key={label}>{label}</option>)}</select></label>
+      <label>{angular ? 'Practice angle offset (degrees)' : 'Days after this sunrise'}
+        <input type="range" min={0} max={angular ? 30 : 6} value={offset}
+          onChange={(event) => setOffset(event.currentTarget.valueAsNumber)} />
+      </label>
+    </div>
+    <p>{result.city} at sunrise on {result.date} · {limb.label} is {limb.value}.
+      {limb.until && <> Next change {clock(limb.until, result.date)} IST.</>}</p>
+    {angular ? <>
+      <p>{angular.operation} gives {startingAngle.toFixed(3)}°. Each of the {angular.sectors} sectors spans {sectorWidth.toFixed(3)}°.</p>
+      <output aria-label="Practice result">{position.toFixed(3)}° with a +{offset}° practice offset is in sector {Math.floor(position * angular.sectors / 360) + 1} of {angular.sectors}.</output>
+      <p className="small-note">The slider changes a practice angle. The next change above comes from the calculated sky.</p>
+    </> : <output aria-label="Practice result">{offset === 0 ? 'At this sunrise' : `${offset} day${offset === 1 ? '' : 's'} later`} the weekday is {nextWeekday}.</output>}
+  </details>;
+}
+
 function CalendarResult({ result, month }: { result: Calendar; month: 'amanta' | 'purnimanta' }) {
   return <section className="beta-result" aria-label="Pañchāṅga result">
     <h2>{result.city} · {result.date}</h2>
@@ -45,9 +89,10 @@ function CalendarResult({ result, month }: { result: Calendar; month: 'amanta' |
       <thead><tr><th scope="col">Limb</th><th scope="col">At sunrise</th><th scope="col">Next change</th></tr></thead>
       <tbody>{result.limbs.map(({ label, value, until, rule }) => <tr key={label}>
         <th scope="row"><details><summary>{label}</summary><small>{rule}</small></details></th>
-        <td>{value}</td><td>{until ? clock(until, result.date) : 'Next sunrise'}</td>
+        <td>{value}</td><td>{until ? clock(until, result.date) : 'Unavailable'}</td>
       </tr>)}</tbody>
     </table>
+    <LimbExercise result={result} />
     <Wheel markers={[{ name: 'Sun', angle: 0 }, { name: 'Moon', angle: result.phase_degrees }]}
       label={`Moon–Sun angle ${result.phase_degrees}°. The Moon is ${result.illuminated}% illuminated at sunrise.`} />
     <table className="data-table">
@@ -72,6 +117,17 @@ function BirthResult({ result }: { result: Birth }) {
       </dl>
       <Wheel markers={[{ name: 'Moon', angle: result.moon_longitude }, { name: 'Lagna', angle: result.lagna_longitude }]}
         label={`Sidereal ecliptic. Moon ${result.moon_longitude}°. Eastern horizon ${result.lagna_longitude}°.`} />
+      <details className="source-card">
+        <summary>Compare Moon rāshi, Sun sign and rising sign</summary>
+        <dl className="fact-line">
+          <div><dt>Sidereal Moon</dt><dd>{result.rashi} · {result.moon_longitude}°</dd></div>
+          <div><dt>Sidereal Sun</dt><dd>{result.sun_rashi} · {result.sun_longitude}°</dd></div>
+          <div><dt>Tropical Sun</dt><dd>{result.tropical_sun_sign} · {result.tropical_sun_longitude}°</dd></div>
+          <div><dt>Sidereal ascendant</dt><dd>{result.lagna} · {result.lagna_longitude}°</dd></div>
+        </dl>
+        <p>The tropical zodiac starts at the March equinox. This sidereal convention subtracts the linear Lahiri ayanāṃśa of {result.ayanamsha_degrees}° at the entered time.</p>
+        <p>The Moon is {result.boundary_distances.moon_rashi}° from its nearest rāshi boundary and the ascendant is {result.boundary_distances.lagna}° from its nearest boundary. Change the local time by a few minutes to see whether either crosses.</p>
+      </details>
     </> : <>
       <p>These possibilities span the local civil day. Lagna needs a birth time.</p>
       <table className="data-table">

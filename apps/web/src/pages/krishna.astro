@@ -1,0 +1,52 @@
+---
+import Beta from '../layouts/Beta.astro';
+import { journey, sources } from '../lib/library';
+---
+<Beta title="Kṛṣṇa · Stories across three texts">
+  <article class="reading-width">
+    <header class="beta-intro">
+      <h1>Kṛṣṇa across three texts</h1>
+      <p class="lede">Read from the Yamunā crossing to the reunion at Kurukṣetra. At Mathurā and Dvārakā, open the passages side by side.</p>
+      <nav aria-label="Compare the Kṛṣṇa readings"><a href="#arena">Mathurā arena</a> · <a href="#city">Dvārakā</a> · <a href="#observance">Janmāṣṭamī</a> · <a href="/mind-map/?node=purana-person-krishna">Mind map</a></nav>
+    </header>
+    <section class="beta-band">
+      <h2>Follow the Bhāgavata Purāṇa</h2>
+      <ol class="reading-list">{journey.map((episode) => <li><a href={episode.path}>{episode.title}</a> · {episode.passages[0].locator}</li>)}</ol>
+    </section>
+    <section class="beta-band" id="arena">
+      <h2>What happens after the arena falls silent?</h2>
+      <div class="link-grid">
+        <article>
+          <h3>Bhāgavata Purāṇa</h3>
+          <p>Kaṃsa orders punishments. Kṛṣṇa enters the royal dais and throws him down. After consolation and funeral rites, the two brothers release their parents from captivity.</p>
+          <p><a href="https://vedabase.io/en/library/sb/10/44/">10.44.33–38 and 43–51 · Bhaktivedanta Book Trust edition</a></p>
+        </article>
+        <article>
+          <h3>Harivaṃśa</h3>
+          <p>The constituted main text describes Kaṃsa’s death and Kṛṣṇa’s greeting to Vasudeva and Devakī in adjacent verses. GRETIL separately marks an inserted reading describing an anointing after verse 43.</p>
+          <p><a href={`${sources.vaidya.url}#:~:text=HV_76.40`}>76.40–43 and insertion 851 · Vaidya Critical Edition</a></p>
+        </article>
+      </div>
+    </section>
+    <section class="beta-band" id="city">
+      <h2>Why does the city in the sea matter twice?</h2>
+      <div class="link-grid">
+        <article>
+          <h3>A place of refuge</h3>
+          <p>The threat to Mathurā gives Kṛṣṇa and Balarāma a reason to establish a fortified city in the sea. The passage tells the city’s beginning.</p>
+          <p><a href="https://vedabase.io/en/library/sb/10/50/49/">Bhāgavata Purāṇa 10.50.49 · Bhaktivedanta Book Trust edition</a></p>
+        </article>
+        <article>
+          <h3>A city left behind</h3>
+          <p>The Mausala Parva follows the people leaving under Arjuna’s protection. The sea covers Dvārakā after their departure. Each account gives the sea a different role in the story.</p>
+          <p><a href="https://indology.info/bombay/mahabharata/text/UR/MBh16.txt#:~:text=16008040a">Mausala Parva 16.8.40–41 · BORI Critical Edition</a> · <a href="/mahabharata/?scene=dvaraka">Open the atlas scene</a></p>
+        </article>
+      </div>
+    </section>
+    <section class="beta-band" id="observance">
+      <h2>How is Janmāṣṭamī observed?</h2>
+      <p>The Bhāgavata places Kṛṣṇa’s appearance at night. The festival lesson applies a modern observance convention to waning Aṣṭamī and shows why the same day carries two month names.</p>
+      <p><a href="https://vedabase.io/en/library/sb/10/3/7-8/">Bhāgavata Purāṇa 10.3.8</a> · <a href="/festivals/janmashtami/">Janmāṣṭamī observance</a> · <a href="/panchang/?date=2025-08-16">Calculate the example day</a></p>
+    </section>
+  </article>
+</Beta>

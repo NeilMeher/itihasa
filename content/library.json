@@ -12,7 +12,7 @@
     "baroda": {"title":"Vālmīki Rāmāyaṇa","edition":"Oriental Institute, Baroda Critical Edition, Bālakāṇḍa main text","attribution":"Oriental Institute, Baroda; electronic text hosted by Indology","url":"https://indology.info/bombay/ramayana/text/UR/Ram01.txt"},
     "southern": {"title":"Vālmīki Rāmāyaṇa","edition":"Southern Recension, Bālakāṇḍa, IIT Kanpur e-text","attribution":"IIT Kanpur digital edition","url":"https://heritage.iitk.ac.in/VRAM/1.18.8"},
     "bhagavata": {"title":"Bhāgavata Purāṇa, Canto 10","edition":"VedaBase Sanskrit text and English edition","attribution":"Bhaktivedanta Book Trust edition","url":"https://vedabase.io/en/library/sb/10/"},
-    "vaidya": {"title":"Harivaṃśa","edition":"BORI Critical Edition, 1969, GRETIL constituted text","attribution":"P. L. Vaidya, editor; GRETIL transcription","url":"https://www.gretil.uni-goettingen.de/gretil/corpustei/transformations/html/sa_harivaMza.htm"}
+    "vaidya": {"title":"Harivaṃśa","edition":"BORI Critical Edition, 1969, GRETIL constituted text","attribution":"P. L. Vaidya, editor; GRETIL transcription","url":"https://gretil.sub.uni-goettingen.de/gretil/corpustei/transformations/html/sa_harivaMza.htm"}
   },
   "episodes": [
     {
@@ -42,7 +42,7 @@
       "summary":"Kṛṣṇa appears to Devakī and Vasudeva. At night, Vasudeva carries the infant across the Yamunā to Nanda’s household and returns with Yaśodā’s daughter.",
       "people":["Kṛṣṇa","Devakī","Vasudeva","Yaśodā","Kaṃsa"],"places":["Mathurā","Yamunā","Gokula"],"aliases":["Krishna","Janmashtami","janmāṣṭamī","Gokul","मथुरा","जन्माष्टमी","कृष्ण"],
       "passages":[
-        {"id":"appearance","source":"bhagavata","chapter":"10.3","locator":"Bhāgavata Purāṇa 10.3.8","url":"https://vedabase.io/en/library/sb/10/3/8/","reading":"Kṛṣṇa appears to Devakī at night. The moon language in the passage is a comparison in the narrative."},
+        {"id":"appearance","source":"bhagavata","chapter":"10.3","locator":"Bhāgavata Purāṇa 10.3.8","url":"https://vedabase.io/en/library/sb/10/3/7-8/","reading":"Kṛṣṇa appears to Devakī at night. The moon language in the passage is a comparison in the narrative."},
         {"id":"river","source":"bhagavata","chapter":"10.3","locator":"Bhāgavata Purāṇa 10.3.48–51","url":"https://vedabase.io/en/library/sb/10/3/50/","reading":"The text describes Vasudeva’s crossing and the exchange of the children."}
       ],"related":["krishna-gokula","krishna-mathura","krishna-dvaraka","krishna-kurukshetra"]
     },

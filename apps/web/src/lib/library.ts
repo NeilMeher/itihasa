@@ -32,6 +32,7 @@ export const lessons = [
 
 export const searchEntries = [
   ...areas, ...lessons,
+  { url: '/krishna/', title: 'Kṛṣṇa across three texts', text: 'Read the arena and Dvārakā passages together.', aliases: 'Krishna कृष्ण Bhagavata Harivamsa Purana' },
   ...episodes.flatMap((e) => [
     { url: e.path, title: e.title, text: e.question, aliases: [...e.aliases, ...e.people, ...e.places].join(' ') },
     ...e.passages.map((p) => ({ url: `${e.path}#${p.id}`, title: p.locator, text: e.title, aliases: p.chapter })),

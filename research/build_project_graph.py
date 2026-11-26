@@ -16,6 +16,15 @@ def read(name, fallback=None):
 
 def build():
     sources = read("source-register") | read("maratha-sources", {})
+    library = read("library")
+    for source_id in ("bhagavata", "vaidya"):
+        source = library["sources"][source_id]
+        sources[source_id] = {
+            "work": source["title"], "edition": source["edition"], "creator": source["attribution"],
+            "url": source["url"], "locator": "Selected passages in the Kṛṣṇa reading path",
+            "basis": "primary-text", "use": "Links to editions with editorial paraphrase",
+            "review": "edition-and-locators-checked",
+        }
     atlas, reading = read("mahabharata-atlas"), read("mahabharata-reading")
     editorial = read("graph-editorial")
     nodes = list(editorial["nodes"])
@@ -155,6 +164,31 @@ def build():
              "The inscribed components give two hill-fort comparisons. Their inclusion alone supplies no itinerary.", "unesco-forts")
         edge("maratha-place-vasai", "source-maratha-port-ledger", "has a fiscal record", "1739, Appendix C-2",
              "The account documents a port under administration after the change of possession.", "maratha-port-ledger")
+
+    add("purana-person-krishna", "person", "purana", "Kṛṣṇa across three texts",
+        "Follow the Yamunā, Mathurā and Dvārakā readings and compare their sources.", "/krishna/", ["Krishna", "कृष्ण"])
+    for episode in library["episodes"]:
+        if episode["collection"] not in ("bhagavata", "harivamsa"):
+            continue
+        id_ = f'purana-episode-{episode["id"]}'
+        passage = episode["passages"][0]
+        source = passage["source"]
+        add(id_, "episode", "purana", episode["title"], episode["summary"], episode["path"], episode["aliases"])
+        edge("purana-person-krishna", id_, "appears in", passage["locator"], passage["reading"], source, passage.get("url", ""))
+        edge(id_, f"source-{source}", "is told in", passage["locator"], passage["reading"], source, passage.get("url", ""))
+    edge("purana-episode-harivamsa-kamsa", "purana-episode-krishna-mathura", "retells", "Vaidya 76.40–43",
+         "The Harivaṃśa moves directly from Kaṃsa’s death to Kṛṣṇa greeting his parents.", "vaidya",
+         sources["vaidya"]["url"] + "#:~:text=HV_76.40")
+    edge("purana-episode-krishna-dvaraka", "ma-episode-dvaraka", "shares a setting with", "Bhāgavata 10.50.49 and BORI 16.8.40",
+         "The Bhāgavata tells of founding the refuge. The Mausala Parva tells of Arjuna leading the people out before the sea covers the city.",
+         "bhagavata", "https://vedabase.io/en/library/sb/10/50/49/")
+    add("tradition-janmashtami", "tradition", "purana", "Janmāṣṭamī", "Compare the observance rule and two lunar month labels.",
+        "/festivals/janmashtami/", ["Janmashtami", "जन्माष्टमी"])
+    edge("purana-episode-krishna-birth", "tradition-janmashtami", "is remembered at", "Bhāgavata 10.3.8 and contemporary calendar practice",
+         "The birth story is read alongside a lesson applying a modern midnight observance rule.", "bhagavata",
+         "https://vedabase.io/en/library/sb/10/3/7-8/")
+    edge("tradition-janmashtami", "tool-panchang", "is explored in", "Delhi, 16 August 2025",
+         "Compare the tithi, time of day and both month conventions for the modern example.", "panchang-method")
 
     ids = {node["id"] for node in nodes}
     if len(ids) != len(nodes) or any(not re.fullmatch(r"[a-z\d-]+", id_) for id_ in ids):

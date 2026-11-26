@@ -17,6 +17,8 @@ IST = timezone(timedelta(hours=5, minutes=30), "IST")
 J2000_UTC = datetime(2000, 1, 1, 12, tzinfo=UTC)
 METHOD = CONVENTION["id"]
 RASHIS = ("Meṣa", "Vṛṣabha", "Mithuna", "Karka", "Siṃha", "Kanyā", "Tulā", "Vṛścika", "Dhanu", "Makara", "Kumbha", "Mīna")
+TROPICAL_SIGNS = ("Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo", "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces")
+WEEKDAYS = ("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
 NAKSHATRAS = (
     "Aśvinī", "Bharaṇī", "Kṛttikā", "Rohiṇī", "Mṛgaśīrṣa", "Ārdrā", "Punarvasu", "Puṣya", "Āśleṣā",
     "Maghā", "Pūrva Phalgunī", "Uttara Phalgunī", "Hasta", "Citrā", "Svātī", "Viśākhā", "Anurādhā",
@@ -149,6 +151,8 @@ def calendar(payload: dict) -> dict:
     setting = astro.SearchRiseSet(astro.Body.Sun, observer, astro.Direction.Set, midnight, 1)
     if rise is None or setting is None:
         raise RuntimeError("Rise or set is unavailable for this day")
+    tomorrow = at(datetime.combine(day + timedelta(days=1), time(), tzinfo=IST))
+    next_rise = astro.SearchRiseSet(astro.Body.Sun, observer, astro.Direction.Rise, tomorrow, 1)
 
     @lru_cache(maxsize=256)
     def ecliptic(ut):
@@ -161,7 +165,8 @@ def calendar(payload: dict) -> dict:
         ("Karaṇa", lambda e: sector(e[2], 60), karana_name, "Half a tithi, one segment per 6°"),
     )
     sunrise_coords = ecliptic(rise.ut)
-    limbs = [{"label": "Vāra", "value": day.strftime("%A"), "until": None, "rule": "Weekday at local sunrise"}]
+    limbs = [{"label": "Vāra", "value": WEEKDAYS[day.weekday()],
+              "until": display_time(next_rise) if next_rise else None, "rule": "Weekday at local sunrise"}]
     for label, index, name, rule in definitions:
         boundary = next_change(rise, lambda value: index(ecliptic(value.ut)), days=2)
         limbs.append({"label": label, "value": name(index(sunrise_coords)), "until": display_time(boundary) if boundary else None, "rule": rule})
@@ -178,6 +183,8 @@ def calendar(payload: dict) -> dict:
     return {
         "version": 1, "method": METHOD, "city": city["name"], "date": day.isoformat(),
         "sunrise": display_time(rise), "sunset": display_time(setting),
+        "weekday_index": day.weekday(),
+        "angles_degrees": dict(zip(("sun", "moon", "phase"), sunrise_coords)),
         "limbs": limbs, "phase_degrees": round(phase, 2),
         "illuminated": round(astro.Illumination(astro.Body.Moon, rise).phase_fraction * 100),
         "paksha": "Kṛṣṇa paksha (waning)" if waning else "Śukla paksha (waxing)",
@@ -232,8 +239,17 @@ def birth_sky(payload: dict) -> dict:
     if not isinstance(supplied, str) or not re.fullmatch(r"(?:[01]\d|2[0-3]):[0-5]\d", supplied):
         raise InputError("Use a local time from 00:00 to 23:59, or leave it blank.")
     moment = at(datetime.combine(day, time.fromisoformat(supplied), tzinfo=IST))
-    _, moon, _ = signs(moment)
+    sun, moon, _ = signs(moment)
+    offset = ayanamsha(moment)
+    tropical_sun = (sun + offset) % 360
     rising = ascendant(moment, city)
     return {**result, "kind": "instant", "time": display_time(moment), "rashi": RASHIS[sector(moon, 12)],
             "nakshatra": NAKSHATRAS[sector(moon, 27)], "lagna": RASHIS[sector(rising, 12)],
-            "moon_longitude": round(moon, 2), "lagna_longitude": round(rising, 2)}
+            "moon_longitude": round(moon, 2), "lagna_longitude": round(rising, 2),
+            "sun_rashi": RASHIS[sector(sun, 12)], "sun_longitude": round(sun, 2),
+            "tropical_sun_sign": TROPICAL_SIGNS[sector(tropical_sun, 12)],
+            "tropical_sun_longitude": round(tropical_sun, 2), "ayanamsha_degrees": round(offset, 4),
+            "boundary_distances": {
+                "moon_rashi": round(min(moon % 30, 30 - moon % 30), 3),
+                "lagna": round(min(rising % 30, 30 - rising % 30), 3),
+            }}
