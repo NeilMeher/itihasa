@@ -7,13 +7,14 @@ test('home opens each major product area', async ({ page }, testInfo) => {
   ];
   await page.setViewportSize({ width: 360, height: 640 });
   await page.goto('/');
-  const hero = page.getByRole('link', { name: 'Explore the two stars', exact: true });
+  const hero = page.getByRole('button', { name: 'Next scene', exact: true });
   await expect(hero).toBeInViewport({ ratio: 1 });
+  await expect(hero).toBeEnabled();
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(360);
   await page.screenshot({ path: testInfo.outputPath('home-360.png'), fullPage: true });
   await hero.press('Enter');
-  await expect(page).toHaveURL(/\/arundhati\/$/);
-  await expect(page.getByText('illustrative sky', { exact: true })).toBeVisible();
+  await expect(page).toHaveURL(/scene=vow/);
+  await expect(page.getByRole('heading', { name: 'The vow that changes the throne' })).toBeVisible();
   for (const [name, path] of routes) {
     await page.goto('/');
     await page.locator('.link-grid').getByRole('link', { name, exact: true }).click();

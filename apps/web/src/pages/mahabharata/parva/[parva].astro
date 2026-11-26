@@ -1,0 +1,52 @@
+---
+import Beta from '../../../layouts/Beta.astro';
+import atlas from '../../../../../../content/mahabharata-atlas.json';
+import { chaptersFor, parvaUrl, readings, sourceUrl } from '../../../lib/mahabharata';
+import '../../../styles/mahabharata.css';
+
+export function getStaticPaths() {
+  return atlas.books.map((book) => ({ params: { parva: String(book.number).padStart(2, '0') }, props: { book } }));
+}
+
+const { book } = Astro.props;
+const chapters = chaptersFor(book.number);
+const covered = chapters.filter((chapter) => chapter.readings.length).length;
+---
+<Beta title={`${book.name} Parva · Mahābhārata`} summary={book.summary}>
+  <header class="ma-opening ma-guide-opening">
+    <a href="/mahabharata/">← Mahābhārata atlas</a>
+    <p class="ma-kicker">Parva {book.number} of 18</p>
+    <h1>{book.name} Parva</h1>
+    <p class="ma-deck">{book.summary}</p>
+  </header>
+  <section class="ma-story ma-guide" aria-labelledby="chapter-title">
+    <nav class="ma-reader-nav" aria-label="Parva sequence">
+      {book.number > 1 && <a href={parvaUrl(book.number - 1)}>← {atlas.books[book.number - 2].name}</a>}
+      {book.number < 18 && <a href={parvaUrl(book.number + 1)}>{atlas.books[book.number].name} →</a>}
+    </nav>
+    <h2 id="chapter-title">Chapter index</h2>
+    <p>{chapters.length} BORI Critical Edition chapters. {covered} {covered === 1 ? 'chapter links' : 'chapters link'} to at least one annotated scene.</p>
+    <div class="ma-chapter-jumps" aria-label="Jump to a group of chapters">
+      {chapters.filter(({ chapter }) => (chapter - 1) % 25 === 0).map(({ chapter }) => <a href={`#chapter-${chapter}`}>{chapter}–{Math.min(chapter + 24, chapters.length)}</a>)}
+    </div>
+    <ol class="ma-chapter-list">
+      {chapters.map(({ chapter, line, readings: excerpts }) => (
+        <li id={`chapter-${chapter}`}>
+          <div><h3>{book.number}.{chapter}</h3><a href={sourceUrl(line)}>Sanskrit chapter start ↗</a></div>
+          {excerpts.length ? <>
+            <p>Selected scene reading</p>
+            {excerpts.map((scene) => <div class="ma-index-scene">
+              <a href={`/mahabharata/?scene=${scene.id}`}>{scene.title} →</a>
+              {Number(readings[scene.id].line.slice(2, 5)) === chapter && <p>{scene.summary}</p>}
+            </div>)}
+          </> : <p>Index and primary source only</p>}
+          <nav class="ma-reader-nav ma-neighbours" aria-label={`Chapters around ${book.number}.${chapter}`}>
+            {chapter > 1 && <a href={`#chapter-${chapter - 1}`}>← {book.number}.{chapter - 1}</a>}
+            {chapter < chapters.length && <a href={`#chapter-${chapter + 1}`}>{book.number}.{chapter + 1} →</a>}
+          </nav>
+        </li>
+      ))}
+    </ol>
+    <p>Chapter starts come from the <a href="https://indology.info/bombay/mahabharata/statement.html">Tokunaga–Smith Unicode Roman e-text of the BORI constituted main text</a>. Other editions and translations may number the same passage differently.</p>
+  </section>
+</Beta>

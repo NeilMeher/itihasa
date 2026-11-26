@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 type Entry = { url: string; title: string; text: string; aliases: string };
 
@@ -8,6 +8,10 @@ function normalize(text: string) {
 
 export default function SearchPanel({ entries }: { entries: Entry[] }) {
   const [query, setQuery] = useState('');
+  const input = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    if (input.current?.value) setQuery(input.current.value);
+  }, []);
   const terms = normalize(query).trim().split(/\s+/).filter(Boolean);
   const results = terms.length ? entries.filter(({ title, text, aliases }) => {
     const haystack = normalize(`${title} ${text} ${aliases}`);
@@ -16,7 +20,7 @@ export default function SearchPanel({ entries }: { entries: Entry[] }) {
   return (
     <section aria-label="Search results">
       <label htmlFor="library-query">Search the library</label>
-      <input id="library-query" type="search" value={query} onChange={(event) => setQuery(event.currentTarget.value)}
+      <input ref={input} id="library-query" type="search" onChange={(event) => setQuery(event.currentTarget.value)}
         placeholder="Try rāshi, Ayodhyā, or 6.2.31" />
       <p className="small-note" role="status">
         {terms.length ? `${results.length} ${results.length === 1 ? 'result' : 'results'}` : 'Browse by topic'}

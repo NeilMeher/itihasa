@@ -1,0 +1,97 @@
+"""Check atlas references and optionally match passage locators to the source files."""
+
+import argparse
+import json
+import re
+from pathlib import Path
+
+from build_mahabharata_index import SOURCE, extract
+
+
+CONTENT = Path(__file__).resolve().parents[1] / "content"
+COUNTS = [225, 72, 299, 67, 197, 117, 173, 69, 64, 18, 27, 353, 154, 96, 47, 9, 3, 5]
+
+
+def read(name):
+    return json.loads((CONTENT / f"mahabharata-{name}.json").read_text(encoding="utf-8"))
+
+
+def check(source_dir):
+    atlas, reading, index, evidence, details, sky = (
+        read(name) for name in ("atlas", "reading", "chapters", "evidence", "evidence-details", "sky")
+    )
+    if source_dir and extract(source_dir) != index:
+        raise ValueError("Chapter index drifted from the upstream source files")
+    assert [len(book["chapterStarts"]) for book in index["parvas"]] == COUNTS
+    assert [book["number"] for book in atlas["books"]] == list(range(1, 19))
+
+    sources = {}
+    anchors = set()
+    for number, book in enumerate(index["parvas"], 1):
+        filename = f"MBh{number:02}.txt"
+        assert re.fullmatch("[a-f0-9]{64}", book["sha256"]), filename
+        assert book["parva"] == number and book["url"] == SOURCE + filename
+        for chapter, line in enumerate(book["chapterStarts"], 1):
+            assert line.startswith(f"{number:02}{chapter:03}"), line
+        if source_dir:
+            sources[number] = set(re.findall(
+                r"^\d{8}[a-zA-Z](?=\s)", (source_dir / filename).read_text(encoding="utf-8-sig"), re.MULTILINE,
+            ))
+
+    def passage(line):
+        assert re.fullmatch(r"\d{8}[a-zA-Z]", line), line
+        book, chapter = int(line[:2]), int(line[2:5])
+        assert 1 <= book <= 18 and 1 <= chapter <= COUNTS[book - 1], line
+        if source_dir:
+            assert line in sources[book], f"Unknown text line {line}"
+        anchors.add(line)
+        return book, chapter
+
+    scene_books = {"frame": 1, **{scene["id"]: scene["book"] for scene in atlas["episodes"]}}
+    people = reading["people"]
+    clues = {clue["id"] for clue in evidence}
+    places = {place["id"] for place in atlas["places"]}
+    assert clues == details.keys() and len(clues) == len(evidence)
+    assert scene_books.keys() == reading["scenes"].keys() and len(scene_books) == len(atlas["episodes"]) + 1
+    assert all(scene["place"] in places | {""} and scene["clue"] in clues | {""} for scene in atlas["episodes"])
+
+    selected = {number: set() for number in range(1, 19)}
+    for scene, annotation in reading["scenes"].items():
+        number, chapter = passage(annotation["line"])
+        assert number == scene_books[scene] and chapter in annotation["chapters"], scene
+        assert all(1 <= part <= COUNTS[number - 1] for part in annotation["chapters"]), scene
+        assert all(person in people for person in annotation["people"]), scene
+        assert annotation.get("nestedUnder", scene) in scene_books
+        selected[number].update(annotation["chapters"])
+    for person in people.values():
+        assert all(scene in scene_books for scene, _ in person["links"]), person["name"]
+
+    wagers = [line for line, _, _ in reading["wagers"]]
+    assert wagers == sorted(wagers) and wagers[-2:] == ["02058027a", "02058031a"]
+    for entry in reading["wagers"] + reading["court"]:
+        assert passage(entry[0])[0] == 2, entry
+    passage("01002026a")
+    assert [entry["day"] for entry in reading["warDays"]] == list(range(1, 19))
+    for entry in reading["warDays"]:
+        assert entry["event"] and passage(entry["line"])[0] >= 6, entry
+        assert entry.get("scene", "frame") in scene_books, entry
+    assert sum(clue["younger"] is not None for clue in evidence) == 3
+    for site in sky["sites"]:
+        days = sky["samples"][site["id"]]
+        assert len(days) == len(sky["days"])
+        for frames in days:
+            assert len(frames) == 49
+            assert all(len(frame) == len(sky["objects"]) for frame in frames)
+            assert all(-90 <= alt <= 90 and 0 <= az <= 360 for frame in frames for alt, az in frame)
+    assert all(len(day) == 49 and all(0 <= phase < 360 for phase in day) for day in sky["moonPhase"])
+
+    print("Parva chapters:", ", ".join(f"{number} {len(selected[number])}/{count}" for number, count in enumerate(COUNTS, 1)))
+    print(f"{sum(COUNTS)} chapters, {sum(map(len, selected.values()))} linked to {len(scene_books)} scene readings")
+    print(f"18 war days, {len(people)} people, {len(places)} places and {len(clues)} evidence records")
+    print(f"{len(anchors)} distinct passage anchors {'found in the upstream sources' if source_dir else 'validated structurally'}")
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--source-dir", type=Path)
+    check(parser.parse_args().source_dir)

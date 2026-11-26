@@ -1,10 +1,14 @@
 ---
 import Beta from '../layouts/Beta.astro';
+import atlas from '../../../../content/mahabharata-atlas.json';
+import evidence from '../../../../content/mahabharata-evidence.json';
 import { collections, episodes, areas } from '../lib/library';
+import { annotatedChapterCount, chapterCount, scenes } from '../lib/mahabharata';
 ---
 <Beta title="Coverage">
   <header class="beta-intro"><h1>What you can read</h1><p class="lede">{episodes.length} annotated epic and Purāṇic episodes across {collections.length} collections.</p></header>
   <div class="reading-width">
+    <section class="beta-band"><h2>Mahābhārata Atlas</h2><p>{atlas.books.length} parva guides and {chapterCount.toLocaleString('en')} indexed BORI chapters. {annotatedChapterCount} chapters link to one or more of the {scenes.length} annotated scenes. The remaining chapters offer a locator and primary source.</p><p>The catalogue includes {evidence.length} dating and context records. Three author-reported bounds can be combined. The observer sky uses modern samples. The historical transit comparison remains prereview.</p><p><a href="/mahabharata/">Open the atlas</a></p></section>
     <ul class="search-list">
       {collections.map((collection) => {
         const entries = episodes.filter((episode) => episode.collection === collection.id);

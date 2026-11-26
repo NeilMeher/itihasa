@@ -1,0 +1,586 @@
+{
+  "arcs": [
+    {
+      "id": "origins",
+      "title": "The Kuru house",
+      "summary": "A vow, an inheritance, and two branches of one family."
+    },
+    {
+      "id": "exile",
+      "title": "Court & exile",
+      "summary": "A throne is won, lost, and argued for again."
+    },
+    {
+      "id": "war",
+      "title": "Kurukṣetra",
+      "summary": "From the failed peace mission through the commanders of the war."
+    },
+    {
+      "id": "aftermath",
+      "title": "After the battle",
+      "summary": "Grief, government, and what victory costs."
+    },
+    {
+      "id": "departure",
+      "title": "The last journeys",
+      "summary": "The Yādavas fall and the Pāṇḍavas leave their kingdom."
+    }
+  ],
+  "books": [
+    {
+      "number": 1,
+      "name": "Ādi",
+      "title": "Beginnings",
+      "arc": "origins",
+      "summary": "Bhīṣma’s vow reshapes the succession. The Pāṇḍavas and Kauravas grow up in the same royal house, and the competition for power begins.",
+      "place": "hastinapura",
+      "url": "https://indology.info/bombay/mahabharata/text/UR/MBh01.txt"
+    },
+    {
+      "number": 2,
+      "name": "Sabhā",
+      "title": "The assembly hall",
+      "arc": "exile",
+      "summary": "Yudhiṣṭhira’s royal consecration is followed by the dice match, Draupadī’s challenge in the hall, and a sentence of exile.",
+      "place": "indraprastha",
+      "url": "https://indology.info/bombay/mahabharata/text/UR/MBh02.txt"
+    },
+    {
+      "number": 3,
+      "name": "Āraṇyaka",
+      "title": "The forest years",
+      "arc": "exile",
+      "summary": "The Pāṇḍavas travel in exile, learn from visiting sages, and hear stories such as that of Nala and Damayantī.",
+      "place": "kamyaka",
+      "url": "https://indology.info/bombay/mahabharata/text/UR/MBh03.txt"
+    },
+    {
+      "number": 4,
+      "name": "Virāṭa",
+      "title": "A year in hiding",
+      "arc": "exile",
+      "summary": "The exiles enter Virāṭa’s service under assumed names. A cattle raid forces Arjuna back into action.",
+      "place": "matsya",
+      "url": "https://indology.info/bombay/mahabharata/text/UR/MBh04.txt"
+    },
+    {
+      "number": 5,
+      "name": "Udyoga",
+      "title": "Before the armies march",
+      "arc": "exile",
+      "summary": "Envoys attempt a settlement while the two sides seek allies. Kṛṣṇa’s peace mission comes before the armies face one another.",
+      "place": "hastinapura",
+      "url": "https://indology.info/bombay/mahabharata/text/UR/MBh05.txt"
+    },
+    {
+      "number": 6,
+      "name": "Bhīṣma",
+      "title": "The war opens",
+      "arc": "war",
+      "summary": "The armies assemble at Kurukṣetra. Arjuna’s hesitation frames the Bhagavad Gītā, and Bhīṣma eventually falls under a rain of arrows.",
+      "place": "kurukshetra",
+      "url": "https://indology.info/bombay/mahabharata/text/UR/MBh06.txt"
+    },
+    {
+      "number": 7,
+      "name": "Droṇa",
+      "title": "A vow before sunset",
+      "arc": "war",
+      "summary": "Droṇa takes command. After Abhimanyu falls, Arjuna vows to kill Jayadratha before sunset on the following day.",
+      "place": "kurukshetra",
+      "url": "https://indology.info/bombay/mahabharata/text/UR/MBh07.txt"
+    },
+    {
+      "number": 8,
+      "name": "Karṇa",
+      "title": "The duel",
+      "arc": "war",
+      "summary": "Karṇa leads the Kaurava forces. His rivalry with Arjuna culminates in the duel in which his chariot wheel sinks.",
+      "place": "kurukshetra",
+      "url": "https://indology.info/bombay/mahabharata/text/UR/MBh08.txt"
+    },
+    {
+      "number": 9,
+      "name": "Śalya",
+      "title": "The last day",
+      "arc": "war",
+      "summary": "Śalya commands the remaining Kaurava army. The fighting closes with the mace duel between Bhīma and Duryodhana.",
+      "place": "kurukshetra",
+      "url": "https://indology.info/bombay/mahabharata/text/UR/MBh09.txt"
+    },
+    {
+      "number": 10,
+      "name": "Sauptika",
+      "title": "The night raid",
+      "arc": "war",
+      "summary": "Aśvatthāman and his companions attack the sleeping camp. The fighting continues after the main battle has ended.",
+      "place": "kurukshetra",
+      "url": "https://indology.info/bombay/mahabharata/text/UR/MBh10.txt"
+    },
+    {
+      "number": 11,
+      "name": "Strī",
+      "title": "The bereaved",
+      "arc": "aftermath",
+      "summary": "Gāndhārī and the women of the royal families see the battlefield and mourn the dead. The book follows the people who must live with the war’s outcome.",
+      "place": "kurukshetra",
+      "url": "https://indology.info/bombay/mahabharata/text/UR/MBh11.txt"
+    },
+    {
+      "number": 12,
+      "name": "Śānti",
+      "title": "How should a king rule?",
+      "arc": "aftermath",
+      "summary": "Yudhiṣṭhira struggles with the cost of victory. Bhīṣma teaches him about government, emergencies, and liberation.",
+      "place": "kurukshetra",
+      "url": "https://indology.info/bombay/mahabharata/text/UR/MBh12.txt"
+    },
+    {
+      "number": 13,
+      "name": "Anuśāsana",
+      "title": "Bhīṣma’s final teachings",
+      "arc": "aftermath",
+      "summary": "Bhīṣma continues his teaching, including discussions of gifts and duties. At the end of the book he dies.",
+      "place": "kurukshetra",
+      "url": "https://indology.info/bombay/mahabharata/text/UR/MBh13.txt"
+    },
+    {
+      "number": 14,
+      "name": "Āśvamedhika",
+      "title": "Rebuilding the kingdom",
+      "arc": "aftermath",
+      "summary": "Yudhiṣṭhira performs the horse sacrifice. Arjuna follows the released horse and encounters challenges from other rulers.",
+      "place": "hastinapura",
+      "url": "https://indology.info/bombay/mahabharata/text/UR/MBh14.txt"
+    },
+    {
+      "number": 15,
+      "name": "Āśramavāsika",
+      "title": "The elders leave court",
+      "arc": "aftermath",
+      "summary": "Dhṛtarāṣṭra, Gāndhārī, and Kuntī withdraw to the forest. News of their deaths reaches Yudhiṣṭhira.",
+      "place": "hastinapura",
+      "url": "https://indology.info/bombay/mahabharata/text/UR/MBh15.txt"
+    },
+    {
+      "number": 16,
+      "name": "Mausala",
+      "title": "The end of the Yādavas",
+      "arc": "departure",
+      "summary": "Conflict destroys the Yādavas. Kṛṣṇa and Balarāma depart, and the narrative recounts the loss of Dvārakā.",
+      "place": "dvaraka",
+      "url": "https://indology.info/bombay/mahabharata/text/UR/MBh16.txt"
+    },
+    {
+      "number": 17,
+      "name": "Mahāprasthānika",
+      "title": "The northern journey",
+      "arc": "departure",
+      "summary": "The Pāṇḍavas and Draupadī lay down their rule and travel north. Yudhiṣṭhira continues with a dog as his companion.",
+      "place": "himalaya",
+      "url": "https://indology.info/bombay/mahabharata/text/UR/MBh17.txt"
+    },
+    {
+      "number": 18,
+      "name": "Svargārohaṇa",
+      "title": "Yudhiṣṭhira’s final test",
+      "arc": "departure",
+      "summary": "Yudhiṣṭhira encounters an unexpected heaven and hell. The tale closes by testing where his loyalties lie.",
+      "place": "",
+      "url": "https://indology.info/bombay/mahabharata/text/UR/MBh18.txt"
+    }
+  ],
+  "episodes": [
+    {
+      "id": "vow",
+      "book": 1,
+      "title": "The vow that changes the throne",
+      "place": "hastinapura",
+      "summary": "Bhīṣma renounces his claim and promises to remain unmarried so Śāntanu can marry Satyavatī. The promise changes who can inherit.",
+      "locator": "",
+      "url": "https://indology.info/bombay/mahabharata/text/UR/MBh01.txt",
+      "clue": "",
+      "deepLink": ""
+    },
+    {
+      "id": "lac",
+      "book": 1,
+      "title": "The house of lac",
+      "place": "varanavata",
+      "summary": "The brothers face an engineered fire at Vāraṇāvata. Vidura’s warning helps them escape through a tunnel.",
+      "locator": "",
+      "url": "https://indology.info/bombay/mahabharata/text/UR/MBh01.txt",
+      "clue": "",
+      "deepLink": ""
+    },
+    {
+      "id": "draupadi",
+      "book": 1,
+      "title": "Draupadī’s svayaṃvara",
+      "place": "pancala",
+      "summary": "The Pāṇḍavas reach Pañcāla in disguise. Arjuna completes the trial at Draupadī’s svayaṃvara.",
+      "locator": "",
+      "url": "https://indology.info/bombay/mahabharata/text/UR/MBh01.txt",
+      "clue": "",
+      "deepLink": ""
+    },
+    {
+      "id": "new-capital",
+      "book": 1,
+      "title": "A new capital",
+      "place": "indraprastha",
+      "summary": "The Pāṇḍavas receive a share of the kingdom and establish Indraprastha. Their new court changes the rivalry between the families.",
+      "locator": "",
+      "url": "https://indology.info/bombay/mahabharata/text/UR/MBh01.txt",
+      "clue": "",
+      "deepLink": ""
+    },
+    {
+      "id": "dice",
+      "book": 2,
+      "title": "The dice match",
+      "place": "hastinapura",
+      "summary": "Śakuni plays on Duryodhana’s behalf. After Yudhiṣṭhira loses, Draupadī asks whether he had the authority to stake her.",
+      "locator": "",
+      "url": "https://indology.info/bombay/mahabharata/text/UR/MBh02.txt",
+      "clue": "",
+      "deepLink": ""
+    },
+    {
+      "id": "exile-start",
+      "book": 3,
+      "title": "Into the forest",
+      "place": "kamyaka",
+      "summary": "The brothers and Draupadī leave the court. The forest books follow their travels and the debates and stories told along the way.",
+      "locator": "",
+      "url": "https://indology.info/bombay/mahabharata/text/UR/MBh03.txt",
+      "clue": "",
+      "deepLink": ""
+    },
+    {
+      "id": "nala",
+      "book": 3,
+      "title": "A story within the exile",
+      "place": "",
+      "summary": "Bṛhadaśva tells the exiled Yudhiṣṭhira about Nala and Damayantī. Their separation and reunion offer another way to understand the aftermath of a dice game.",
+      "locator": "",
+      "url": "https://indology.info/bombay/mahabharata/text/UR/MBh03.txt",
+      "clue": "",
+      "deepLink": ""
+    },
+    {
+      "id": "hidden-year",
+      "book": 4,
+      "title": "The year in disguise",
+      "place": "matsya",
+      "summary": "The brothers and Draupadī live under assumed identities at Virāṭa’s court. A raid on the cattle puts their disguises at risk.",
+      "locator": "",
+      "url": "https://indology.info/bombay/mahabharata/text/UR/MBh04.txt",
+      "clue": "",
+      "deepLink": ""
+    },
+    {
+      "id": "peace",
+      "book": 5,
+      "title": "Kṛṣṇa’s peace mission",
+      "place": "hastinapura",
+      "summary": "Kṛṣṇa travels to the Kuru court to seek a settlement. The mission ends without an agreement and preparations for battle continue.",
+      "locator": "",
+      "url": "https://indology.info/bombay/mahabharata/text/UR/MBh05.txt",
+      "clue": "",
+      "deepLink": ""
+    },
+    {
+      "id": "omens",
+      "book": 6,
+      "title": "Vyāsa reads the omens",
+      "place": "kurukshetra",
+      "summary": "Vyāsa describes disturbing signs to Dhṛtarāṣṭra. One verse mentions Arundhatī and Vasiṣṭha, and nearby passages mention planets and the luminaries.",
+      "locator": "6.2–3",
+      "url": "https://indology.info/bombay/mahabharata/text/UR/MBh06.txt#:~:text=06002031a",
+      "clue": "stars",
+      "deepLink": ""
+    },
+    {
+      "id": "gita",
+      "book": 6,
+      "title": "Arjuna stops the chariot",
+      "place": "kurukshetra",
+      "summary": "Arjuna asks Kṛṣṇa to stop between the armies. Seeing family, teachers, and friends on both sides, he questions whether to fight.",
+      "locator": "6.23–40",
+      "url": "https://indology.info/bombay/mahabharata/text/UR/MBh06.txt#:~:text=06023001",
+      "clue": "",
+      "deepLink": ""
+    },
+    {
+      "id": "bhishma-falls",
+      "book": 6,
+      "title": "Bhīṣma falls",
+      "place": "kurukshetra",
+      "summary": "Arjuna advances with Śikhaṇḍin. Bhīṣma is brought down and remains on a bed of arrows.",
+      "locator": "",
+      "url": "https://indology.info/bombay/mahabharata/text/UR/MBh06.txt",
+      "clue": "season",
+      "deepLink": ""
+    },
+    {
+      "id": "drona-commands",
+      "book": 7,
+      "title": "Droṇa takes command",
+      "place": "kurukshetra",
+      "summary": "Duryodhana asks Karṇa who can lead the army after Bhīṣma falls. Karṇa proposes Droṇa.",
+      "locator": "",
+      "url": "https://indology.info/bombay/mahabharata/text/UR/MBh07.txt",
+      "clue": "",
+      "deepLink": ""
+    },
+    {
+      "id": "abhimanyu",
+      "book": 7,
+      "title": "Abhimanyu enters the formation",
+      "place": "kurukshetra",
+      "summary": "Abhimanyu enters Droṇa’s formation. He is separated from help and killed, leading to Arjuna’s vow.",
+      "locator": "",
+      "url": "https://indology.info/bombay/mahabharata/text/UR/MBh07.txt",
+      "clue": "",
+      "deepLink": ""
+    },
+    {
+      "id": "jayadratha",
+      "book": 7,
+      "title": "The vow and the darkening sky",
+      "place": "kurukshetra",
+      "summary": "Arjuna must reach Jayadratha before sunset. Ganguli’s rendering describes darkness produced through yoga, a scene sometimes read as an eclipse.",
+      "locator": "",
+      "url": "https://indology.info/bombay/mahabharata/text/UR/MBh07.txt",
+      "clue": "eclipse",
+      "deepLink": "/stories/jayadratha/"
+    },
+    {
+      "id": "drona-dies",
+      "book": 7,
+      "title": "Droṇa lays down his weapons",
+      "place": "kurukshetra",
+      "summary": "The report of Aśvatthāman’s death breaks Droṇa’s resolve. Dhṛṣṭadyumna attacks after he casts down his weapons.",
+      "locator": "",
+      "url": "https://indology.info/bombay/mahabharata/text/UR/MBh07.txt",
+      "clue": "",
+      "deepLink": ""
+    },
+    {
+      "id": "karna-commands",
+      "book": 8,
+      "title": "Karṇa leads the surviving army",
+      "place": "kurukshetra",
+      "summary": "After Droṇa’s death, Karṇa lines up Duryodhana’s army at dawn.",
+      "locator": "",
+      "url": "https://indology.info/bombay/mahabharata/text/UR/MBh08.txt",
+      "clue": "",
+      "deepLink": ""
+    },
+    {
+      "id": "karna",
+      "book": 8,
+      "title": "Arjuna and Karṇa",
+      "place": "kurukshetra",
+      "summary": "Karṇa’s chariot wheel sinks during the duel. The scene turns on a dispute over the rules of battle.",
+      "locator": "",
+      "url": "https://indology.info/bombay/mahabharata/text/UR/MBh08.txt",
+      "clue": "",
+      "deepLink": ""
+    },
+    {
+      "id": "maces",
+      "book": 9,
+      "title": "The final duel",
+      "place": "kurukshetra",
+      "summary": "Bhīma and Duryodhana fight with maces. The closing blow prompts arguments about how the duel was won.",
+      "locator": "",
+      "url": "https://indology.info/bombay/mahabharata/text/UR/MBh09.txt",
+      "clue": "",
+      "deepLink": ""
+    },
+    {
+      "id": "night-raid",
+      "book": 10,
+      "title": "The sleeping camp",
+      "place": "kurukshetra",
+      "summary": "Aśvatthāman enters the enemy camp at night. The attack targets survivors of the battle.",
+      "locator": "",
+      "url": "https://indology.info/bombay/mahabharata/text/UR/MBh10.txt",
+      "clue": "",
+      "deepLink": ""
+    },
+    {
+      "id": "mourning",
+      "book": 11,
+      "title": "Gāndhārī on the battlefield",
+      "place": "kurukshetra",
+      "summary": "Gāndhārī and the other bereaved women walk among the fallen. This is the aftermath as seen by families.",
+      "locator": "",
+      "url": "https://indology.info/bombay/mahabharata/text/UR/MBh11.txt",
+      "clue": "",
+      "deepLink": ""
+    },
+    {
+      "id": "rule",
+      "book": 12,
+      "title": "Lessons in kingship",
+      "place": "kurukshetra",
+      "summary": "While Bhīṣma lies wounded, Yudhiṣṭhira seeks guidance on ruling and on the duties that come with power.",
+      "locator": "",
+      "url": "https://indology.info/bombay/mahabharata/text/UR/MBh12.txt",
+      "clue": "",
+      "deepLink": ""
+    },
+    {
+      "id": "bhishma-dies",
+      "book": 13,
+      "title": "Bhīṣma’s death",
+      "place": "kurukshetra",
+      "summary": "After teaching Yudhiṣṭhira, Bhīṣma chooses the time of his death. The interval and seasonal wording enter Oak’s dating argument.",
+      "locator": "",
+      "url": "https://indology.info/bombay/mahabharata/text/UR/MBh13.txt",
+      "clue": "season",
+      "deepLink": ""
+    },
+    {
+      "id": "horse",
+      "book": 14,
+      "title": "The horse sacrifice",
+      "place": "hastinapura",
+      "summary": "The horse’s journey links the restored court to other rulers. Arjuna travels with it and faces challenges along the way.",
+      "locator": "",
+      "url": "https://indology.info/bombay/mahabharata/text/UR/MBh14.txt",
+      "clue": "",
+      "deepLink": ""
+    },
+    {
+      "id": "retreat",
+      "book": 15,
+      "title": "The elders withdraw",
+      "place": "hastinapura",
+      "summary": "Dhṛtarāṣṭra, Gāndhārī, and Kuntī leave the court for forest life. Yudhiṣṭhira later learns how they died.",
+      "locator": "",
+      "url": "https://indology.info/bombay/mahabharata/text/UR/MBh15.txt",
+      "clue": "",
+      "deepLink": ""
+    },
+    {
+      "id": "dvaraka",
+      "book": 16,
+      "title": "The end of Dvārakā",
+      "place": "dvaraka",
+      "summary": "The book follows the destruction of the Yādavas and the loss of Dvārakā. Literary accounts and the dating of marine finds are distinct questions.",
+      "locator": "",
+      "url": "https://indology.info/bombay/mahabharata/text/UR/MBh16.txt",
+      "clue": "dwarka",
+      "deepLink": ""
+    },
+    {
+      "id": "ascent",
+      "book": 17,
+      "title": "The last journey",
+      "place": "himalaya",
+      "summary": "The Pāṇḍavas leave the throne and go north. Yudhiṣṭhira refuses to abandon the dog that follows him.",
+      "locator": "",
+      "url": "https://indology.info/bombay/mahabharata/text/UR/MBh17.txt",
+      "clue": "",
+      "deepLink": ""
+    },
+    {
+      "id": "last-test",
+      "book": 18,
+      "title": "The final test",
+      "place": "",
+      "summary": "Yudhiṣṭhira is confronted with an unexpected picture of heaven and hell. The book closes by revealing the purpose of that test.",
+      "locator": "",
+      "url": "https://indology.info/bombay/mahabharata/text/UR/MBh18.txt",
+      "clue": "",
+      "deepLink": ""
+    }
+  ],
+  "places": [
+    {
+      "id": "hastinapura",
+      "name": "Hastināpura",
+      "lon": 78.02,
+      "lat": 29.16,
+      "modern": "Hastinapur, Uttar Pradesh",
+      "status": "Modern archaeological site and traditional identification",
+      "url": "https://ignca.gov.in/Asi_data/87815.pdf"
+    },
+    {
+      "id": "varanavata",
+      "name": "Vāraṇāvata",
+      "lon": 77.34,
+      "lat": 29.11,
+      "modern": "Barnāwā area, Uttar Pradesh",
+      "status": "Proposed literary identification",
+      "url": "https://ignca.gov.in/Asi_data/87815.pdf"
+    },
+    {
+      "id": "indraprastha",
+      "name": "Indraprastha",
+      "lon": 77.24,
+      "lat": 28.61,
+      "modern": "Purana Qila, Delhi",
+      "status": "Traditional identification discussed in excavation literature",
+      "url": "https://ignca.gov.in/Asi_data/87815.pdf"
+    },
+    {
+      "id": "pancala",
+      "name": "Pañcāla",
+      "lon": 79.1,
+      "lat": 27.8,
+      "modern": "Broad western Uttar Pradesh reference point",
+      "status": "Regional orientation only, site of the episode unlocated",
+      "url": "https://www.britannica.com/topic/Panchala"
+    },
+    {
+      "id": "kamyaka",
+      "name": "Kāmyaka",
+      "lon": null,
+      "lat": null,
+      "modern": "Forest setting in the narrative",
+      "status": "Map location left open",
+      "url": "https://indology.info/bombay/mahabharata/text/UR/MBh03.txt"
+    },
+    {
+      "id": "matsya",
+      "name": "Matsya",
+      "lon": 76.15,
+      "lat": 27.43,
+      "modern": "Viratnagar area, Rajasthan",
+      "status": "Traditional regional locator, exact court unverified",
+      "url": "https://www.tourism.rajasthan.gov.in/viratnagar.html"
+    },
+    {
+      "id": "kurukshetra",
+      "name": "Kurukṣetra",
+      "lon": 76.79,
+      "lat": 29.97,
+      "modern": "Kurukshetra district, Haryana",
+      "status": "Modern regional reference, battlefield extent unverified",
+      "url": "https://kurukshetra.gov.in/geography-location/"
+    },
+    {
+      "id": "dvaraka",
+      "name": "Dvārakā",
+      "lon": 68.97,
+      "lat": 22.24,
+      "modern": "Dwarka, Gujarat",
+      "status": "Modern coastal site; literary identification requires separate evidence",
+      "url": "https://nopr.niscpr.res.in/handle/123456789/38461"
+    },
+    {
+      "id": "himalaya",
+      "name": "Northern mountains",
+      "lon": null,
+      "lat": null,
+      "modern": "Direction described in the story",
+      "status": "Route and endpoint unlocated",
+      "url": "https://indology.info/bombay/mahabharata/text/UR/MBh17.txt"
+    }
+  ]
+}

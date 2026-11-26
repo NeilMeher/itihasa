@@ -1,37 +1,30 @@
 ---
 import Beta from '../layouts/Beta.astro';
-import { areas, lessons } from '../lib/library';
+import MahabharataAtlas from '../components/MahabharataAtlas';
+import atlas from '../../../../content/mahabharata-atlas.json';
+import { annotatedChapterCount, chapterCount, parvaUrl, scenes } from '../lib/mahabharata';
+import '../styles/mahabharata.css';
 ---
-<Beta title="Explore stories and the sky">
-  <div class="home-hero">
-    <div>
-      <p class="eyebrow">Stories, skies &amp; sources</p>
-      <h1>What did Vyāsa mean by <em>“ahead”?</em></h1>
-      <p class="lede">Two stars. One verse. Read the omen, move the sky, and see what the passage can tell us.</p>
-      <div class="intro-links">
-        <a class="start-link" href="/arundhati/">Explore the two stars <span aria-hidden="true">→</span></a>
-        <a href="/search/">Search the library</a>
-      </div>
-    </div>
-    <figure class="home-plot" aria-label="Illustrative Alcor and Mizar meridian diagram">
-      <span class="plot-meridian">Meridian</span>
-      <span class="home-star home-alcor">Alcor</span>
-      <span class="home-star home-mizar">Mizar</span>
-      <figcaption>Illustrative sky · Arundhatī and Vasiṣṭha</figcaption>
-    </figure>
-  </div>
-  <section class="beta-band" aria-labelledby="routes">
-    <h2 id="routes">Find a question</h2>
-    <div class="link-grid">
-      {areas.map((area) => (
-        <article><h3><a href={area.url}>{area.title}</a></h3><p>{area.text}</p></article>
-      ))}
-    </div>
-  </section>
-  <section class="beta-band" aria-labelledby="festival-links">
-    <h2 id="festival-links">From story to festival</h2>
-    <div class="link-grid">{lessons.map((lesson) => (
-      <article><h3><a href={lesson.url}>{lesson.title}</a></h3><p>{lesson.text}</p></article>
-    ))}</div>
-  </section>
+<Beta title="Explore the Mahābhārata" summary="Follow the epic across 18 parvas, explore its geography and sky, and inspect how the dating arguments work.">
+  <header class="ma-opening">
+    <p class="ma-kicker"><span lang="sa-Deva">महाभारतम्</span> <span aria-hidden="true">/</span> THE SANSKRIT EPIC</p>
+    <h1>Mahābhārata</h1>
+    <p class="ma-deck">Follow the Kuru family from the dice hall to Kurukṣetra and beyond. Read the passages, explore the sky, and test the proposed dating constraints.</p>
+  </header>
+  <MahabharataAtlas client:load />
+  <noscript>
+    <section class="ma-noscript">
+      <h2>The 18 parvas</h2>
+      <ol>{atlas.books.map((book) => <li><a href={parvaUrl(book.number)}>{book.name} · {book.title}</a><p>{book.summary}</p></li>)}</ol>
+    </section>
+  </noscript>
+  <aside class="ma-coverage">
+    <div><h2>Reading coverage</h2><p>All {chapterCount.toLocaleString('en')} BORI chapters are indexed. {annotatedChapterCount} link to one or more of the atlas’s {scenes.length} selected readings.</p></div>
+    <a href="/coverage/">See coverage</a>
+  </aside>
+  <nav class="link-grid" aria-label="Other areas of Itihāsa">
+    <a href="/epics/">Epics &amp; Purāṇas</a><a href="/panchang/">Today’s Pañchāṅga</a>
+    <a href="/birth-sky/">My Birth Sky</a><a href="/workshop/">Sūrya Siddhānta</a>
+    <a href="/research/">Research notebook</a><a href="/swarajya/">Maratha Swarajya</a>
+  </nav>
 </Beta>

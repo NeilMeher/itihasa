@@ -13,6 +13,7 @@ export const sources: Record<string, Source> = raw.sources;
 export const journey = raw.journey.map((id) => episodes.find((episode) => episode.id === id)!);
 
 export const areas = [
+  { url: '/mahabharata/', title: 'Mahābhārata Atlas', text: 'Explore all eighteen parvas, geography, the sky and dating evidence.', aliases: 'Mahabharata atlas timeline map Oak' },
   { url: '/epics/', title: 'Epics & Purāṇas', text: 'Follow stories across editions and open the passages behind them.', aliases: 'Mahabharata Ramayana Puranas epic' },
   { url: '/panchang/', title: 'Today’s Pañchāṅga', text: 'See the five limbs of the calendar and when they change.', aliases: 'panchang panchanga पंचांग tithi योग nakshatra पक्ष rahu kala' },
   { url: '/birth-sky/', title: 'My Birth Sky', text: 'Read the Moon’s rāshi and nakshatra, and find what needs a birth time.', aliases: 'rashi rāshi राशि nakshatra नक्षत्र lagna लग्न' },

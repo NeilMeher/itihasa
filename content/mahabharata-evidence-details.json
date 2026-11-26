@@ -1,0 +1,65 @@
+{
+  "stars": {
+    "text": "BORI Bhīṣmaparvan 6.2.31 describes Arundhatī in front of Vasiṣṭha among Vyāsa’s omens. This is an editorial paraphrase. Oak’s 2016 diagrams interpret it as crossing the meridian first.",
+    "method": "Compare upper transit times of Alcor (HIP 65477) and Mizar A (HIP 65378), with component, proper motion, long-term precession, time scale and uncertainty recorded. The Greenwich modern comparison ran. Historical boundaries are awaiting independent review.",
+    "dependencies": "The stellar test shares the precession premise with the seasonal argument. The stated intervals are model-dependent constraints.",
+    "links": [["Oak’s original meridian figures","https://nileshoak.wordpress.com/2016/02/08/arundhati-vasistha/"],["Illustrative two-star lesson","/arundhati/"],["Local benchmark and historical method","/research/"]]
+  },
+  "season": {
+    "text": "BORI 6.114 narrates Bhīṣma’s fall. At 13.153.6 and 27–28 the sun has turned north, and Bhīṣma names fifty-eight nights and the month Māgha. Editorial paraphrase.",
+    "method": "Identify the start and end of the nights and the month convention. Compute the northern solar turning point and lunar phase under each combination. The full comparison awaits implementation.",
+    "dependencies": "Shares calendar definitions with the war-month clue. Oak’s narrower combined inference from items 2–4 is dependent on both inputs.",
+    "links":[["Bhīṣma’s count in BORI 13.153.27","https://indology.info/bombay/mahabharata/text/UR/MBh13.txt#:~:text=13153027a"]]
+  },
+  "moon": {
+    "text": "Oak’s public noon table for Kurukṣetra describes his candidate, from new Moon on day 1 to full Moon on day 15 and the waning half by day 18. Matching his table to individual CE passages remains open.",
+    "method": "At a defined time each day compare the Moon’s longitude relative to the Sun, its nakṣatra, and the adopted lunar month convention. Check the precession and seasonal rule behind the approximate threshold. The modern Moon lesson has calculated examples.",
+    "dependencies": "The threshold uses the same seasons and lunar calendar as the Bhīṣma argument. Comparing the candidate’s moon phases requires the same proposed opening day.",
+    "links":[["Oak’s 18-day lunar table","https://nileshoak.wordpress.com/2015/03/15/the-moon-phases-positions-18-days-of-the-mahabharata-war/"]]
+  },
+  "planets": {
+    "text": "BORI 6.43.38 compares warriors to Mars and Mercury, while 6.43.54 compares a fight to Venus and Mars. Oak’s item 1 describes Venus and Mercury, a discrepancy to resolve before testing. His item 2 reports about 3–7° between Venus and Mars for his war interval.",
+    "method": "Verify the Sanskrit object identifications and whether the comparison describes an observation. Define separation, epoch, visibility, and a tolerance before searching. The 2019 post credits Saiswaroopa Iyer for new leads. No historical planetary checks ran here.",
+    "dependencies": "The reported comparisons use the proposed war days and site. Bhīṣma 6.2–3 also supplies other omen records.",
+    "links":[["BORI 6.43.54","https://indology.info/bombay/mahabharata/text/UR/MBh06.txt#:~:text=06043054a"]]
+  },
+  "eclipse": {
+    "text": "The royal omens in BORI 6.3.28–29 differ in setting from the darkness at Jayadratha’s death in BORI 7.121. Ganguli’s translation of the latter credits Kṛṣṇa’s yoga. Historical eclipse wording and day claims still need a passage-by-passage catalogue.",
+    "method": "Test syzygy, lunar node distance, contact geometry and horizon at the proposed site. A long-term Earth-rotation model controls where a solar shadow might cross. No historical eclipse or local visibility check ran here.",
+    "dependencies": "Uses the same lunar ephemeris and candidate times as the lunar clue. The Jayadratha scene carries its own textual assumption.",
+    "links":[["BORI 7.121","https://indology.info/bombay/mahabharata/text/UR/MBh07.txt#:~:text=07121016a"],["Edition comparison","/stories/jayadratha/"]]
+  },
+  "dwarka": {
+    "text": "BORI 16.8.40 narrates the inundation. Oak’s 2020 summary item 10 gives 5525 BCE for the flooding he proposes.",
+    "method": "Rao and colleagues surveyed the seabed off modern Dwarka and considered structures, pottery and anchors in relation to historic settlement. An object’s proposed age, depositional context and a possible inundation are different measurements. A matched dated stratigraphic layer is needed to connect them.",
+    "dependencies": "Oak’s summary treats this as corroboration. The atlas has no source-backed link that converts the marine material into a numerical war-date constraint.",
+    "links":[["BORI 16.8.40","https://indology.info/bombay/mahabharata/text/UR/MBh16.txt#:~:text=16008040c"]]
+  },
+  "rakhigarhi": {
+    "text": "Shinde et al. (Cell, 2019), sample I6113 from the Rakhigarhi cemetery. The paper analysed one genome after screening 61 individuals and compared its ancestry to other ancient populations.",
+    "method": "The laboratory extracted and sequenced ancient DNA for ancestry analysis. Collagen preservation prevented direct radiocarbon dating of the burial. The reported 2800–2300 BCE context comes from seven radiocarbon dates on charcoal from the habitation area. The burial’s absolute age remains uncertain.",
+    "dependencies": "Oak lists genetics as corroboration in his project summary. A paper, passage, or specimen association stating how I6113 would date the war has yet to be identified.",
+    "track":{"older":2800,"younger":2300,"label":"Rakhigarhi habitation charcoal · 2800–2300 BCE"}
+  },
+  "population": {
+    "text": "Narasimhan et al. (Science, 2019) compared genome-wide data from 523 ancient individuals in South and Central Asian contexts over roughly the last 8,000 years.",
+    "method": "The team used dated assemblages and individual sample contexts, then modelled shared ancestry and mixture. Limits vary by sample location, radiocarbon coverage and the sampled populations that stand in for past groups.",
+    "dependencies": "The population model supplies context for comparisons with Harappan ancestry. The atlas has yet to locate a source linking a specific sample in this study to a specific war event."
+  },
+  "rivers": {
+    "text": "Singh et al. (Nature Communications, 2017) tested how the Ghaggar–Hakra palaeochannel relates to former Sutlej flow and to urban settlements of the Indus civilisation.",
+    "method": "The team used sediment provenance and optically stimulated luminescence to date deposits. They place the diversion of the large river by around 8,000 years ago. The estimate concerns the channel’s history and leaves the epic river’s identity and remembered times open.",
+    "dependencies": "Oak’s project summary names hydrology generally. It gives no testable match to this particular channel deposit or to the date of a named battle.",
+    "links":[["Singh et al., 2017","https://www.nature.com/articles/s41467-017-01643-9"]]
+  },
+  "hastinapura": {
+    "text": "B. B. Lal’s excavation report identifies Period II at Hastināpura by Painted Grey Ware and discusses an erosion or flood horizon and a subsequent break in occupation.",
+    "method": "The excavation used stratigraphy and comparison of ceramic assemblages. The report assigns a relative cultural sequence and proposes dates. The layer requires independent absolute dates and an evidentiary link to a narrated person or event before it can bear on the war.",
+    "dependencies": "This context is linked to the map’s modern site. Oak’s specific use of the excavation and its proposed historical associations still needs a cited edition and page."
+  },
+  "candidate": {
+    "text": "In his 2015 calendar note Oak specifies 16 October 5561 BCE as proleptic Julian. The atlas consulted his public posts and linked book overview. Precise page and figure references for the full 2011 book await an accessible copy.",
+    "method": "Translate the labelled calendar date to the time scale of each independent test, then compare the candidate with the remaining ranges and unfiltered observations. Passing the displayed broad bounds leaves many other years possible.",
+    "dependencies": "The public day-by-day lunar and planetary checks use this starting day. The local prereview transit run is a separate comparison and still awaits independent review."
+  }
+}

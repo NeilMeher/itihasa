@@ -27,6 +27,8 @@ jobs:
       - run: uv sync --locked --project research
       - run: uv run --locked --project research python research/check_evidence.py
       - run: uv run --locked --project research python research/check_beta_content.py
+      - run: uv run --locked --project research python research/check_mahabharata.py
+      - run: uv run --locked --project research python research/build_mahabharata_sky.py --check
       - run: uv run --locked --project research python research/run_arundhati_history.py --check
       - run: uv run --locked --project research python -m unittest discover -s research
       - run: npm run contracts:generate
