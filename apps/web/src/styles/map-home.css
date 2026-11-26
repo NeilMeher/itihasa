@@ -105,8 +105,6 @@
   .map-category-heading h2 { scroll-margin-top: .55rem; }
 }
 @media (prefers-reduced-motion: no-preference) {
-  @view-transition { navigation: auto; }
-  ::view-transition-group(*) { animation-duration: .22s; }
   .map-category, .map-overview li { animation: map-arrive .18s ease-out both; }
   .home-quick-reading { animation: map-arrive .16s ease-out both; }
   .map-category-link { transition: background-color .16s; }

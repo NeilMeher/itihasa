@@ -10,7 +10,7 @@ const { selected } = Astro.props;
 <div data-home-map={!selected ? '' : undefined}>
 <header class="map-home-header">
   {selected && <a href="/">← All Itihāsa</a>}
-  <h1 style={selected ? `view-transition-name: branch-${selected.id}` : undefined}>{selected ? selected.label : 'Explore Itihāsa'}</h1>
+  <h1>{selected ? selected.label : 'Explore Itihāsa'}</h1>
   <p>{selected ? selected.intro : 'Choose where to start.'}</p>
 </header>
 <form action="/search/" role="search" class="map-home-search" data-map-search>
@@ -23,7 +23,7 @@ const { selected } = Astro.props;
   <nav class="map-overview" aria-label="Whole-project Mind Map">
     <div class="map-center" aria-hidden="true"><span>✦</span><strong>Itihāsa</strong></div>
     <ul>{branches.map((branch) => <li class={'branch-' + branch.id}>
-      <a href={branchHref(branch.id)} class="map-category-link" data-home-branch={branch.id} aria-controls="home-branch" style={`view-transition-name: branch-${branch.id}`}>
+      <a href={branchHref(branch.id)} class="map-category-link" data-home-branch={branch.id} aria-controls="home-branch">
         <span class="branch-mark" aria-hidden="true"></span>
         <span><strong>{branch.label}</strong><small>{branch.cue}</small></span>
         <span class="branch-arrow" aria-hidden="true">↗</span>

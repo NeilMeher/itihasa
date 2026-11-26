@@ -1,10 +1,10 @@
 # Itihāsa
 
-Itihāsa connects epic readings, Maratha history, and astronomy through the passages and records behind them. The homepage opens on the whole-project Mind Map. Choose a branch or search for a name, place, passage, or source. A focused reading carries the same selection into the Timeline, Geography, and Sources. Use **All Itihāsa** to return to the complete map. Library, Sky and Calendar, Research, and Search also have their own entrances.
+Itihāsa connects epic readings, Maratha history, and astronomy through their passages and records. The homepage Mind Map unfolds in place. Open a branch or search for a person, place, passage, or source. The attached reading keeps the same selection in Timeline, Geography, and Sources. **All Itihāsa** returns to the complete map. Direct map, reading, Library, and tool links also work as standalone routes.
 
-![The six Itihāsa branches on the mobile homepage](docs/images/map-home-mobile.png)
+![The six Itihāsa branches on the mobile homepage](docs/images/unfold-overview-360.png)
 
-[Desktop map and reading preview](docs/images/map-home-desktop.png)
+[Expanded branch and attached reading on desktop](docs/images/unfold-reading-1280.png)
 
 | Area | Current coverage |
 | --- | --- |
@@ -25,22 +25,22 @@ npm.cmd ci
 python -m pip install uv==0.13.10
 uv sync --locked --project research
 $env:ASTRO_TELEMETRY_DISABLED = '1'
-$build = Join-Path (Get-Location).Path '.tools/map-home-dist'
+$build = Join-Path (Get-Location).Path '.tools/unfold-dist'
 npm.cmd run build --workspace @itihasa/web -- --outDir $build
-uv run --locked --project research python research/serve_beta.py --port 4327 --dist $build
+uv run --locked --project research python research/serve_beta.py --port 4329 --dist $build
 ```
 
-Open the [homepage map](http://127.0.0.1:4327/) or the [Timeline](http://127.0.0.1:4327/explorer/). The Python service hosts the static Astro pages and same-origin calculator API on loopback. If uv is unavailable in the shell and its locked environment already exists, run `./research/.venv/Scripts/python.exe research/serve_beta.py --port 4327 --dist $build`.
+Open the [homepage map](http://127.0.0.1:4329/) or the [Timeline](http://127.0.0.1:4329/explorer/). The Python service hosts the Astro output and same-origin calculators on loopback. If uv is unavailable and its locked environment exists, run `./research/.venv/Scripts/python.exe research/serve_beta.py --port 4329 --dist $build`.
 
 ## Verify a build
 
-The browser suite starts and stops its own local server. Use port 4326 alongside the manual preview on 4327.
+The browser suite starts and stops its own local server. Use port 4328 alongside the manual preview on 4329.
 
 ```powershell
 npm.cmd run check
 $env:PLAYWRIGHT_BROWSERS_PATH = '0'
 npx.cmd playwright install chromium --only-shell
-$env:ITIHASA_QA_PORT = '4326'
+$env:ITIHASA_QA_PORT = '4328'
 $env:ITIHASA_QA_DIST = $build
 $env:ITIHASA_PYTHON = (Resolve-Path research/.venv/Scripts/python.exe).Path
 npm.cmd run test:browser
@@ -48,7 +48,13 @@ npm.cmd run test:browser
 & $env:ITIHASA_PYTHON -m unittest discover -s research
 ```
 
-The [CI workflow](.github/workflows/foundation.yml) contains the full reproducibility and content check list. Browser screenshots land in the ignored `test-results/` directory. The [homepage map handoff](docs/Mind-Map-Home.md) records the baseline, performance commands, and review journeys.
+The [CI workflow](.github/workflows/foundation.yml) contains the reproducibility and content checks. Browser screenshots land in the ignored `test-results/` directory. The [unfolding map handoff](docs/Unfolding-Map-Release.md) records the matched measurements and read-only review steps.
+
+## Calculators and Vercel
+
+The site uses `POST /api/v1/panchang` and `POST /api/v1/birth-sky` with JSON bodies. Local and hosted handlers share the same validation and Astronomy Engine calculation. Calculator responses use `Cache-Control: no-store`. Birth input is submitted in the request body and kept out of the URL and resume state.
+
+The [Vercel configuration](vercel.json) builds from the repository root with `npm ci` and `npm run build --workspace @itihasa/web`, serves `apps/web/dist`, and bundles the two Python 3.14 handlers. Use the [release handoff](docs/Unfolding-Map-Release.md) for protected preview verification, production promotion, and rollback.
 
 ## Where changes belong
 
