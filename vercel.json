@@ -1,0 +1,13 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "installCommand": "npm ci",
+  "buildCommand": "npm run build --workspace @itihasa/web",
+  "outputDirectory": "apps/web/dist",
+  "functions": {
+    "api/v1/*.py": {
+      "includeFiles": "{research/calendar_engine.py,research/calendar_http.py,content/cities.json,content/conventions.json}",
+      "excludeFiles": "{apps/**,docs/**,packages/**,.github/**,node_modules/**,research/runs/**,research/test_*.py,research/build_*.py,research/check_*.py,content/{arundhati*,coverage*,explorer*,graph*,library*,mahabharata*,maratha*,project-graph*,ramayana*,source-register*,swarajya*}}"
+    }
+  }
+}

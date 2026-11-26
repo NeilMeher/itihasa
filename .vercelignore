@@ -1,0 +1,12 @@
+.git
+.tools
+**/node_modules
+**/.venv
+**/__pycache__
+**/.astro
+**/dist
+**/.pytest_cache
+test-results
+playwright-report
+docs
+research/runs
