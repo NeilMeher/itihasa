@@ -7,6 +7,9 @@ type Reading = { line: string; chapters: number[]; speaker: string; people: stri
 type Person = { name: string; bio: string; links: string[][] };
 export const readings: Record<string, Reading> = reading.scenes;
 export const people: Record<string, Person> = reading.people;
+export const warDays = reading.warDays;
+export const battleScene = (day: (typeof warDays)[number]) =>
+  day.scene ?? (day.day < 11 ? 'gita' : day.day < 16 ? 'drona-commands' : 'karna-commands');
 export const scenes: Scene[] = [
   { ...atlas.episodes[0], id: 'frame', place: '', title: 'Who tells the Mahābhārata?', summary: 'A storyteller arrives at a forest gathering and recounts what he heard at a king’s sacrifice.' },
   ...atlas.episodes,

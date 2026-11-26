@@ -2,32 +2,37 @@ import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import atlas from '../../../../content/mahabharata-atlas.json';
 import reading from '../../../../content/mahabharata-reading.json';
 import clues from '../../../../content/mahabharata-evidence.json';
-import { chapterCount, chaptersFor, locator, parvaUrl, people, readings, scenes, sourceUrl } from '../lib/mahabharata';
+import { battleScene, chapterCount, chaptersFor, locator, parvaUrl, people, readings, scenes, sourceUrl } from '../lib/mahabharata';
+import { commitSelection } from '../lib/selection';
 import { foldSearch, mapFor } from '../lib/project-graph';
 import MahabharataMap from './MahabharataMap';
 const MahabharataEvidence = lazy(() => import('./MahabharataEvidence'));
 const MahabharataSky = lazy(() => import('./MahabharataSky'));
 
 type Mode = 'story' | 'sky' | 'evidence';
-type Position = { mode: Mode; scene: string; place: string; clue: string; day: number; constraints: string[]; useTransit: boolean };
+type Position = { mode: Mode; scene: string; place: string; clue: string; day: number; daySelected: boolean; constraints: string[]; useTransit: boolean };
 type ReadingPanel = { kind: 'person'; id: string } | { kind: 'sources' };
-const start: Position = { mode: 'story', scene: 'frame', place: '', clue: '', day: 1, constraints: [], useTransit: true };
+const start: Position = { mode: 'story', scene: 'frame', place: '', clue: '', day: 1, daySelected: false, constraints: [], useTransit: true };
 const tabs: { id: Mode; label: string }[] = [
   { id: 'story', label: 'Story & map' }, { id: 'sky', label: 'Sky map' }, { id: 'evidence', label: 'Dating evidence' },
 ];
 
 function fromUrl(): Position {
   const query = new URLSearchParams(window.location.search);
-  const scene = scenes.find((item) => item.id === (query.get('scene') ?? query.get('episode')));
+  const requested = query.get('scene') ?? query.get('episode');
   const view = query.get('view');
-  const day = Number(query.get('day'));
+  const selectedBattle = reading.warDays.find((item) => item.day === Number(query.get('day')));
+  const scene = scenes.find((item) => item.id === (selectedBattle ? battleScene(selectedBattle) : requested));
+  const linkedBattle = reading.warDays.find((item) => item.scene === scene?.id);
+  const sameStory = !selectedBattle || Boolean(selectedBattle.scene && (!requested || selectedBattle.scene === requested));
   const useTransit = query.get('ahead') !== 'relative';
   return {
     scene: scene?.id ?? start.scene,
     place: atlas.places.find((item) => item.id === query.get('place'))?.id ?? scene?.place ?? '',
-    clue: clues.find((item) => item.id === query.get('clue'))?.id ?? scene?.clue ?? '',
+    clue: (sameStory ? clues.find((item) => item.id === query.get('clue'))?.id : undefined) ?? scene?.clue ?? '',
     mode: view === 'evidence' || view === 'sky' ? view : 'story',
-    day: reading.warDays.some((item) => day === item.day) ? day : 1,
+    day: selectedBattle?.day ?? linkedBattle?.day ?? 1,
+    daySelected: Boolean(selectedBattle || linkedBattle),
     constraints: clues.filter((item) => item.younger !== null && (useTransit || item.id !== 'stars') &&
       query.get('bounds')?.split(',').includes(item.id)).map((item) => item.id),
     useTransit,
@@ -60,6 +65,8 @@ export default function MahabharataAtlas({ graphBranches }: {
   const place = atlas.places.find((item) => item.id === state.place);
   const era = scenes.filter((item) => atlas.books[item.book - 1].arc === arc.id);
   const battle = reading.warDays[state.day - 1];
+  const dayOverview = state.daySelected && !battle.scene;
+  const storyTitle = dayOverview ? `War day ${state.day} · ${commander(state.day)} commands` : scene.title;
   const chapterMatch = query.trim().match(/^(\d{1,2})\.(\d{1,3})$/);
   const jumpBook = chapterMatch && atlas.books[Number(chapterMatch[1]) - 1];
   const jumpChapter = jumpBook && chaptersFor(jumpBook.number)[Number(chapterMatch[2]) - 1];
@@ -69,7 +76,16 @@ export default function MahabharataAtlas({ graphBranches }: {
 
   useEffect(() => {
     function restore() {
-      setState(fromUrl());
+      const next = fromUrl();
+      const url = new URL(location.href);
+      if (url.searchParams.has('day') && next.daySelected) {
+        if (!reading.warDays[next.day - 1].scene) url.searchParams.delete('scene');
+        else url.searchParams.set('scene', next.scene);
+        if (next.clue) url.searchParams.set('clue', next.clue);
+        else url.searchParams.delete('clue');
+        commitSelection(url.pathname + url.search + url.hash, 'replace');
+      }
+      setState(next);
       setPlaying(false);
     }
     restore();
@@ -97,18 +113,19 @@ export default function MahabharataAtlas({ graphBranches }: {
     if (panel && !dialog.current?.open) dialog.current?.showModal();
   }, [panel]);
 
-  function update(next: Position) {
+  function update(next: Position, mode: 'push' | 'replace' = 'push') {
     setState(next);
     const url = new URL(window.location.href);
     url.searchParams.delete('episode');
     for (const [key, value] of Object.entries({
-      scene: next.scene, view: next.mode, place: next.place, clue: next.clue, day: next.day === 1 ? '' : next.day,
+      scene: next.daySelected && !reading.warDays[next.day - 1].scene ? '' : next.scene,
+      view: next.mode, place: next.place, clue: next.clue, day: next.daySelected ? next.day : '',
       bounds: next.constraints.join(','), ahead: next.useTransit ? '' : 'relative',
     })) {
       if (value) url.searchParams.set(key, String(value));
       else url.searchParams.delete(key);
     }
-    window.history.replaceState(null, '', url);
+    commitSelection(url.pathname + url.search + url.hash, mode);
   }
 
   function selectScene(id: string, pause = true, day?: number, keepFocus = true) {
@@ -116,7 +133,9 @@ export default function MahabharataAtlas({ graphBranches }: {
     if (!next) return;
     if (pause) setPlaying(false);
     const linkedDay = reading.warDays.find((item) => item.scene === id && item.direct)?.day;
-    update({ ...state, scene: id, place: next.place, clue: next.clue, day: day ?? linkedDay ?? state.day });
+    const selectedDay = day ?? linkedDay;
+    update({ ...state, scene: id, place: next.place, clue: next.clue, day: selectedDay ?? 1, daySelected: Boolean(selectedDay) },
+      pause ? 'push' : 'replace');
     if (!keepFocus) requestAnimationFrame(() => sceneHeading.current?.focus());
   }
 
@@ -140,7 +159,7 @@ export default function MahabharataAtlas({ graphBranches }: {
         <button className="ma-text-button" onClick={() => {
           changeMode('story');
           requestAnimationFrame(() => sceneHeading.current?.focus());
-        }}>← Return to {scene.title}</button>
+        }}>← Return to {storyTitle}</button>
         <span>{book.name} {scene.book} · {place?.name ?? 'Story context'}</span>
       </div>}
       {state.mode !== 'story' && <Suspense fallback={<p className="ma-lab" role="status">Opening {state.mode === 'sky' ? 'the sky map' : 'the dating evidence'}…</p>}>
@@ -173,7 +192,7 @@ export default function MahabharataAtlas({ graphBranches }: {
           </div>
           <input id="ma-scene" type="range" disabled={!ready} min="0" max={scenes.length - 1} value={position}
             aria-valuetext={scene.title} onChange={(event) => selectScene(scenes[Number(event.target.value)].id)} />
-          <div className="ma-narration" role="status"><span>{book.number}. {book.name}</span><span>{scene.title}</span></div>
+          <div className="ma-narration" role="status"><span>{book.number}. {book.name}</span><span>{storyTitle}</span></div>
         </div>
         <div className="ma-jump">
           <label>Jump to parva <select disabled={!ready} value={scene.book} onChange={(event) => selectScene(scenes.find((item) => item.book === Number(event.target.value))!.id)}>
@@ -196,7 +215,16 @@ export default function MahabharataAtlas({ graphBranches }: {
             selectScene(scenes.find((episode) => atlas.books[episode.book - 1].arc === item.id)!.id)}>{item.title}</button>)}
         </div>
         <div className="ma-stage">
-          <article className="ma-episode">
+          {dayOverview ? <article className="ma-episode">
+            <p className="ma-kicker">War day overview · BORI {locator(battle.marker)}</p>
+            <h3 tabIndex={-1} ref={sceneHeading}>{storyTitle}</h3>
+            <p>{battle.event}</p><p>{battle.boundary}</p>
+            <div className="ma-source-links">
+              <a href={sourceUrl(battle.line)}>Day passage {locator(battle.line)} ↗</a>
+              <a href={sourceUrl(battle.marker)}>Boundary passage {locator(battle.marker)} ↗</a>
+              <a href={`${parvaUrl(Number(battle.line.slice(0, 2)))}#chapter-${Number(battle.line.slice(2, 5))}`}>Read the chapter index →</a>
+            </div>
+          </article> : <article className="ma-episode">
             <p className="ma-kicker">{book.name} Parva · BORI {locator(excerpt.line)}</p>
             <h3 tabIndex={-1} ref={sceneHeading}>{scene.title}</h3>
             {excerpt.notes.map((note) => <p key={note}>{note}</p>)}
@@ -227,7 +255,7 @@ export default function MahabharataAtlas({ graphBranches }: {
                 <li key={branch.id}>{branch.relation} · <a href={mapFor(branch.id)}>{branch.title}</a></li>)}</ul>
               <a href={mapFor(`ma-episode-${scene.id}`)}>Open this scene in the mind map →</a>
             </details>
-          </article>
+          </article>}
           <MahabharataMap selected={state.place} onSelect={(id) => update({ ...state, place: id })} onScene={(id) => selectScene(id, true, undefined, false)} />
         </div>
         {scene.id === 'dice' && <div className="ma-dice">
@@ -249,7 +277,7 @@ export default function MahabharataAtlas({ graphBranches }: {
           <div className="ma-day-buttons" aria-label="Choose a battle day">
             {reading.warDays.map((item) => <button key={item.day} disabled={!ready} aria-pressed={state.day === item.day} aria-label={`Battle day ${item.day}`} onClick={() => {
               if (item.scene) selectScene(item.scene, true, item.day);
-              else { setPlaying(false); update({ ...state, day: item.day, place: 'kurukshetra' }); }
+              else { setPlaying(false); update({ ...state, day: item.day, daySelected: true, scene: battleScene(item), place: 'kurukshetra', clue: '' }); }
             }}>{item.day}</button>)}
           </div>
           <h3>Day {state.day} · {commander(state.day)} commands</h3>

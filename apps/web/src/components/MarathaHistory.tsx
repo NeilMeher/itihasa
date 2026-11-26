@@ -4,13 +4,14 @@ import historical from '../../../../content/maratha-sources.json';
 import shared from '../../../../content/source-register.json';
 import land from '../../../../content/swarajya-land.json';
 import { mapFor, type GraphSource } from '../lib/project-graph';
+import { commitSelection, withQuery } from '../lib/selection';
 
 const { events, periods, places, dossiers } = history;
 const sources: Record<string, GraphSource> = { ...shared, ...historical };
 const [west, south, east, north] = land.views.overview.bounds;
 
 export default function MarathaHistory() {
-  const [selection, setSelection] = useState({ event: events[0].id, place: '' });
+  const [selection, setSelection] = useState({ event: events[0].id, place: '', focus: 'event' });
   const [ready, setReady] = useState(false);
   const event = events.find((item) => item.id === selection.event)!;
   const period = periods.find((item) => item.id === event.period)!;
@@ -27,6 +28,7 @@ export default function MarathaHistory() {
       setSelection({
         event: events.find((item) => item.id === query.get('event'))?.id ?? events.find((item) => item.place === site)?.id ?? events[0].id,
         place: site,
+        focus: query.get('focus') === 'place' || (site && !query.get('event')) ? 'place' : 'event',
       });
     }
     restore();
@@ -36,10 +38,9 @@ export default function MarathaHistory() {
   }, []);
 
   function select(id: string, placeId = '') {
-    const query = new URLSearchParams({ event: id });
-    if (placeId) query.set('place', placeId);
-    window.history.replaceState(null, '', `?${query}`);
-    setSelection({ event: id, place: placeId });
+    const focus = placeId ? 'place' : 'event';
+    commitSelection(withQuery('/swarajya/history/', { event: id, place: placeId, focus: placeId ? focus : '' }));
+    setSelection({ event: id, place: placeId, focus });
   }
 
   return <section className="route-reader" aria-label="Maratha period and site explorer">
@@ -62,6 +63,7 @@ export default function MarathaHistory() {
     </div>
     <div className="route-stage">
       <article className="route-scene" aria-live="polite">
+        {selection.focus === 'place' && <p className="route-locator">Previous event for context · Inspecting {place.name}</p>}
         <p className="route-locator">{event.date} · {event.precision}</p>
         <h2>{event.title}</h2>
         <p><strong>{event.authority}.</strong> {event.summary}</p>
@@ -88,9 +90,10 @@ export default function MarathaHistory() {
               onClick={() => select(event.id, item.id)}>{item.id === place.id ? item.name : '•'}</button>)}
         </div>
         <p className="route-map-credit">Modern locators · <a href="https://www.naturalearthdata.com/downloads/50m-physical-vectors/50m-land/">Natural Earth</a></p>
+        {selection.focus === 'place' && <p className="route-locator">Selected place · Choose an event below</p>}
         <h3>{place.name}</h3><p><strong>{place.precision}.</strong> {place.summary}</p>
         <p className="route-links"><a href={siteEvidence.url}>Site source ↗</a><a href={mapFor(`maratha-place-${place.id}`)}>Mind map →</a></p>
-        {datedRecords.length > 0 && <details className="source-card"><summary>Dated records at this location</summary>
+        {datedRecords.length > 0 && <details className="source-card" open={selection.focus === 'place' || undefined}><summary>Dated records at this location</summary>
           <ul className="reading-list">{datedRecords.map((item) => <li key={item.id}><button className="route-event-link" disabled={!ready}
             onClick={() => select(item.id)}>{item.date} · {item.title}</button></li>)}</ul></details>}
         {dossier && <section className="maratha-dossier" aria-labelledby="dossier-title">

@@ -3,6 +3,7 @@ import land from '../../../../content/swarajya-land.json';
 import { mapFor } from '../lib/project-graph';
 import { kandaUrl, ramaPassageUrl, ramayana, ramayanaReadings, ramayanaSceneUrl } from '../lib/ramayana';
 import { passagePart } from '../lib/chapter-reading';
+import { commitSelection, withQuery } from '../lib/selection';
 
 const { books, episodes, people, places } = ramayana;
 const [west, south, east, north] = land.views.overview.bounds;
@@ -42,17 +43,14 @@ export default function RamayanaRoute() {
         setPlaying(false);
         return;
       }
-      setPosition({ ...selection, scene: arc[at + 1].id, place: '' });
+      setPosition({ ...selection, scene: arc[at + 1].id, place: '' }, 'replace');
     }, 7800);
     return () => window.clearTimeout(timer);
   }, [playing, at, arc, selection]);
 
-  function setPosition(next: typeof initial) {
+  function setPosition(next: typeof initial, mode: 'push' | 'replace' = 'push') {
     setSelection(next);
-    const url = new URL(ramayanaSceneUrl(next.scene), window.location.origin);
-    if (next.person) url.searchParams.set('person', next.person);
-    if (next.place) url.searchParams.set('place', next.place);
-    window.history.replaceState(null, '', url);
+    commitSelection(withQuery(ramayanaSceneUrl(next.scene), { person: next.person, place: next.place }), mode);
   }
 
   function choose(id: string, personId = selection.person) {
@@ -99,7 +97,7 @@ export default function RamayanaRoute() {
         <div className="route-links">{note.anchors.map((line) => <a key={line} href={ramaPassageUrl(scene.book, line)}>{passagePart(line)} Sanskrit ↗</a>)}</div>
         <div className="route-links">
           <a href={`${kandaUrl(scene.book)}#sarga-${scene.chapter}`}>Read the annotated sarga →</a>
-          <a href={mapFor(`ra-episode-${scene.id}`)}>Open in the mind map →</a>
+          <a href={withQuery(mapFor(`ra-episode-${scene.id}`), { person: selection.person })}>Open in the mind map →</a>
           {scene.related && <a href={scene.related}>Open related investigation →</a>}
         </div>
         <h3>People in the scene</h3>
